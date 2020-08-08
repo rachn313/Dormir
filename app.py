@@ -1,30 +1,33 @@
-from flask import Flask
-import servertime
+from flask import (Flask, render_template, make_response, url_for, request,
+                   redirect, flash, session, send_from_directory, Response, jsonify)
+
+
 
 app = Flask(__name__)
 
-numRequests = 0
+import os
+import dbi
+import imghdr
+import bcrypt
+#import db # database stuff
+import json
+
 
 @app.route('/')
-def hello_world():
-    return '<h1>Hello Everyone!</h1>'
+def index():
+    if "username" in session:
+       return redirect(url_for("home"))
+    return render_template('home.html', page_title='Dormir')
 
-@app.route('/about')
-def about():
-    global numRequests
-    numRequests += 1
-    return ('''<h1>Hello, World!</h1>
-<p>This is Scott's version</p>
-<p>The time on Tempest is {time}.</p>
-<p>There have been {n} requests so far.</p>'''
-    .format(time=servertime.now(),n=numRequests))
 
-@app.route('/bye')
-def bye():
-    return 'This is how we say good-bye!!'
 
 if __name__ == '__main__':
-    import os
-    uid = os.getuid()
+    import sys,os
+    if len(sys.argv) > 1:
+        # arg, if any, is the desired port number
+        port = int(sys.argv[1])
+        assert(port>1024)
+    else:
+        port = os.getuid()
     app.debug = True
-    app.run('0.0.0.0',uid)
+    app.run('0.0.0.0',port)
