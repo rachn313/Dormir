@@ -1,25 +1,80 @@
-
+<head>
+	<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat">
+     <link rel="icon" type="image/png" href="../static/img/LogoIcon.png"/>
+</head>
 
 <!-- source: https://codepen.io/Joshuasm32/pen/ILJHp -->
 <div class="cover">
   <div class="profile">
-    <img class="avatar" src="../static/img/studio-ghibli-best-movies-03.jpg" alt="Joshuasm32" />
+    <img class="avatar" src="../static/img/incognito.png" alt="profile face" />
   </div>
-  <div class="username">@pegolegoeggo</div>
+  <div class="username">@pegolegoeggo <br>
+  		<div id="classYear"> Class of 2021</div>
+  </div>
 
-  <div clas="social">
-    <img class="button twitter" src="http://cdn3.iconfinder.com/data/icons/free-social-icons/67/twitter_six-128.png" alt="Twitter" />
-    <img class="button github" src="http://cdn3.iconfinder.com/data/icons/free-social-icons/67/github_six_gray-128.png" alt="GitHub" />
-    <img class="button dribbble" src="http://cdn3.iconfinder.com/data/icons/free-social-icons/67/dribbble_six_gray-128.png" alt="Dribbble" />
-    <img class="button rss" src="http://cdn3.iconfinder.com/data/icons/free-social-icons/67/rss_six_gray-128.png" alt="RSS" />
+  <div class="myRoom">
+  	My Rooms
+  	<div class= "clearFloat" >
+		<div class= "content" id="my-rooms">
+			<div class="row">
+				<div class="column">
+					Room 1
+				</div>
+
+				<div class="column">
+					Room 2
+				</div>
+
+				<div class="column">
+					Room 3
+				</div>
+
+				<div class="column">
+					Room 4
+				</div>
+
+				<div class="column">
+					Room 5
+				</div>
+			</div>
+		</div> <!-- end content -->
+  	</div> <!-- end clearFloat -->
   </div>
-  <div class="description">
+
+  <div class="starredRoom">
+  	Starred Rooms
+  	<div class= "clearFloat" >
+		<div class= "content" id="starred-rooms">
+			<div class="row">
+				<div class="column">
+					Room 1
+				</div>
+
+				<div class="column">
+					Room 2
+				</div>
+
+				<div class="column">
+					Room 3
+				</div>
+
+				<div class="column">
+					Room 4
+				</div>
+			</div>
+		</div> <!-- end content -->
+  	</div> <!-- end clearFloat -->
+  </div>
+
+  <div class="description" style="display:none;">
    Welcome to my profile. I want to find a nice dorm room. <br>
    I sleep 24/7 so I need a very comfortable room. 
   </div>
-  <p> <a href={{url_for("index")}}> Home </a></p>
-
-
+  <div id="home"> <a href={{url_for("index")}}> Home </a></div>
+  <div class="iconCredits">
+  Icons made by <a href="https://icon54.com/" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+ </div>
 
 </div>
 
@@ -31,7 +86,7 @@
   box-sizing: border-box;
 }
 body {
-  font-family: "Lato", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 100;
   font-size: 16px;
   color: #333;
@@ -43,19 +98,79 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: hidden;
-  background: linear-gradient(to bottom, #1ad6fd, #1d62fc);
+  background: white;
   font-size: 40;
-  color: #fff;
+  color: black;
+  overflow:scroll;
 }
 .avatar {
-  width: 200px;
-  height: 200px;
-  margin-top: 100px;
+  width: 120px;
+  height: 120px;
+  left:50px;
+  right:50px;
+  margin-top: 50px;
   cursor: pointer;
-  border-radius: 50%;
-  animation: pulse 1s infinite;
+  position:absolute;
 }
+.username{
+	left:200px;
+	position:absolute;
+	margin-top:75px;
+}
+.iconCredits{
+	text-align:center;
+	bottom:0%;
+	position:fixed;
+	font-size:18;
+	left:30%;
+}
+#home{
+	text-align:left;
+	position:absolute;
+	font-size:20;
+	padding-left:10px;
+	top:10px;
+}
+#classYear{
+	font-size: 18;
+    padding-top: 10px;
+    text-align: left;
+}
+
+.myRoom{
+	position:relative;
+	top:30%;
+	color:black;
+}
+
+.starredRoom{
+	position:relative;
+	top:10%;
+	color:black;
+	padding-top:10%;
+}
+
+.clearFloat{
+  width: 100%; 
+  clear:both;
+  padding-left: 10%;
+}
+
+.row{
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.column{
+  background-color: #FFF4CF;
+  float: left;
+  width: 12%;
+  height: 150px;
+  padding:5px;
+  margin:5% 5% 5%;
+  font-size: 16;
+}
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6);
@@ -80,22 +195,6 @@ body {
     transform: none;
   }
 }
-.button {
-  margin: 10px;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  transition: all 1s ease;
-}
-.button:hover {
-  transform: rotate(180deg);
-}
-.username {
-  font-size: 60px;
-}
-.description {
-  margin-top: 20px;
-  font-weight: 2;
-  text-shadow: 0 0 5px #fff;
+
 }
 </style>
