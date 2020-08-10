@@ -15,11 +15,15 @@ import json
 
 @app.route('/')
 def index():
-    if "username" in session:
-       return redirect(url_for("home"))
+    #if "username" in session:
+     #  return redirect(url_for("home"))
     return render_template('home.html', page_title='Dormir')
 
-
+@app.route('/profile/')
+def profile():
+    # if "username" in session:
+    #    return redirect(url_for("profile"))
+    return render_template('profile.html', page_title='Profile')   
 
 if __name__ == '__main__':
     import sys,os
