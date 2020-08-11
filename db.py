@@ -33,3 +33,13 @@ def getMyRooms(conn, uid):
 	return curs.fetchall() 
 	''' get all the info for each post in the Reviews table'''
 
+
+#insert everything but filename and return the pid of the inserted image
+#FIX
+def insertReview(conn, rmID, rating, review, imgPath):
+    #add to post table
+    curs = dbi.dictCursor(conn)
+    curs.execute(
+        '''insert into Reviews(rmID, rating, review, imgPath, time) 
+        values (%s,%s,%s,%s, now())''',
+        [rmID, rating, review, imgPath])

@@ -10,7 +10,7 @@
     background-color: #333;
     background-size: cover;
     background-position: 50%;
-    background-image: url(static/img/hero.png);
+    background-image: url(../static/img/hero.png);
 }
 
 .hero-header_nav .header-nav_link, .hero-header_nav .header-nav_text {

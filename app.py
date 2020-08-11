@@ -31,6 +31,51 @@ def profile():
     rooms = db.getMyRooms(conn, 1)
     return render_template('profile.html', page_title='Dormir', my_rooms = rooms)   
 
+@app.route('/upload/', methods=["POST"])
+def upload(): 
+    '''adds a post's information into the database'''
+    roomCode = request.form.get("rCode")
+    print(roomCode)
+    roomNum = request.form.get("rNum")
+    print(roomNum)
+    rating = request.form.get("rating")
+    print(rating)
+    review = request.form.get("review")
+    print(review)
+
+    uid = 10
+    rmID = roomCode + roomNum
+    filepath = "/lsfnl/alskdd"
+    
+    
+    #uid = session['uid'] FIGURE OUT WHAT THIS WILL BE 
+    postconn = db.getConn(DB)
+    pid = db.insertReview(postconn, rmID, rating, review, filepath)
+    
+    # try:
+    #     #add everything but the imgpath to the Post table
+    
+    #     f = request.files["upload"]
+
+    #     ext = f.filename.split('.')[-1]
+    #     filename = secure_filename('{}.{}'.format(pid,ext))
+    #     user_folder = os.path.join(app.config['UPLOADS'],str(uid))
+
+    
+    #     #if user folder doesn't exist, create it. Otherwise, upload it
+    #     if not(os.path.isdir(user_folder)):
+    #         os.mkdir(user_folder)
+    #     pathname = os.path.join(user_folder,filename)
+    #     f.save(pathname)
+        
+    #     #add the renamed imgpath into the Post table
+    #     filePath = os.path.join('images/{}/'.format(uid), filename)
+
+       
+    #    # db.insertFilepath(postconn, filePath, pid)
+
+   # flash('Upload successful')
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
