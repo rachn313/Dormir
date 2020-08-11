@@ -8,10 +8,11 @@ app = Flask(__name__)
 import os
 import dbi
 import imghdr
-#import bcrypt
-#import db # database stuff
+import db 
+import dbi # database stuff
 import json
 
+DB = 'dormir'
 
 @app.route('/')
 def index():
@@ -24,7 +25,11 @@ def index():
 def profile():
     # if "username" in session:
     #    return redirect(url_for("profile"))
-    return render_template('profile.html', page_title='Dormir')   
+    conn = db.getConn(DB)
+    #uid = get it from session. 
+    uid = 1 #temporary.
+    rooms = db.getMyRooms(conn, 1)
+    return render_template('profile.html', page_title='Dormir', my_rooms = rooms)   
 
 
 

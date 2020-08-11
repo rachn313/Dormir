@@ -23,9 +23,9 @@ create table Reviews(
            on delete cascade        
 );
 
--- enter data
-source enter-users.sql;
-source enter-reviews.sql;
+-- -- enter data
+-- source enter-users.sql;
+-- source enter-reviews.sql;
 
 
 

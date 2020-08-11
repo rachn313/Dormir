@@ -1,9 +1,13 @@
+
 <head>
 	<link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Montserrat">
      <link rel="icon" type="image/png" href="../static/img/LogoIcon.png"/>
 </head>
 
+
+
+{% block content %}
 <!-- source: https://codepen.io/Joshuasm32/pen/ILJHp -->
 <div class="cover">
   <div class="profile">
@@ -13,34 +17,24 @@
   		<div id="classYear"> Class of 2021</div>
   </div>
 
+  
+
   <div class="myRoom">
   	My Rooms
   	<div class= "clearFloat" >
 		<div class= "content" id="my-rooms">
 			<div class="row">
-				<div class="column">
-					Room 1
-				</div>
+				{% for room in my_rooms %}
+					<div class="column">
+  				 		{{ room.rmID }} 
+  				 	</div>
+  				{% endfor %}
+				
 
-				<div class="column">
-					Room 2
-				</div>
-
-				<div class="column">
-					Room 3
-				</div>
-
-				<div class="column">
-					Room 4
-				</div>
-
-				<div class="column">
-					Room 5
-				</div>
-			</div>
+			</div> <!-- end row -->
 		</div> <!-- end content -->
-  	</div> <!-- end clearFloat -->
-  </div>
+		</div><!-- end clearFloat -->
+  	</div> 
 
   <div class="starredRoom">
   	Starred Rooms
@@ -198,3 +192,5 @@ body {
 
 }
 </style>
+
+{% endblock %}
