@@ -89,17 +89,14 @@ def editReview(conn, pid, pname, restaurant, location, rating, price, review):
 
 #insert everything but filename and return the pid of the inserted image
 #FIX
-def insertPost(conn, uid, name, rating, price, review, restaurant, location):
+def insertReview(conn, rmID, rating, review, imgPath):
     #add to post table
     curs = dbi.dictCursor(conn)
     curs.execute(
-        '''insert into Posts(uid,pname,rating,price,review,restaurant,location, time) 
-        values (%s,%s,%s,%s,%s,%s,%s, now())''',
-        [uid, name, rating, price, review, restaurant, location])
-    curs.execute('''select last_insert_id() from Posts''')
-    result = curs.fetchone()
-    result = str(result['last_insert_id()'])
-    return result
+        '''insert into Reviews(rmID, rating, review, imgPath, time) 
+        values (%s,%s,%s,%s, now())''',
+        [rmID, rating, review, imgPath])
+   
 
 #inserts the image path named with the pid
 #FIX

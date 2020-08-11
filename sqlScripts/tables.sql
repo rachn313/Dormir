@@ -12,21 +12,21 @@ create table Users(
 
 create table Reviews(
     rid int auto_increment not null primary key,
-    uid int,
     rmID varchar(10),
-    building varchar (20),
     rating enum("1", "2", "3", "4", "5"),
     review varchar(500),
     imgPath varchar(50), 
-    time timestamp,
-    foreign key (uid) references Users(uid)
-           on delete cascade        
+    time timestamp
+   
 );
 
 -- enter data
-source enter-users.sql;
-source enter-reviews.sql;
+-----source enter-users.sql;
+--source enter-reviews.sql;
 
+ -- foreign key (uid) references Users(uid)
+    --       on delete cascade        
+   -- uid int,
 
 
 
