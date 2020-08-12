@@ -29,17 +29,36 @@ def getConn(db):
 
 def getMyRooms(conn, uid):
 	curs = dbi.dictCursor(conn)
-	curs.execute('''select rmID, imgPath from Reviews where uid=%s''', [uid]) 
+	curs.execute('''select rmID from Reviews where uid=%s''', [uid]) 
 	return curs.fetchall() 
 	''' get all the info for each post in the Reviews table'''
 
 
 #insert everything but filename and return the pid of the inserted image
 #FIX
-def insertReview(conn, rmID, rating, review, imgPath):
+def insertReview(conn, uid, rmID, rating, review, imgPath):
     #add to post table
     curs = dbi.dictCursor(conn)
     curs.execute(
-        '''insert into Reviews(rmID, rating, review, imgPath, time) 
-        values (%s,%s,%s,%s, now())''',
-        [rmID, rating, review, imgPath])
+        '''insert into Reviews(uid, rmID, rating, review, imgPath, time) 
+        values (%s, %s,%s,%s,%s, now())''',
+        [uid, rmID, rating, review, imgPath])
+
+def getSearchedRooms(conn, rmID):
+	curs = dbi.dictCursor(conn)
+	query = rmID
+	if len(rmID) <= 3:
+		query += "%"
+
+	curs.execute('''select distinct rmID from Reviews where rmID like %s ''', [query])
+	return curs.fetchall() 
+
+def getRoomInfo(conn, rmID):
+  curs = dbi.dictCursor(conn)
+  curs.execute(''' select * from Reviews where rmID = %s''', [rmID])
+  return curs.fetchall()
+
+def getAverageRating(conn, rmID):
+  curs = dbi.dictCursor(conn)
+  curs.execute(''' select avg(rating) as rate from Reviews where rmID = %s group by rmID''', [rmID])
+  return curs.fetchone()

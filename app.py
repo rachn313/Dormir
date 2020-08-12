@@ -28,7 +28,7 @@ def profile():
     conn = db.getConn(DB)
     #uid = get it from session. 
     uid = 1 #temporary.
-    rooms = db.getMyRooms(conn, 1)
+    rooms = db.getMyRooms(conn, uid)
     return render_template('profile.html', page_title='Dormir', my_rooms = rooms)   
 
 @app.route('/upload/', methods=["POST"])
@@ -43,14 +43,14 @@ def upload():
     review = request.form.get("review")
     print(review)
 
-    uid = 10
+    uid = 1 #MAKE SURE TO CHANGE!! 
     rmID = roomCode + roomNum
     filepath = "/lsfnl/alskdd"
     
     
     #uid = session['uid'] FIGURE OUT WHAT THIS WILL BE 
     postconn = db.getConn(DB)
-    pid = db.insertReview(postconn, rmID, rating, review, filepath)
+    pid = db.insertReview(postconn, uid, rmID, rating, review, filepath)
     
     # try:
     #     #add everything but the imgpath to the Post table
@@ -75,7 +75,52 @@ def upload():
     #    # db.insertFilepath(postconn, filePath, pid)
 
    # flash('Upload successful')
-    return redirect(url_for('index'))
+    return redirect(url_for('roomReview', rmID = rmID))
+
+@app.route('/search/')
+def searchHome():
+    return render_template("search.html")
+
+
+#handler for searching
+@app.route('/roomsearch/', methods=["POST"])
+def search():
+    roomCode = request.form.get("rCode")
+    print(roomCode)
+    roomNum = request.form.get("rNum")
+    print(roomNum)
+    query = roomCode + roomNum
+    #print("query: " + query)
+    #print("query length: " + str(len(query)))
+    return redirect(url_for('roomResults', searched = query))
+
+#results page for rooms search (placeholder. Once individual room pages are set up, 
+#we can just direct to eh actual room page, unles someone searched by hall. )
+@app.route('/roomResults/<searched>')
+def roomResults(searched):
+    ''' returns a list of shops that serve the searched drink.
+    shows address after shop name to avoid confusion with 
+    chains of the same name'''
+    conn = db.getConn(DB)
+    result = db.getSearchedRooms(conn, searched)
+    if len(searched) <= 4: #return list of rooms in that hall. 
+        return render_template('searchResults.html',
+                            rooms = result, searched = searched)
+    else:
+        return redirect(url_for('roomReview', rmID = searched))
+ 
+# #individual review page for one room. 
+#need to add error handling/sanitizing params. 
+@app.route('/reviews/<rmID>')
+def roomReview(rmID):
+    conn = db.getConn(DB)
+    result = db.getRoomInfo(conn, rmID)
+    r = db.getAverageRating(conn, rmID)
+    return render_template('indivRoom.html', rmID = rmID, reviews = result, 
+        avg = r)        
+
+
+
 
 
 if __name__ == '__main__':

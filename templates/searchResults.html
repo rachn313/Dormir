@@ -1,0 +1,35 @@
+{% extends "nav.html" %}
+
+{% block head %}
+<head>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat">
+     <link rel="icon" type="image/png" href="../static/img/LogoIcon.png"/>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+{% endblock %}
+
+{% block nav %} 
+{{super()}}
+{% endblock %}
+
+{% block content %}
+<div class="results">
+  {% if not rooms %}
+  	No results found
+  {% else %}
+	Here's a list of rooms that match your query: {{searched}} 
+	<ol>  
+	    {% for room in rooms %}
+	        <li> {{room.rmID}} </li>
+	    {% endfor %}
+	</ol>
+	{% endif %}
+</div>
+
+<style> 
+.results{
+	padding:10%;
+}
+</style>
+{% endblock %}

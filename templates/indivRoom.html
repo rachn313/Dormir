@@ -1,0 +1,36 @@
+{% extends "nav.html" %}
+
+{% block head %}
+<head>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat">
+     <link rel="icon" type="image/png" href="../static/img/LogoIcon.png"/>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+{% endblock %}
+
+{% block nav %} 
+{{super()}}
+{% endblock %}
+
+{% block content %}
+<div class="content">
+This is {{rmID}}. It has an average rating of {{avg.rate}}
+
+
+</div>
+
+
+
+<style>
+.content{
+	padding-top:10%;
+	padding-left:20%;
+}
+
+
+
+</style>
+
+
+{% endblock %}
