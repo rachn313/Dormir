@@ -103,7 +103,7 @@ def roomResults(searched):
     chains of the same name'''
     conn = db.getConn(DB)
     result = db.getSearchedRooms(conn, searched)
-    if len(searched) <= 4: #return list of rooms in that hall. 
+    if (len(searched) <= 4) or (not result): #return list of rooms in that hall. 
         return render_template('searchResults.html',
                             rooms = result, searched = searched)
     else:
