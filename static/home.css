@@ -32,6 +32,11 @@
 .form-options {
     font-family: spaceSemiBold;
 }
+
+h1 {
+    font-family: spaceBold;
+}
+
 h4 {
     font-family: spaceBold;
 }

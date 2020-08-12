@@ -19,7 +19,7 @@ DB = 'rnavarr2_db' #CHANGE
 def index():
     #if "username" in session:
      #  return redirect(url_for("home"))
-    return render_template('home.html', page_title='Dormir')
+    return render_template('review.html', page_title='review')
 
 @app.route('/upload/', methods=["POST"])
 def upload(): 
