@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name=author content="Rachel Navarrette and Peggy Wang">  
+        <link rel="stylesheet" type="text/css"
+              href="{{url_for('static', filename='home.css')}}">
+        <link rel="stylesheet" 
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/cc5f13310d.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+        
+        {% endblock%}
+    </head>
+
+    <body>
+    
+    {% block nav %} 
+        <!-- make navbar look nicer later -->
+        <nav class="navbar fixed-top navbar-light bg-light justify-content-between">
+            <!-- fix at top -->
+            <a class="navbar-brand nav-link font-large" href="{{url_for('index')}}"> <img class="navbar-brand" src="static/img/LogoIcon.png" style="width: 50px;"> <h4>Dormir </h4> </a>
+            <a class="navbar" id = "modal" data-toggle="modal" data-target="#upload-modal" aria-label="upload"><svg style="margin-left: 1000px;" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 7V17M7 12H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="12" cy="12" r="10" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg></a>
+            <a class="navbar" href="" aria-label="profile"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle><path d="M4 21V17C4 15.8954 4.89543 15 6 15H18C19.1046 15 20 15.8954 20 17V21" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+            <a href= "" aria-label="logout"> <img src="https://img.icons8.com/ios/50/000000/exit.png" style="width: 30px;"/>
+        </a>
+        </nav>
+        <!-- UPLOAD FORM -->
+     <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add a Review</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+              <!-- EDIT POST FORM -->
+            <form id="upload-post-form" method=POST action="{{url_for('upload')}}" enctype="multipart/form-data">
+              <div class="form-group form-inline item">
+                <label class="form-options"> Room Code 
+                  <select class="required" name="rCode" style="margin-left: 10px;">
+                    <option value="BAT" name="rCode">BAT</option>
+                    <option value="BEB" name="rCode">BEB</option>
+                    <option value="CAS" name="rCode">CAS</option>
+                    <option value="CAS" name="rCode">CAZ</option>
+                    <option value="CLA" name="rCode">CLA</option>
+                    <option value="DAV" name="rCode">DAV</option>
+                    <option value="DOW" name="rCode">DOW</option>
+                    <option value="FRE" name="rCode">FRE</option>
+                    <option value="FRH" name="rCode">FRH</option>
+                    <option value="HEM" name="rCode">HEM</option>
+                    <option value="INS" name="rCode">INS</option>
+                    <option value="LAK" name="rCode">LAK</option>
+                    <option value="MCA" name="rCode">MCA</option>
+                    <option value="MUN" name="rCode">MUN</option>
+                    <option value="ORC" name="rCode">ORC</option>
+                    <option value="POM" name="rCode">POM</option>
+                    <option value="SEV" name="rCode">SEV</option> 
+                    <option value="SHA" name="rCode">SHA</option>
+                    <option value="STO" name="rCode">STO</option>
+                    <option value="TCE" name="rCode">TCE</option>
+                    <option value="TCW" name="rCode">TCW</option>
+                </select>
+                </label>
+                <a style="margin-left: 10px" class= "help" href=" " title="CAS = spanish house, FRH = french house, INS = instead, HEM = hemlock apartments, ORC = orchid apartments, LAK = Lake House, CAS = Casa Cervantes" style="background-color:#FFFFFF;color: blue;text-decoration:none">?</a>
+                
+              </div>
+              <div class="form-group form-inline"> 
+                <label class="form-options">Room Number 
+                <input style="margin-left: 10px;" type="text" id = "edit-rn" class="form-control" name="rNum" 
+                      value="" maxlength="30" required /> 
+                    </label>
+              </div>   
+
+              <div class="form-group form-inline">
+                  <label class="form-options"> Picture or Video
+                   <input style="margin-left: 10px;" type="file" id="upload-pic" name="upload">
+                  </label>
+            </div> 
+              <!-- rating -->
+              <div class="form-group form-inline">
+                  <label class="form-options">Dormir Rating </label>
+                      <label style="margin-left: 10px;" class="radio-inline"><input type="radio" value="1" name="rating">1</label>
+                      <label class="radio-inline"><input type="radio" value="2" name="rating">2</label>
+                      <label class="radio-inline"><input type="radio" value="3" name="rating">3</label>
+                      <label class="radio-inline"><input type="radio" value="4" name="rating">4</label>
+                      <label class="radio-inline"><input type="radio" value="5" name="rating">5</label>
+                 
+              </div>   
+              <!-- price 
+              <div class="form-group form-inline">
+                <label>Price</label>
+                <label class="radio-inline"><input type="radio" value="1" name="price">1</label>
+                <label class="radio-inline"><input type="radio" value="2" name="price">2</label>
+                <label class="radio-inline"><input type="radio" value="3" name="price">3</label>
+                <label class="radio-inline"><input type="radio" value="4" name="price">4</label>
+              </div> -->
+              <div class="form-group form-inline">
+                <label>Review <br>
+                <!-- make rows and cols dynamic later -->
+                <textarea style="margin-left: 10px;" class="radio-inline" placeholder="Talk about the state of the room, what flooring does it have; noise level, how spacious the closet is, room layou, views outside, how many windows... "class="form-control" rows="5" cols="45" name="review" maxlength="500"></textarea>
+              </label>
+              </div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+              <button type="button submit" class="btn btn-primary" form="upload-post-form">Upload</button>
+            </form>
+            
+            </div>
+          </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    {% block options %}
+
+    {% endblock %}
+
+
+    <!-- {% block flash %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="flash">
+            {% for msg in messages %}
+                <p class="message">{{msg}}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+    {% endblock %} -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> -->
+ 
+    {% block scripts %}
+
+    <script src="{{url_for('static',filename='home.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+{% endblock %}
+
+</body>
+</html>

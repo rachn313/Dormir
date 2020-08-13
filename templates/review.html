@@ -1,0 +1,132 @@
+{% extends "nav.html" %}
+<head>
+    <!-- other head stuff... -->
+
+    {% block nav %} 
+    {{super()}}
+    {% endblock %}
+  </head>
+  <br>
+  <br>
+
+  {% block content %}
+  <body>
+    <!-- all your great html... -->
+    <link rel="stylesheet" type="text/css"
+              href="{{url_for('static', filename='flickity.css')}}" media="screen">
+    <link rel="stylesheet" type="text/css"
+              href="{{url_for('static', filename='home.css')}}">
+              <link rel="stylesheet" type="text/css"
+              href="{{url_for('static', filename='review.css')}}">
+    
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="{{url_for('static', filename='flickity.pkgd.min.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+   
+  <div class="main-carousel" data-flickity='{ "cellAlign": "left", "contain": true }'></div>
+
+
+ <!-- Flickity HTML init -->
+ <div class="gallery js-flickity" style="margin-top: 120px; height: 400px;" data-flickity-options='{ "freeScroll": true, "wrapAround": true }'>
+    <div class="gallery-cell" style="height: 400px;"></div>
+    <div class="gallery-cell" style="height: 400px;"></div>
+    <div class="gallery-cell" style="height: 400px;"></div>
+    <div class="gallery-cell" style="height: 400px;"></div>
+    <div class="gallery-cell" style="height: 400px;"></div>
+    <div class="gallery-cell" style="height: 400px;"></div>
+    <div class="gallery-cell" style="height: 400px;"></div>
+    <div class="gallery-cell" style="height: 400px;"></div>
+  </div>
+
+  <br>
+  <br>
+
+  <div>
+      <h1 style="margin-left: 50px; font-family: spaceBold"> {{roomID}} </h1>
+      <h4 style="margin-left: 50px; font-family: spaceSemiBold"> {{building}} </h1>
+    
+        <style>
+            .checked {
+              color: gold;
+            }
+            </style>
+     <div style="font-family: spaceSemiBold; margin-left: 50px; font-size: 18px;">  Average Dormir Rating   
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>  </div>      
+  </div>
+
+  <style>
+      .reviews {
+    border-radius: 25px;
+  background:#f7f7f5;
+  padding: 20px; 
+  width: 93%;
+  height: 400px;  
+  margin-left: 50px;
+      }
+      .profile-image {
+    float: left;
+    width: calc(33.333% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+.profile-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 20px;
+  
+    object-fit: cover;
+    object-position: center;
+}
+
+.profile-user-name {
+    display: inline-block;
+    font-size: 36px;
+    font-weight: 300;
+    text-align: left;
+    margin: 20px;
+    object-fit: cover;
+    object-position: center;
+    padding-top: 25px;
+    margin-left: -320px;
+}
+
+  </style>
+  <div class="reviews" style="margin-top: 50px;">
+    <div class="profile-image">
+
+        <img style="margin-right: 310px;" src="static/img/SnapchatFace.jpg" alt="profile_pic">
+    </div>
+    <p style="font-family: spaceBold" class="profile-user-name" value="{{username}}">{{username}}</p> 
+    <br>
+    <br>
+    <div style="font-family: spaceSemiBold; font-size: 18px; margin-right: 1000px;"> Dormir Rating   
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>  </div> 
+
+    <div style="font-family: spaceGrotesk; text-align: left; margin-right: 1000px;">
+    <br>
+        <p> {{review}} </p>     
+    </div>
+        
+    
+  </div>
+</div>
+  </body>
+  {% endblock %}
+  {% block scripts %}
+  {{super()}}
+  {% endblock %}
