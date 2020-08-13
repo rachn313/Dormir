@@ -68,13 +68,6 @@
      <button type="button submit" class="btn btn-primary">Search</button>
     </form> 
     </div> <!-- end searchform -->
-    {% if username %}
-   <form method="GET" action="{{url_for('cas.logout')}}"><button>logout {{username}}</button></form>
-   <p>CAS username: {{username}}</p>
-
-    {% else %}
-        <form method="GET" action="{{url_for('cas.login')}}"><button id="loginbutton">login</button></form>
-    {% endif %}  
         </div>
                    
             </div>
@@ -109,15 +102,7 @@
 .homepage-hero{
     opacity:80%;
 }
-#loginbutton{
-    z-index:100000;
-    align-content:center;
-    position:relative;
-    padding-left: 30%;
-    padding-right:30%;
-    margin-top:30%
 
-}
 
 
 
