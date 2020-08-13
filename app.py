@@ -124,13 +124,12 @@ def roomReview(rmID):
 
 
 if __name__ == '__main__':
-    # import sys,os
-    # if len(sys.argv) > 1:
-    #     # arg, if any, is the desired port number
-    #     port = int(sys.argv[1])
-    #     assert(port>1024)
-    # else:
-    #     port = os.getuid()
-    # app.debug = True
-    #app.run('0.0.0.0',port)
-    app.run()
+    import sys,os
+    if len(sys.argv) > 1:
+        # arg, if any, is the desired port number
+        port = int(sys.argv[1])
+        assert(port>1024)
+    else:
+        port = os.getuid()
+    app.debug = True
+    app.run('0.0.0.0',port)
