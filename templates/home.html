@@ -8,6 +8,22 @@
 {% endblock %}
 
 {% block content %}
+
+{% if username %}
+   <form method="GET" action="{{url_for('cas.logout')}}"><button>logout {{username}}</button></form>
+   <p>CAS username: {{username}}</p>
+   <p>CAS attributes:</p>
+   <ul>
+       {% for key,val in cas_attributes.items() %}
+       <li>{{key}} &rArr; {{val}}</li>
+       {% endfor %}
+   </ul>
+
+{% else %}
+   <form method="GET" action="{{url_for('cas.login')}}"><button>login</button></form>
+{% endif %}   
+
+
 <div class="y-container homepage-hero" style="background-image: url(static/img/cooldesk.jpg);">
     <div class="y-container_content">
 
@@ -77,7 +93,6 @@
     </div>
     </div>
 </div>
-
 <!-- bootstrap stuff -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
