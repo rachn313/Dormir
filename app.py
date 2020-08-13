@@ -120,6 +120,48 @@ def upload():
     #    return redirect(url_for("profile"))
  #   return render_template('profile.html', page_title='Profile')   
 
+@app.route('/search/')
+def searchHome():
+    return render_template("search.html")
+
+
+#handler for searching
+@app.route('/roomsearch/', methods=["POST"])
+def search():
+    roomCode = request.form.get("rCode")
+    print(roomCode)
+    roomNum = request.form.get("rNum")
+    print(roomNum)
+    query = roomCode + roomNum
+    #print("query: " + query)
+    #print("query length: " + str(len(query)))
+    return redirect(url_for('roomResults', searched = query))
+
+#results page for rooms search (placeholder. Once individual room pages are set up, 
+#we can just direct to eh actual room page, unles someone searched by hall. )
+@app.route('/roomResults/<searched>')
+def roomResults(searched):
+    ''' returns a list of shops that serve the searched drink.
+    shows address after shop name to avoid confusion with 
+    chains of the same name'''
+    conn = db.getConn(DB)
+    result = db.getSearchedRooms(conn, searched)
+    if (len(searched) <= 4) or (not result): #return list of rooms in that hall or no results.  
+        return render_template('searchResults.html',
+                            rooms = result, searched = searched)
+    else:
+        return redirect(url_for('roomReview', rmID = searched))
+
+@app.route('/reviews/<rmID>')
+def roomReview(rmID):
+    conn = db.getConn(DB)
+    result = db.getRoomInfo(conn, rmID)
+    r = db.getAverageRating(conn, rmID)
+    username = session['CAS_USERNAME']
+    return render_template('review.html', rmID = rmID, reviews = result, 
+        avg = r, username = username)    
+
+
 if __name__ == '__main__':
     import sys, os
 

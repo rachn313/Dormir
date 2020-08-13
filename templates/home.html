@@ -8,8 +8,17 @@
 {% endblock %}
 
 {% block content %}
-<div class="y-container homepage-hero" style="background-image: url(static/img/hero.png);">
+<div class="y-container homepage-hero" style="background-image: url(static/img/cooldesk.jpg);">
     <div class="y-container_content">
+
+   <!-- <div class="hero-header js-main-header">
+        <div class="arrange arrange--18">
+            <div class="arrange_unit arrange_unit--fill">
+                    <div class="hero-header_nav hero-header_nav--main nowrap">
+                    </div>
+            </div>
+        </div>
+    </div> -->
 
 
     <div class="homepage-hero_inner">
@@ -20,11 +29,46 @@
         </div>
         <div>
            <!-- input search bar -->
+
+        <div class="home-search">
+            <div class="title">
+            <img src="https://img.icons8.com/ios/50/000000/search--v1.png" style="width: 30px; position:relative;"/>  Search for a Room or Hall </div> 
+    <form id="search-form" method=POST action="{{url_for('search')}}">
+        <label for="Hall"> Residence Hall: 
+            <select class="required" name="rCode" style="margin-left: 10px;">
+                <option value="BAT" name="rCode">BAT</option>
+                <option value="BEB" name="rCode">BEB</option>
+                <option value="CAS" name="rCode">CAS</option>
+                <option value="CAS" name="rCode">CAZ</option>
+                <option value="CLA" name="rCode">CLA</option>
+                <option value="DAV" name="rCode">DAV</option>
+                <option value="DOW" name="rCode">DOW</option>
+                <option value="FRE" name="rCode">FRE</option>
+                <option value="FRH" name="rCode">FRH</option>
+                <option value="HEM" name="rCode">HEM</option>
+                <option value="INS" name="rCode">INS</option>
+                <option value="LAK" name="rCode">LAK</option>
+                <option value="MCA" name="rCode">MCA</option>
+                <option value="MUN" name="rCode">MUN</option>
+                <option value="ORC" name="rCode">ORC</option>
+                <option value="POM" name="rCode">POM</option>
+                <option value="SEV" name="rCode">SEV</option> 
+                <option value="SHA" name="rCode">SHA</option>
+                <option value="STO" name="rCode">STO</option>
+                <option value="TCE" name="rCode">TCE</option>
+                <option value="TCW" name="rCode">TCW</option>
+            </select>
+        </label>
+
+        <a style="margin-left: 10px" class= "help" href=" " title="CAS = spanish house, FRH = french house, INS = instead, HEM = hemlock apartments, ORC = orchid apartments, LAK = Lake House, CAS = Casa Cervantes" style="background-color:#FFFFFF;color: blue;text-decoration:none">?</a>
+
+         Room number (optional) <input id="roomnumber" placeholder="318" name="rNum">
+    <!--     <button id="searchbutton" type="submit" name="submit" value="Search">Search</button>
+     -->
+     <button type="button submit" class="btn btn-primary">Search</button>
+    </form> 
+    </div> <!-- end searchform -->
         </div>
-       
-        
-        
-        
                    
             </div>
                     
@@ -32,11 +76,40 @@
     </div>
     </div>
 </div>
-
 <!-- bootstrap stuff -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<footer>
+  <a href="https://icons8.com/icon/132/search">Search, </a> 
+  <a href="https://icons8.com/icon/1090/enter"> Login </a> and 
+  <a hred="https://img.icons8.com/ios/50/000000/exit.png"> Logout </a> icons by Icons8
+  <span>Photo by <a href="https://unsplash.com/@hutomoabrianto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hutomo Abrianto</a> on <a href="https://unsplash.com/s/photos/bedroom?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+</footer>
+
+<style>
+    .home-search{
+        margin-top:15%;
+        margin-right:20%;
+        margin-left:20%;
+        margin-bottom:20%;
+        text-align:center;
+        color:white;
+        font-weight:120;
+        background-color:#adafb3;
+        opacity:90%;
+        border-radius: 20px;
+    }
+.homepage-hero{
+    opacity:80%;
+}
+
+
+
+
+
+</style>
 
 
 {% endblock %}

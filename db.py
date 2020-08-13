@@ -110,3 +110,22 @@ def insertReview(conn, uid, rmID, rating, review, imgPath):
 def insertFilepath(conn, path, pid):
     curs = dbi.dictCursor(conn)
     curs.execute('''update Posts set imgPath = %s where pid = %s''',[path, pid])
+
+def getSearchedRooms(conn, rmID):
+    curs = dbi.dictCursor(conn)
+    query = rmID
+    if len(rmID) <= 3:
+        query += "%"
+
+    curs.execute('''select distinct rmID from Reviews where rmID like %s ''', [query])
+    return curs.fetchall() 
+
+def getRoomInfo(conn, rmID):
+  curs = dbi.dictCursor(conn)
+  curs.execute(''' select * from Reviews where rmID = %s''', [rmID])
+  return curs.fetchall()
+
+def getAverageRating(conn, rmID):
+  curs = dbi.dictCursor(conn)
+  curs.execute(''' select avg(rating) as rate from Reviews where rmID = %s group by rmID''', [rmID])
+  return curs.fetchone()

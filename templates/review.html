@@ -45,20 +45,16 @@
   <br>
 
   <div>
-      <h1 style="margin-left: 50px; font-family: spaceBold"> {{roomID}} </h1>
-      <h4 style="margin-left: 50px; font-family: spaceSemiBold"> {{building}} </h1>
+      <h1 style="margin-left: 50px; font-family: spaceBold"> {{rmID}} </h1>
+      <h4 style="margin-left: 50px; font-family: spaceSemiBold"> placeholder: mcafee </h1>
     
         <style>
             .checked {
               color: gold;
             }
             </style>
-     <div style="font-family: spaceSemiBold; margin-left: 50px; font-size: 18px;">  Average Dormir Rating   
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>  </div>      
+     <div style="font-family: spaceSemiBold; margin-left: 50px; font-size: 18px;">  Average Dormir Rating: {{avg}}/5
+      </div>      
   </div>
 
   <style>
@@ -102,6 +98,7 @@
 }
 
   </style>
+  <!-- will loop through reviews here.  -->
   <div class="reviews" style="margin-top: 50px;">
     <div class="profile-image">
 
