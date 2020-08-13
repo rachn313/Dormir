@@ -1,9 +1,11 @@
 from flask import (Flask, render_template, make_response, url_for, request,
                    redirect, flash, session, send_from_directory, Response, jsonify)
+from flask_cas import CAS
 
 
 
 app = Flask(__name__)
+app.secret_key = 'rosebud'  # so we can have sessions, which are necessary
 
 import os
 import dbi
@@ -25,46 +27,34 @@ def index():
 def upload(): 
     '''adds a post's information into the database'''
     roomCode = request.form.get("rCode")
-    print(roomCode)
     roomNum = request.form.get("rNum")
-    print(roomNum)
     rating = request.form.get("rating")
-    print(rating)
     review = request.form.get("review")
-    print(review)
 
     uid = 10
     rmID = roomCode + roomNum
-    filepath = "/lsfnl/alskdd"
-    
-    
+    username = session['CAS_USERNAME']
     #uid = session['uid'] FIGURE OUT WHAT THIS WILL BE 
     postconn = db.getConn(DB)
-    pid = db.insertReview(postconn, rmID, rating, review, filepath)
-    
-    # try:
-    #     #add everything but the imgpath to the Post table
-    
-    #     f = request.files["upload"]
 
-    #     ext = f.filename.split('.')[-1]
-    #     filename = secure_filename('{}.{}'.format(pid,ext))
-    #     user_folder = os.path.join(app.config['UPLOADS'],str(uid))
+    #upload folder path, and allowed extension of file images
+    UPLOAD_FOLDER = 'static/img/{}/'.format(uid)
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
-    
-    #     #if user folder doesn't exist, create it. Otherwise, upload it
-    #     if not(os.path.isdir(user_folder)):
-    #         os.mkdir(user_folder)
-    #     pathname = os.path.join(user_folder,filename)
-    #     f.save(pathname)
-        
-    #     #add the renamed imgpath into the Post table
-    #     filePath = os.path.join('images/{}/'.format(uid), filename)
+    #check allowed files 
+    def allowed_file(filename):
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-       
-    #    # db.insertFilepath(postconn, filePath, pid)
-
-   # flash('Upload successful')
+    file = request.files['profpic']
+    filePath = None
+    if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename) #get the filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
+            filePath = os.path.join('img/{}/'.format(uid), filename) #make a modified path so the profile.html can read it
+            pid = db.insertReview(postconn, rmID, rating, review, filepath)
+            return redirect(url_for('review', username = username, review = review, filepath = filepath, rmID))
     return redirect(url_for('index'))
 
     #except Exception as err:

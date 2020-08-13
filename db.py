@@ -13,6 +13,13 @@ def getConn(DB):
     return conn
 
 
+# get uid of a user by username
+def getUid(conn, username):
+    '''get uid given a username '''
+    curs = dbi.dictCursor(conn)
+    curs.execute('''select uid from Users where username = %s''', [username])
+    result = curs.fetchone()
+    return result['uid']
 
 # gets all reviews
 def getAllReviews(conn):
@@ -89,13 +96,13 @@ def editReview(conn, pid, pname, restaurant, location, rating, price, review):
 
 #insert everything but filename and return the pid of the inserted image
 #FIX
-def insertReview(conn, rmID, rating, review, imgPath):
+def insertReview(conn, uid, rmID, rating, review, imgPath):
     #add to post table
     curs = dbi.dictCursor(conn)
     curs.execute(
-        '''insert into Reviews(rmID, rating, review, imgPath, time) 
-        values (%s,%s,%s,%s, now())''',
-        [rmID, rating, review, imgPath])
+        '''insert into Reviews(uid, rmID, rating, review, imgPath, time) 
+        values (%s,%s,%s,%s,%s, now())''',
+        [uid, rmID, rating, review, imgPath])
    
 
 #inserts the image path named with the pid
