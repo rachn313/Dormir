@@ -8,22 +8,6 @@
 {% endblock %}
 
 {% block content %}
-
-{% if username %}
-   <form method="GET" action="{{url_for('cas.logout')}}"><button>logout {{username}}</button></form>
-   <p>CAS username: {{username}}</p>
-   <p>CAS attributes:</p>
-   <ul>
-       {% for key,val in cas_attributes.items() %}
-       <li>{{key}} &rArr; {{val}}</li>
-       {% endfor %}
-   </ul>
-
-{% else %}
-   <form method="GET" action="{{url_for('cas.login')}}"><button>login</button></form>
-{% endif %}   
-
-
 <div class="y-container homepage-hero" style="background-image: url(static/img/cooldesk.jpg);">
     <div class="y-container_content">
 
@@ -82,9 +66,15 @@
     <!--     <button id="searchbutton" type="submit" name="submit" value="Search">Search</button>
      -->
      <button type="button submit" class="btn btn-primary">Search</button>
-    </form>
+    </form> 
     </div> <!-- end searchform -->
+    {% if username %}
+   <form method="GET" action="{{url_for('cas.logout')}}"><button>logout {{username}}</button></form>
+   <p>CAS username: {{username}}</p>
 
+    {% else %}
+        <form method="GET" action="{{url_for('cas.login')}}"><button id="loginbutton">login</button></form>
+    {% endif %}  
         </div>
                    
             </div>
@@ -118,6 +108,15 @@
     }
 .homepage-hero{
     opacity:80%;
+}
+#loginbutton{
+    z-index:100000;
+    align-content:center;
+    position:relative;
+    padding-left: 30%;
+    padding-right:30%;
+    margin-top:30%
+
 }
 
 
