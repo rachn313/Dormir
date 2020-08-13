@@ -23,8 +23,7 @@ create table Reviews(
     imgPath varchar(50), 
     time timestamp
     foreign key (uid) references Users(uid)
-        on delete cascade
-   
+           on delete cascade   
 );
 
 -- enter data
