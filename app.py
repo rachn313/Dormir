@@ -114,11 +114,17 @@ def upload():
     #     return redirect( url_for('index') )
 
 
-#@app.route('/profile/')
-#def profile():
-    # if "username" in session:
+@app.route('/profile/')
+def profile():
+    if session["username"] and session["uid"]:
     #    return redirect(url_for("profile"))
- #   return render_template('profile.html', page_title='Profile')   
+        conn = db.getConn(DB)
+        uid = session['uid'] 
+        user = session["username"]
+        rooms = db.getMyRooms(conn, uid)
+        return render_template('profile.html', page_title='Dormir', my_rooms = rooms, username = user)   
+    else:
+        return render_template('login.html')
 
 @app.route('/search/')
 def searchHome():

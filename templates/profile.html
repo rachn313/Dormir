@@ -1,0 +1,215 @@
+{% extends "nav.html" %}
+
+{% block head %}
+<head>
+	<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat">
+     <link rel="icon" type="image/png" href="../static/img/LogoIcon.png"/>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+{% endblock %}
+
+{% block nav %} 
+{{super()}}
+{% endblock %}
+
+{% block content %}
+<!-- source: https://codepen.io/Joshuasm32/pen/ILJHp -->
+<div class="cover">
+  <div class="profile">
+    <img class="avatar" src="static/img/default_profilepic.jpg" alt="profile face" />
+  </div>
+  <div class="username"> {{username}} <br>
+  </div>
+
+  
+
+  <div class="myRoom">
+  	<div class="title"> My Rooms </div>
+  	<div class= "clearFloat" >
+		<div class= "content" id="my-rooms">
+			<div class="row">
+				{% for room in my_rooms %}
+					<div class="column">
+  				 		{{ room.rmID }} 
+  				 	</div>
+  				{% endfor %}
+				
+
+			</div> <!-- end row -->
+		</div> <!-- end content -->
+		</div><!-- end clearFloat -->
+  	</div> 
+
+  <div class="starredRoom">
+  	<div class="title"> Starred Rooms</div>
+  	<div class= "clearFloat" >
+		<div class= "content" id="starred-rooms">
+			<div class="row">
+				<div class="column">
+					Room 1
+				</div>
+
+				<div class="column">
+					Room 2
+				</div>
+
+				<div class="column">
+					Room 3
+				</div>
+
+				<div class="column">
+					Room 4
+				</div>
+			</div>
+		</div> <!-- end content -->
+  	</div> <!-- end clearFloat -->
+  </div>
+
+  <div class="description" style="display:none;">
+   Welcome to my profile. I want to find a nice dorm room. <br>
+   I sleep 24/7 so I need a very comfortable room. 
+  </div>
+  <div id="home"> <a href={{url_for("index")}}> Home </a></div>
+  <div class="iconCredits">
+  Icons made by <a href="https://icon54.com/" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> <br>
+  <a href="https://icons8.com/icon/132/search">Search and Logout icon by Icons8</a>
+ </div>
+
+
+
+
+  
+
+</div>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 100;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  font-size: 40;
+  color: black;
+  overflow:scroll;
+  padding-top: 8%
+}
+.avatar {
+  width: 120px;
+  height: 120px;
+  left:50px;
+  right:50px;
+  margin-top: 50px;
+  cursor: pointer;
+  position:absolute;
+}
+.username{
+	left:200px;
+	position:absolute;
+	margin-top:75px;
+	font-size:30px;
+}
+.iconCredits{
+	text-align:center;
+	bottom:0%;
+	position:fixed;
+	font-size:18;
+	left:30%;
+}
+#home{
+	text-align:left;
+	position:absolute;
+	font-size:20;
+	padding-left:10px;
+	top:10px;
+}
+
+.myRoom{
+	position:relative;
+	top:30%;
+	color:black;
+}
+
+.title{
+	font-size:30px;
+}
+
+.starredRoom{
+	position:relative;
+	top:10%;
+	color:black;
+	padding-top:10%;
+}
+
+.clearFloat{
+  width: 100%; 
+  clear:both;
+  padding-left: 10%;
+}
+
+.row{
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.column{
+  background-color: #FFF4CF;
+  float: left;
+  width: 12%;
+  height: 150px;
+  padding:5px;
+  margin:5% 5% 5%;
+  font-size: 16;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6);
+    opacity: 1;
+  }
+  25% {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.6);
+    opacity: 1;
+    transform: translateY(-15px);
+  }
+  75% {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.6);
+    opacity: 1;
+    transform: none;
+  }
+}
+
+}
+</style>
+
+<!-- bootstrap stuff -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+{% endblock %}  
