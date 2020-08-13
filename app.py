@@ -44,47 +44,30 @@ application = app
 
 @app.route('/')
 def index():
-    # if "username" in session:
-    #    return redirect(url_for("home"))
-    # return render_template('home.html', page_title='Dormir')
+    if 'CAS_USERNAME' in session:
+        username = session['CAS_USERNAME']
+        profpicPath = 'img/default_profilepic.jpg'
+        username = session['CAS_USERNAME']
+        firstName = attribs['cas:givenName']
+        lastName = attribs['cas:sn']
+        fullname = firstName + ' ' + lastName
+        conn = db.getConn(DB)
+        curs = dbi.cursor(conn)
+        curs.execute('''SELECT * FROM Users WHERE username = %s''', [username])
+        row = curs.fetchone()
+        if row is None:
+            curs.execute('''INSERT INTO Users(fullname, username, profpicPath) VALUES(%s,%s,%s)''', [fullname, username, profpicPath])
+        curs.execute('select last_insert_id()')
+        row = curs.fetchone()
+        uid = row[0]
+        session['username'] = username
+        session['uid'] = uid
+        return render_template('home.html', page_title='Dormir')
     #print('Session keys: ',list(session.keys()))
     #for k in list(session.keys()):
      #   print(k,' => ',session[k])
-    profpicPath = 'img/default_profilepic.jpg'
-    if '_CAS_TOKEN' in session:
-        token = session['_CAS_TOKEN']
-    if 'CAS_ATTRIBUTES' in session:
-        attribs = session['CAS_ATTRIBUTES']
-        print(attribs['cas:id'])
-        print('CAS_attributes: ')
-        for k in attribs:
-            print('\t',k,' => ',attribs[k])
-    if 'CAS_USERNAME' in session:
-        is_logged_in = True
-        username = session['CAS_USERNAME']
-        print(('CAS_USERNAME is: ',username))
     else:
-        is_logged_in = False
-        username = None
-        print('CAS_USERNAME is not in the session')
-    username = session['CAS_USERNAME']
-    firstName = attribs['cas:givenName']
-    lastName = attribs['cas:sn']
-    fullname = firstName + ' ' + lastName
-    conn = db.getConn(DB)
-    curs = dbi.cursor(conn)
-    curs.execute('''SELECT * FROM Users WHERE username = %s''', [username])
-    row = curs.fetchone()
-    if row is None:
-        curs.execute('''INSERT INTO Users(fullname, username, profpicPath) VALUES(%s,%s,%s)''', [fullname, username, profpicPath])
-    curs.execute('select last_insert_id()')
-    row = curs.fetchone()
-    uid = row[0]
-    session['username'] = username
-    session['uid'] = uid
-    #os.mkdir('static/img/{}'.format(username)) 
-    return render_template('home.html',
-                           username=username)
+        return render_template('base.html')
 
 @app.route('/upload/', methods=["POST"])
 def upload(): 
