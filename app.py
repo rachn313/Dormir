@@ -37,7 +37,7 @@ def logged_in():
 @app.route('/after_logout/')
 def after_logout():
     flash('successfully logged out!')
-    return redirect( url_for('index') )
+    return render_template('base.html') 
 
 application = app
 
@@ -48,6 +48,7 @@ def index():
         username = session['CAS_USERNAME']
         profpicPath = 'img/default_profilepic.jpg'
         username = session['CAS_USERNAME']
+        attribs = session['CAS_ATTRIBUTES']
         firstName = attribs['cas:givenName']
         lastName = attribs['cas:sn']
         fullname = firstName + ' ' + lastName
@@ -62,7 +63,7 @@ def index():
         uid = row[0]
         session['username'] = username
         session['uid'] = uid
-        return render_template('home.html', page_title='Dormir')
+        return render_template('home.html')
     #print('Session keys: ',list(session.keys()))
     #for k in list(session.keys()):
      #   print(k,' => ',session[k])
