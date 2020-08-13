@@ -124,7 +124,7 @@ def profile():
         rooms = db.getMyRooms(conn, uid)
         return render_template('profile.html', page_title='Dormir', my_rooms = rooms, username = user)   
     else:
-        return render_template('login.html')
+        return render_template('base.html')
 
 @app.route('/search/')
 def searchHome():
