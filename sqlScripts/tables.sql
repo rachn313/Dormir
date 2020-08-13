@@ -1,13 +1,12 @@
+drop table if exists Starred;
 drop table if exists Reviews;
 drop table if exists Users;
 
 create table Users(
        uid int auto_increment,
        fullname varchar(50) not null,
-       email varchar(50) not null,
        username varchar(20) not null,
        profpicPath varchar(50),
-       unique(email),
        unique(username),
        index(username),
        primary key (uid)
@@ -21,9 +20,17 @@ create table Reviews(
     rating enum("1", "2", "3", "4", "5"),
     review varchar(500),
     imgPath varchar(50), 
-    time timestamp
+    time timestamp,
     foreign key (uid) references Users(uid)
            on delete cascade   
+);
+
+create table Starred(
+  uid int not null primary key,
+  rmID varchar(10),
+  foreign key (uid) references Users(uid)
+   on delete cascade
+
 );
 
 -- enter data

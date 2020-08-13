@@ -68,18 +68,21 @@ def index():
         username = None
         print('CAS_USERNAME is not in the session')
     username = session['CAS_USERNAME']
+    firstName = attribs['cas:givenName']
+    lastName = attribs['cas:sn']
+    fullname = firstName + ' ' + lastName
     conn = db.getConn(DB)
     curs = dbi.cursor(conn)
     curs.execute('''SELECT * FROM Users WHERE username = %s''', [username])
     row = curs.fetchone()
     if row is None:
-        curs.execute('''INSERT INTO Users(uid,fullname,email,username, profpicPath) VALUES(null,%s,%s,%s,%s)''', [fullname, email, username, profpicPath])
+        curs.execute('''INSERT INTO Users(fullname, username, profpicPath) VALUES(%s,%s,%s)''', [fullname, username, profpicPath])
     curs.execute('select last_insert_id()')
     row = curs.fetchone()
     uid = row[0]
     session['username'] = username
     session['uid'] = uid
-    os.mkdir('static/img/{}'.format(username)) 
+    #os.mkdir('static/img/{}'.format(username)) 
     return render_template('home.html',
                            username=username)
 
