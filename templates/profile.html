@@ -29,13 +29,14 @@
   
 
   <div class="myRoom">
-  	<div class="title"> My Rooms </div>
+  	<div class="title" style="padding-right: 37%;"> My Rooms </div>
   	<div class= "clearFloat" >
 		<div class= "content" id="my-rooms">
+      
 			<div class="row">
-				{% for room in my_rooms %}
+        {% for room in my_rooms %}
 					<div class="column">
-  				 		{{ room.rmID }} 
+               <a href="{{url_for('roomReview', rmID = room.rmID)}}">{{ room.rmID }}  </a>
   				 	</div>
   				{% endfor %}
 				
@@ -146,11 +147,13 @@ body {
 .myRoom{
 	position:relative;
 	top:30%;
-	color:black;
+  color:black;
+  text-align: center;
 }
 
 .title{
-	font-size:30px;
+  font-size:30px;
+  text-align: center;
 }
 
 .starredRoom{

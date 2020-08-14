@@ -88,6 +88,7 @@ def upload():
         building = 'McAfee'
   
     #upload folder path, and allowed extension of file images
+    os.mkdir('static/img/{}'.format(username))
     UPLOAD_FOLDER = 'static/img/{}/'.format(username)
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
@@ -102,9 +103,9 @@ def upload():
     if file and allowed_file(file.filename):
             filename = secure_filename(file.filename) #get the filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
-            #filePath = os.path.join('img/{}/'.format(uid), filename) #make a modified path so the profile.html can read it
-            db.insertReview(postconn, uid, rmID, rating, review, filepath)
-            return redirect(url_for('review', username = username, rating = rating, review = review, filepath = filepath, roomID = roomID))
+            filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
+            db.insertReview(postconn, 1, rmID, rating, review, filePath)
+            return redirect(url_for('roomReview', rmID = rmID))
     
     return redirect(url_for('index'))
 
@@ -119,13 +120,13 @@ def profile():
     conn = db.getConn(DB)
     if session['CAS_USERNAME']:
     #    return redirect(url_for("profile"))
-        uid = session['uid'] 
+        uid = 1 #replace with getting it from the table
         user = session['CAS_USERNAME']
         rooms = db.getMyRooms(conn, uid)
         return render_template('profile.html', page_title='Dormir', my_rooms = rooms, username = user)   
     else:
         return render_template('profile.html', my_rooms = {}, username = "Not logged in!")
-        
+
 @app.route('/search/')
 def searchHome():
     return render_template("search.html")

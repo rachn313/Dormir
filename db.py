@@ -132,5 +132,5 @@ def getAverageRating(conn, rmID):
 
 def getMyRooms(conn, uid):
 	curs = dbi.dictCursor(conn)
-	curs.execute('''select rmID from Reviews where uid=%s''', [uid]) 
+	curs.execute('''select * from Reviews where uid=%s''', [uid]) 
 	return curs.fetchall()
