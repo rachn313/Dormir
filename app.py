@@ -89,7 +89,10 @@ def upload():
   
     #upload folder path, and allowed extension of file images
     #check if this exists
-    os.mkdir('static/img/{}'.format(username))
+    path = 'static/img/{}'.format(username)
+    print(os.path.isfile(path))
+    if not os.path.exists(path):
+        os.mkdir('static/img/{}'.format(username))
     UPLOAD_FOLDER = 'static/img/{}/'.format(username)
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
