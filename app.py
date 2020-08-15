@@ -131,11 +131,6 @@ def profile():
     else:
         return render_template('profile.html', my_rooms = {}, username = "Not logged in!")
 
-@app.route('/search/')
-def searchHome():
-    return render_template("search.html")
-
-
 #handler for searching
 @app.route('/roomsearch/', methods=["POST"])
 def search():
@@ -155,13 +150,16 @@ def roomResults(searched):
     ''' returns a list of shops that serve the searched drink.
     shows address after shop name to avoid confusion with 
     chains of the same name'''
-    conn = db.getConn(DB)
-    result = db.getSearchedRooms(conn, searched)
-    if (len(searched) <= 4) or (not result): #return list of rooms in that hall or no results.  
-        return render_template('searchResults.html',
-                            rooms = result, searched = searched)
-    else:
-        return redirect(url_for('roomReview', rmID = searched))
+    if 'CAS_USERNAME' in session:
+        conn = db.getConn(DB)
+        result = db.getSearchedRooms(conn, searched)
+        if (len(searched) <= 4) or (not result): #return list of rooms in that hall or no results.  
+            return render_template('searchResults.html',
+                                rooms = result, searched = searched)
+        else:
+            return redirect(url_for('roomReview', rmID = searched))
+    else: #not logged in:
+        return render_template('base.html')
 
 @app.route('/reviews/<rmID>')
 def roomReview(rmID):
