@@ -120,7 +120,7 @@ def roomReview(rmID):
         avg = r)        
 
 #ajax handler for bookmarking/starring a room. 
-@app.route('/star')
+@app.route('/star/', methods=["POST"])
 def star():
     conn = db.getConn(DB)
     rmID = request.form.get('rmID')
