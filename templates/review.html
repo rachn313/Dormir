@@ -31,15 +31,12 @@
 
  <!-- Flickity HTML init -->
  <!-- loop through the damn imgs-->
+
  <div class="gallery js-flickity" style="margin-top: 120px; height: 400px;" data-flickity-options='{ "freeScroll": true, "wrapAround": true }'>
-    <div class="gallery-cell" style="height: 400px;"></div>
-    <div class="gallery-cell" style="height: 400px;"></div>
-    <div class="gallery-cell" style="height: 400px;"></div>
-    <div class="gallery-cell" style="height: 400px;"></div>
-    <div class="gallery-cell" style="height: 400px;"></div>
-    <div class="gallery-cell" style="height: 400px;"></div>
-    <div class="gallery-cell" style="height: 400px;"></div>
-    <div class="gallery-cell" style="height: 400px;"></div>
+  {% for room in reviews %}
+  <div><img class="gallery-cell" style="height: 400px; width: 400px;" src="{{url_for('static', filename=room.imgPath)}}">
+  </div>
+  {% endfor %}
   </div>
 
   <br>
@@ -47,7 +44,8 @@
 
   <div>
       <h1 style="margin-left: 50px; font-family: spaceBold"> {{rmID}} </h1>
-      <h4 style="margin-left: 50px; font-family: spaceSemiBold"> placeholder: mcafee </h1>
+      <h4 style="margin-left: 50px; font-family: spaceSemiBold"> Building: {{building}} </h4>
+      <h4 style="margin-left: 50px; font-family: spaceSemiBold"> Closet Dining Hall: {{diningHall}} </h4>
     
         <style>
             .checked {
@@ -100,7 +98,7 @@
 
   </style>
   <!-- will loop through reviews here.  -->
-
+  {% for room in reviews %}
   <div class="reviews" style="margin-top: 50px;">
     <div class="profile-image">
 
@@ -110,19 +108,22 @@
     <br>
     <br>
     <div style="font-family: spaceSemiBold; font-size: 18px; margin-right: 1000px;"> Dormir Rating   
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
+      {% for num in range(room.rating | int) %} 
+      <span class="fa fa-star checked"></span>
+      {% endfor %}
+      {% for num in range(5 - (room.rating | int)) %}
         <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>  </div> 
+        {% endfor %}
+      </div> 
 
     <div style="font-family: spaceGrotesk; text-align: left; margin-right: 1000px;">
     <br>
-        <p> {{reviews.review}} </p>     
+        <p> {{room.review}} </p>     
     </div>
         
     
   </div>
+  {% endfor %}
 </div>
   </body>
   {% endblock %}

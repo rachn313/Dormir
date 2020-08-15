@@ -105,12 +105,6 @@ def insertReview(conn, uid, rmID, rating, review, imgPath):
         [uid, rmID, rating, review, imgPath])
    
 
-#inserts the image path named with the pid
-#FIX
-def insertFilepath(conn, path, pid):
-    curs = dbi.dictCursor(conn)
-    curs.execute('''update Posts set imgPath = %s where pid = %s''',[path, pid])
-
 def getSearchedRooms(conn, rmID):
     curs = dbi.dictCursor(conn)
     query = rmID
@@ -134,3 +128,7 @@ def getMyRooms(conn, uid):
 	curs = dbi.dictCursor(conn)
 	curs.execute('''select * from Reviews where uid=%s''', [uid]) 
 	return curs.fetchall()
+
+#def getImgs(conn, rmID):
+ #   curs = dbi.dictCursor(conn)
+  #  curs.execute('''select imgPath from Reviews where rmID = %s''',[rmID])

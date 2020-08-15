@@ -88,6 +88,7 @@ def upload():
         building = 'McAfee'
   
     #upload folder path, and allowed extension of file images
+    #check if this exists
     os.mkdir('static/img/{}'.format(username))
     UPLOAD_FOLDER = 'static/img/{}/'.format(username)
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -163,10 +164,64 @@ def roomResults(searched):
 def roomReview(rmID):
     conn = db.getConn(DB)
     result = db.getRoomInfo(conn, rmID)
+    building = ''
+    print("RMID first three letters")
+    print(rmID[0:3])
+    if rmID[0:3] == 'MCA':
+        building = 'McAfee'
+    elif rmID[0:3] == 'BEB':
+        building = 'Beebe'
+    elif rmID[0:3] == 'BAT':
+        building = 'Bates'
+    elif rmID[0:3] == 'CAS':
+        building = 'Casa Cervantes'
+    elif rmID[0:3] == 'CAZ':
+        building = 'Cazenove'
+    elif rmID[0:3] == 'CLA':
+        building = 'Claflin'
+    elif rmID[0:3] == 'DAV':
+        building = 'Stone-DAVIS'
+    elif rmID[0:3] == 'DOW':
+        building = 'Dower'
+    elif rmID[0:3] == 'FRE':
+        building = 'Freeman'
+    elif rmID[0:3] == 'FRH':
+        building = 'French House'
+    elif rmID[0:3] == 'HEM':
+        building = 'Hemlock Apartments'
+    elif rmID[0:3] == 'INS':
+        building = 'Instead'
+    elif rmID[0:3] == 'LAK':
+        building = 'Lakehouse'
+    elif rmID[0:3] == 'MUN':
+        building = 'Munger'
+    elif rmID[0:3] == 'ORC':
+        building = 'Orchid Apartments'
+    elif rmID[0:3] == 'POM':
+        building = 'Pomeroy'
+    elif rmID[0:3] == 'SEV':
+        building = 'Severance'
+    elif rmID[0:3] == 'SHA':
+        building = 'Shafer'
+    elif rmID[0:3] == 'STO':
+        building = 'STONE-davis'
+    elif rmID[0:3] == 'TCE':
+        building = 'Tower Court'
+    elif rmID[0:3] == 'TCW':
+        building = 'Tower Court'
+    
+    if (building == 'Tower Court' or building == 'Lakehouse' or building == 'Severance' or building == 'Claflin'):
+        diningHall = 'Lulu/Tower'
+    elif (building == 'Beebe' or building == 'Munger' or building == 'Shafer' or building == 'Pomeroy' or building == 'Cazenove'):
+        diningHall = 'Pomeroy/Lulu'
+    else:
+        diningHall = 'Bates/Stone-Davis'
+
+
     r = db.getAverageRating(conn, rmID)
     username = session['CAS_USERNAME']
     return render_template('review.html', rmID = rmID, reviews = result, 
-        avg = r, username = username)    
+        avg = r, username = username, building = building, diningHall = diningHall)    
 
 
 if __name__ == '__main__':
