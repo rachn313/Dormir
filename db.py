@@ -129,6 +129,10 @@ def getMyRooms(conn, uid):
 	curs.execute('''select * from Reviews where uid=%s''', [uid]) 
 	return curs.fetchall()
 
+#def getUsersforRoom(conn, rmID):
+   # curs = dbi.dictCursor(conn)
+	#curs.execute('''select * from Users where uid=%s''', [uid]) 
+	#return curs.fetchall()
 #def getImgs(conn, rmID):
  #   curs = dbi.dictCursor(conn)
   #  curs.execute('''select imgPath from Reviews where rmID = %s''',[rmID])

@@ -34,8 +34,8 @@
 
  <div class="gallery js-flickity" style="margin-top: 120px; height: 400px;" data-flickity-options='{ "freeScroll": true, "wrapAround": true }'>
   {% for room in reviews %}
-  <div><img class="gallery-cell" style="height: 400px; width: 400px;" src="{{url_for('static', filename=room.imgPath)}}">
-  </div>
+  <img class="gallery-cell" style="height: 600px; width: 700px;" src="{{url_for('static', filename=room.imgPath)}}">
+  
   {% endfor %}
   </div>
 
