@@ -21,7 +21,7 @@
 	Here's a list of rooms that match your query: {{searched}} 
 	<ol>  
 	    {% for room in rooms %}
-	        <li> <a href="{{url_for('roomReview', rmID = room.ID)}}"> {{room.rmID}} </a></li>
+	        <li> <a href="{{url_for('roomReview', rmID = room.rmID)}}"> {{room.rmID}} </a></li>
 	    {% endfor %}
 	</ol>
 	{% endif %}
