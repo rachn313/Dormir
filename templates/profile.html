@@ -32,7 +32,7 @@
 			<div class="row">
 				{% for room in my_rooms %}
 					<div class="column">
-  				 		{{ room.rmID }} 
+  				 		<a href="{{url_for('roomReview', rmID = room.rmID)}}"> {{ room.rmID }} </a>
   				 	</div>
   				{% endfor %}
 				

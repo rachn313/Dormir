@@ -6,6 +6,8 @@
           href="https://fonts.googleapis.com/css?family=Montserrat">
      <link rel="icon" type="image/png" href="../static/img/LogoIcon.png"/>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
 </head>
 {% endblock %}
 
@@ -14,13 +16,58 @@
 {% endblock %}
 
 {% block content %}
+<div class="errors"></div>
 <div class="content">
 This is {{rmID}}. It has an average rating of {{avg.rate}}
 
+<form action={{url_for('star')}} method="post">
+    <div data-rmID = {{rmID}} >
+    </div>
+    <label id= "star-button"> Add to Starred Rooms </label>
+                
+</form>
 
-</div>
+</div> 
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  crossorigin="anonymous"></script>
+  <script type='text/javascript'>
+/* global $ */
+var star_url = "{{url_for('star')}}"
+/* global star_url */
+
+$("#star-button").click(function(event){
+	if(event.target != this) return;
+	$(this).css("color", "yellow");
+	$(this).text("Starred");
+	var rmID = $(this).siblings("[data-rmID]").attr("data-rmID");
+	console.log(rmID);
+	//send rmID to backend:
+	$.post(star_url, {'rmID': rmID}, processStar, 'json');
+	// console.log($.ajax);
+	// $.ajax({
+	// 	type: "POST",
+	// 	url: star_url,
+	// 	success: processStar,
+	// 	data: {'rmID': rmID},
+	// 	dataType: "json"
+	// });
+});
+
+//response handler:
+function processStar(resp){
+	var starred = resp.starred;
+	if(starred){
+		$("div.errors").text("You've already starred this");
+	}
+
+}
 
 
+
+
+
+</script>
 
 <style>
 .content{

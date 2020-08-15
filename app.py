@@ -119,7 +119,19 @@ def roomReview(rmID):
     return render_template('indivRoom.html', rmID = rmID, reviews = result, 
         avg = r)        
 
+#ajax handler for bookmarking/starring a room. 
+@app.route('/star')
+def star():
+    conn = db.getConn(DB)
+    rmID = request.form.get('rmID')
+    uid = 1
+    #actual version:
+    #uid = session['uid']
+    alreadyStarred = db.alreadyStarred(conn, uid, rmID)
+    if not alreadyStarred:
+        db.updateStarred(conn, uid, rmID)
 
+    return jsonify({'starred': alreadyStarred})
 
 
 

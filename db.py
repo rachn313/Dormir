@@ -62,3 +62,14 @@ def getAverageRating(conn, rmID):
   curs = dbi.dictCursor(conn)
   curs.execute(''' select avg(rating) as rate from Reviews where rmID = %s group by rmID''', [rmID])
   return curs.fetchone()
+
+
+def updateStarred(conn, uid, rmID):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''insert into Starred (uid, rmID) values (%s, %s) ''', [uid, rmID])    
+
+def alreadyStarred(conn, uid, rmID):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''select * from Starred where uid = %s and rmID = %s''', [uid, rmID])
+    res = curs.fetchone()
+    return (res is not None)
