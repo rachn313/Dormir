@@ -1,0 +1,22 @@
+<link rel="stylesheet" type="text/css"
+href="{{url_for('static', filename='home.css')}}">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+<style>
+ 
+.btn {
+    background-color: #002776;
+    color: white;
+    text-align: center;
+    width: 200px;
+    height: 80px;
+    margin-left: 660px;
+    font-size: 50px;
+    font-family: spaceGrotesk;
+    border-radius: 25px;
+}
+
+</style>
+<h1 style="font-family: 'Libre Baskerville', serif; font-size: 50px; text-align: center;margin-top: 100px; color: #002776;"> Welcome to </h1>
+<img style="margin-left: 520px;" src="{{url_for('static', filename='img/Dormir_Logo.png')}}"> 
+<form method="GET" action="{{url_for('cas.login')}}"><button  class="button-container btn">login</button></form>
+

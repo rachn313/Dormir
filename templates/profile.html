@@ -1,12 +1,16 @@
 {% extends "nav.html" %}
 
 {% block head %}
+<<<<<<< HEAD
 <head>
 	<link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Montserrat">
      <link rel="icon" type="image/png" href="../static/img/LogoIcon.png"/>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+=======
+
+>>>>>>> b10eb52a57c9eb7e263cec73c2e6733dcd2fd1af
 {% endblock %}
 
 {% block nav %} 
@@ -14,6 +18,7 @@
 {% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
 <!-- source: https://codepen.io/Joshuasm32/pen/ILJHp -->
 <div class="cover">
   <div class="profile">
@@ -21,11 +26,29 @@
   </div>
   <div class="username">@pegolegoeggo <br>
   		<div id="classYear"> Class of 2021</div>
+=======
+<head>
+	<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat">
+     <link rel="icon" type="image/png" href="static/img/LogoIcon.png"/>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<!-- source: https://codepen.io/Joshuasm32/pen/ILJHp -->
+
+<div class="cover">
+  <div class="profile-image">
+
+    <img style="margin-right: 310px; padding-top: 30px;" src="{{url_for('static', filename='img/default_profilepic.jpg')}}" alt="profile_pic">
+    </div>
+
+  <div class="username"> {{username}} <br>
+>>>>>>> b10eb52a57c9eb7e263cec73c2e6733dcd2fd1af
   </div>
 
   
 
   <div class="myRoom">
+<<<<<<< HEAD
   	<div class="title"> My Rooms </div>
   	<div class= "clearFloat" >
 		<div class= "content" id="my-rooms">
@@ -33,6 +56,16 @@
 				{% for room in my_rooms %}
 					<div class="column">
   				 		{{ room.rmID }} 
+=======
+  	<div class="title" style="padding-right: 37%;"> My Rooms </div>
+  	<div class= "clearFloat" >
+		<div class= "content" id="my-rooms">
+      
+			<div class="row">
+        {% for room in my_rooms %}
+					<div class="column">
+               <a href="{{url_for('roomReview', rmID = room.rmID)}}">{{ room.rmID }}  </a>
+>>>>>>> b10eb52a57c9eb7e263cec73c2e6733dcd2fd1af
   				 	</div>
   				{% endfor %}
 				
@@ -139,20 +172,33 @@ body {
 	padding-left:10px;
 	top:10px;
 }
+<<<<<<< HEAD
 #classYear{
 	font-size: 16px;
     padding-top: 10px;
     text-align: left;
 }
+=======
+>>>>>>> b10eb52a57c9eb7e263cec73c2e6733dcd2fd1af
 
 .myRoom{
 	position:relative;
 	top:30%;
+<<<<<<< HEAD
 	color:black;
 }
 
 .title{
 	font-size:30px;
+=======
+  color:black;
+  text-align: center;
+}
+
+.title{
+  font-size:30px;
+  text-align: center;
+>>>>>>> b10eb52a57c9eb7e263cec73c2e6733dcd2fd1af
 }
 
 .starredRoom{
@@ -183,6 +229,7 @@ body {
   font-size: 16;
 }
 
+<<<<<<< HEAD
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6);
@@ -209,6 +256,40 @@ body {
 }
 
 }
+=======
+.profile-image {
+    float: left;
+    width: calc(33.333% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+.profile-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 20px;
+  
+    object-fit: cover;
+    object-position: center;
+}
+
+.profile-user-name {
+    display: inline-block;
+    font-size: 36px;
+    font-weight: 300;
+    text-align: left;
+    margin: 20px;
+    object-fit: cover;
+    object-position: center;
+    padding-top: 25px;
+    margin-left: -320px;
+}
+
+
+>>>>>>> b10eb52a57c9eb7e263cec73c2e6733dcd2fd1af
 </style>
 
 <!-- bootstrap stuff -->
@@ -218,4 +299,8 @@ body {
 
 
 
+<<<<<<< HEAD
 {% endblock %}
+=======
+{% endblock %}  
+>>>>>>> b10eb52a57c9eb7e263cec73c2e6733dcd2fd1af

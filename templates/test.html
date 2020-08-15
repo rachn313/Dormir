@@ -1,0 +1,350 @@
+ <!--  <nav class="navbar navbar-expand-lg navbar-light">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                              <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <img class="navbar-brand" src="static/img/LogoIcon.png" style="width: 50px;">
+                          
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                                <li class="nav-item active">
+                                  <a class="nav-link" href="#" style="color: white; border-radius: 25px;  border: 2px solid white;">Home <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#" style="color: white; border-radius: 25px;  border: 2px solid white;">Write a Review</a>
+                                </li>
+                                <li class="nav-item topnav-right">
+                                  <a class="nav-link" href="#" style="color: white; border-radius: 25px;  border: 2px solid white;">Profile</a>
+                                </li>
+                                <li class="nav-item topnav-right">
+                                    <a class="nav-link" href="#" style="color: white; border-radius: 25px;  border: 2px solid white;">Logout</a>
+                                  </li>
+                              </ul>
+                            </div>
+                          </nav> -->
+
+
+                          <div id='wrap'>
+                            <div class='options'>
+                                <label>
+                                    <input type='checkbox' id='vfields' />
+                                    Vertical orientation
+                                </label>
+                                <label>
+                                    <input type='checkbox' id='alerts' />
+                                    Disable alerts
+                                </label>
+                            </div>
+                            <h1 title='how forms should be done.'>Forms: validation, styling &amp; semantics</h1>
+                            <section class='form'>
+                                <form action="" method="post" novalidate>
+                                    <fieldset>
+                                        <div class="item">
+                                            <label>
+                                                <span>Name</span>
+                                                <input data-validate-length-range="6" data-validate-words="2" name="name" placeholder="ex. John f. Kennedy" required="required" type="text" />		
+                                            </label>
+                                            <div class='tooltip help'>
+                                                <span>?</span>
+                                                <div class='content'>
+                                                    <b></b>
+                                                    <p>Name must be at least 2 words</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>Occupation</span>
+                                                <input class='optional' name="occupation" data-validate-length-range="5,20" type="text" />
+                                            </label>
+                                            <div class='tooltip help'>
+                                                <span>?</span>
+                                                <div class='content'>
+                                                    <b></b>
+                                                    <p>An optional field. This field is only validated when it has a value.<br /><em>Minimum 5 chars for this example.</em></p>
+                                                </div>
+                                            </div>
+                                            <span class='extra'>(optional)</span>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>email</span>
+                                                <input name="email" class='email' required="required" type="email" />
+                                            </label>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>Confirm email address</span>
+                                                <input type="email" class='email' name="confirm_email" data-validate-linked='email' required='required'>
+                                            </label>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>Number</span>
+                                                <input type="number" class='number' name="number" data-validate-minmax="10,100" data-validate-pattern="numeric" required='required'>
+                                            </label>
+                                            <div class='tooltip help'>
+                                                <span>?</span>
+                                                <div class='content'>
+                                                    <b></b>
+                                                    <p>Number must be between 10 and 100</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>Date</span>
+                                                <input class='date' type="date" name="date" required='required'>
+                                            </label>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>Password</span>
+                                                <input type="password" name="password" data-validate-length="6,8" required='required'>
+                                            </label>
+                                            <div class='tooltip help'>
+                                                <span>?</span>
+                                                <div class='content'>
+                                                    <b></b>
+                                                    <p>Should be of length 6 OR 8 characters</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>Repeat password</span>
+                                                <input type="password" name="password2" data-validate-linked='password' required='required'>
+                                            </label>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>Telephone</span>
+                                                <input type="tel" class='tel' name="phone" required='required' data-validate-length-range="8,20">
+                                            </label>
+                                            <div class='tooltip help'>
+                                                <span>?</span>
+                                                <div class='content'>
+                                                    <b></b>
+                                                    <p>Notice that for a phone number user can input a '+' sign, a dash '-' or a space ' '</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>Drop down selection</span>
+                                                <select class="required" name="dropdown">
+                                                    <option value="">-- none --</option>
+                                                    <option value="o1">Option 1</option>
+                                                    <option value="o2">Option 2</option>
+                                                    <option value="o3">Option 3</option>
+                                                </select>
+                                            </label>
+                                            <div class='tooltip help'>
+                                                <span>?</span>
+                                                <div class='content'>
+                                                    <b></b>
+                                                    <p>Choose something or choose not. what shall it be?</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>url</span>
+                                                <input name="url" placeholder="http://www.website.com" required="required" type="url" />
+                                            </label>
+                                        </div>
+                                        <div class="item multi required">
+                                            <label for='multi_first'>
+                                                <span>Multifield</span>
+                                            </label>
+                                            <div class='input'>
+                                                <input type="text" name="multi1" maxlength='4' id='multi_first'>
+                                                <input type="text" name="multi2" maxlength='4'>
+                                                <input type="text" name="multi3" maxlength='4'>
+                                                <input type="text" name="multi4" maxlength='4'>
+                                                <input type="text" name="multi5" maxlength='4'>
+                                                <input type="text" name="multi6" maxlength='4'>
+                                                <input data-validate-length-range="24" data-validate-pattern="alphanumeric" id="serial" name="serial" type="hidden" required='required' />
+                                            </div>
+                                            <div class='tooltip help'>
+                                                <span>?</span>
+                                                <div class='content'>
+                                                    <b></b>
+                                                    <p>This is a multifield, which let the user input a serial number or credit card number for example, and the trick is to validate the combined result, which is stored in a hidden field</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <label>
+                                                <span>message</span>
+                                                <textarea required="required" name='message'></textarea>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <p>There is a hidden "Required" form field below, notice it will not be validated due to its lack of visibility. The reason for this is that sometimes there is a section in a form that is not visible until some action is taken, but you do not want to change all those fields' "required" attributes on-the-fly, so that is why.</p>
+                                        <input name="somethingHidden" required="required" type="text" style='display:none' />
+                                    </fieldset>
+                                    <button id='send' type='submit'>Submit</button>
+                                </form>	
+                            </section>
+                        </div>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+                        <script src="http://dropthebit.com/demos/validator/multifield.js"></script>
+                        <script src="http://dropthebit.com/demos/validator/validator.js"></script>
+                        <script>
+                            // initialize the validator function
+                            validator.message['date'] = 'not a real date';
+                            
+                            // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+                            $('form')
+                                .on('blur', 'input[required], input.optional, select.required', validator.checkField)
+                                .on('change', 'select.required', validator.checkField);
+                                
+                            $('.multi.required')
+                                .on('keyup', 'input', function(){ 
+                                    validator.checkField.apply( $(this).siblings().last()[0] );
+                                }).on('blur', 'input', function(){ 
+                                    validator.checkField.apply( $(this).siblings().last()[0] );
+                                });
+                            
+                            // bind the validation to the form submit event
+                            //$('#send').click('submit');//.prop('disabled', true);
+                            
+                            $('form').submit(function(e){
+                                e.preventDefault();
+                                var submit = true;
+                                // evaluate the form using generic validaing
+                                if( !validator.checkAll( $(this) ) ){
+                                    submit = false;
+                                }
+                    
+                                if( submit )
+                                    this.submit();
+                                return false;
+                            });
+                            
+                            /* FOR DEMO ONLY */
+                            $('#vfields').change(function(){
+                                $('form').toggleClass('mode2');
+                            }).prop('checked',false);
+                            
+                            $('#alerts').change(function(){
+                                validator.defaults.alerts = (this.checked) ? false : true;
+                                if( this.checked )
+                                    $('form .alert').remove();
+                            }).prop('checked',false);
+                        </script>
+                    
+
+
+                    html, body{ height:100%; }
+/* body min-width is 992px because it's 960px grid + extra 16px from each side of the header */
+body{ min-width:960px; color:#444; background-color:#F1F1F1; font-size:12px; line-height:1.5em; font-family:Arial, Helvetica, sans-serif; }
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    vertical-align:baseline;
+}
+
+small{ font-size:0.9em; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display:block;
+}
+
+h1{ font-size:2em; margin:0 0 50px 0; }
+button{ cursor:pointer; }
+p{ padding:5px 0; }
+
+a{ text-decoration:none; }
+.btn{ margin:5px; font-size:1.3em; font-weight:bold; border:2px solid rgba(0,0,0,0.2); display:inline-block; box-shadow:0 -30px 30px -15px #00329B inset, 0 1px 0 rgba(255,255,255,0.3) inset; background:#0088CC; background-repeat:repeat-x; color:#FFF; text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25); border-radius:7px; padding:10px 20px; -webkit-transition:0.15s; transition:0.15s; }
+.btn:hover{ background:#0068BA; }
+.btn:active{ box-shadow:0 0 0 0 rgba(0, 0, 0, 0.3), 0 -30px 30px -15px #00329B inset, 0 0 6px #00243F inset; }
+.btn.github{ float:right; }
+
+#wrap{ padding:50px; width:860px; background-color:#FFF; margin:20px auto; border:1px dashed #AAA; position:relative; }
+.options{ position:absolute; top:-1px; right:-1px; background-color:#F1F1F1; padding:4px 0; border-left:1px dashed #AAA; border-bottom:1px dashed #AAA; }
+	.options label{ cursor:pointer; margin:0 10px; }
+
+input, textarea{ border:1px solid #D1D1D1; }
+input, select{ font-size:inherit; margin:0; }
+input:focus, textarea:focus{ border-color:#AAA; }
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+input[type=checkbox]{ border:none; bottom:-1px; cursor:pointer; margin:0 5px 0 0; position:relative; }
+button[type=submit]{ font-size:1.1em; padding:5px 25px; }
+
+/* Tooltips helpers */
+.item .tooltip{ float:left; top:2px; left:7px; position:relative; z-index:2; }
+.item .tooltip:hover{ z-index:3; }
+   .item .tooltip > span{ display:inline-block; width:16px; height:16px; line-height:16px; font-size:0.9em; font-weight:bold; text-align:center; color:#FFF; cursor:help; background-color:#00AEEF; position:relative; border-radius:10px; }
+    .item .tooltip .content{ opacity:0; width:200px; background-color:#333; color:#FFF; font-size:0.9em; position:absolute; top:0; left:20px; padding:8px; border-radius:6px; pointer-events:none; transition:0.2s cubic-bezier(0.1, 0.1, 0.25, 2); -webkit-transition:0.3s cubic-bezier(0.1, 0.2, 0.5, 2.2); -moz-transition:0.3s cubic-bezier(0.1, 0.2, 0.5, 2.2); }
+        .item .tooltip p{ padding:0; }
+   .item .tooltip.down .content{ left:auto; right:0; top:30px; }
+   .item .tooltip:hover .content{ opacity:1; left:36px; }
+      .item .tooltip .content b{ height:0; width:0; border-color:#333 #333 transparent transparent; border-style:solid; border-width:9px 7px; position:absolute; left:-14px; top:8px; }
+        .item .tooltip.down .content b{ left:auto; right:6px; top:-10px; border-width:5px; border-color:transparent #333 #333 transparent; }
+
+/* alerts (when validation fails) */
+.item .alert{ float:left; margin:0 0 0 20px; padding:3px 10px; position:relative; color:#FFF; border-radius:3px 4px 4px 3px; background-color:#CE5454; max-width:170px; white-space:pre; z-index:1; }
+.item .alert::after{ content:''; display:block; height:0; width:0; border-color:transparent #CE5454 transparent transparent; border-style:solid; border-width:11px 7px; position:absolute; left:-13px; top:1px; }
+
+@keyframes shake{
+    25%{ transform:translateX(-6px); }
+    75%{ transform:translateX(6px); }
+}
+@-webkit-keyframes shake{
+    25%{ -webkit-transform:translateX(-6px); }
+    75%{ -webkit-transform:translateX(6px); }
+}
+
+form fieldset{ clear:both; margin:0 0 10px 0; }
+form .item{ padding:5px 0; position:relative; height:2em; }
+form .item.items{ height:auto; }
+	.item label{ float:left; }
+		.item label span{ float:left; width:160px; text-transform:capitalize; line-height:2em; }
+	.item input, .item textarea{ float:left; padding:3px 4px; width:210px; -webkit-transition:0.2s; -moz-transition:0.2s; transition:0.2s; }
+	.item input{  }
+	.item input.short{ width:90px; }
+	.item input:focus:not([type="checkbox"]), .item textarea:focus{ box-shadow:0 0 4px #00AEEF; border:1px solid #00AEEF; }
+	.item textarea{  }
+	.item select{ float:left; width:220px; padding:2px 0; margin:0; border:1px solid #CCC; text-transform:capitalize; }
+		.item select option{ padding:1px; }
+
+    .item > .extra{ float:left; font-size:0.9em; color:#999; line-height:2em; margin-left:13px; }
+    
+	.item.multi .input{ float:left; }
+		.item.multi input{ float:left; margin-right:5px; width:35px; text-align:center; }
+		form .item.multi input:nth-last-child(-n+2){ margin:0; }
+	.item.items input{ border-top:5px solid #E1E1E1; margin:0 0 0 160px; }
+	
+	.bad input[required=required], .bad input.optional, .bad select, .bad textarea{ border:1px solid #CE5454; box-shadow:0 0 4px -2px #CE5454; position:relative; left:0; -moz-animation:.3s 2 shake linear; -webkit-animation:0.3s 2 shake linear; }
+    
+/* mode2 - where the label's text is above the field and not next to it
+--------------------------------------------------------------------------- */
+.mode2 .item{ float:left; clear:left; margin-bottom:30px; height:auto; padding:0; zoom:1; }
+.mode2 .item.bad{ margin-bottom:8px; }
+.mode2 .item::before, .mode2 .item::after{ content:''; display:table; }
+.mode2 .item::after{ clear:both; }
+	.mode2 .item label{  }
+		.mode2 .item label span{ float:none; display:block; line-height:inherit; }
+	.mode2 .item input, .item textarea{ width:250px; margin:0; }
+	.mode2 .item textarea{ width:350px; margin:0; }
+	.mode2 .item select{ width:260px; float:none; }
+	.mode2 .item.multi label{ float:none; }
+	.mode2 .item.multi input{ float:left; margin-right:5px; width:35px; text-align:center; }
+	.mode2 .item .tooltip{ left:auto; position:absolute; right:-22px; top:19px; }
+	.mode2 .item .alert::after{ display:none; }
+	.mode2 .item .alert{ float:none; clear:left; margin:0; padding:0 5px; border-radius:0 0 3px 3px; max-width:100%; height:22px; line-height:1.8em; }
+    .mode2 .item > .extra{ position:absolute; right:0; }

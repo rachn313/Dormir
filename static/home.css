@@ -1,3 +1,54 @@
+@font-face {
+    font-family: "spaceGrotesk";
+    src: url("fonts/SpaceGrotesk-Regular.woff") format('woff');
+}
+
+@font-face {
+    font-family: "spaceLight";
+    src: url("fonts/SpaceGrotesk-Light.woff") format('woff');
+    
+}
+
+@font-face {
+    font-family: "spaceMedium";
+    src: url("fonts/SpaceGrotesk-Medium.woff") format('woff');
+    
+}
+
+@font-face {
+    font-family: "spaceSemiBold";
+    src: url("fonts/SpaceGrotesk-SemiBold.woff") format('woff');
+    
+}
+
+@font-face {
+    font-family: "spaceBold";
+    src: url("fonts/SpaceGrotesk-Bold.woff") format('woff');
+}
+
+.form-group .form-inline {
+    font-family: spaceSemiBold;
+}
+.form-options {
+    font-family: spaceSemiBold;
+}
+
+h1 {
+    font-family: spaceBold;
+}
+
+h4 {
+    font-family: spaceBold;
+}
+
+.help .modal-title{
+    font-family: spaceBold;
+}
+
+#exampleModalLabel {
+    font-family: spaceBold;
+}
+
 .hero-header_nav .header-nav_link {
     border-radius: 0;
     border-bottom: 2px solid transparent;
@@ -40,6 +91,81 @@
     background: rgba(0,0,0,0);
 }
   
-  
-  
+.fa-plus-square:before {
+    content: "\f0fe";
+    float: right;
+    margin-left: 1000px;
+}
+
+
+/* drop down */
+/* Tooltips helpers */
+.item .tooltip{ 
+    float:left; 
+    top:2px; 
+    left:7px; 
+    position:relative; 
+    z-index:2; 
+}
+.item .tooltip:hover{ 
+    z-index:3; 
+}
+.item .tooltip > span{ 
+    display:inline-block; 
+    width:16px; 
+    height:16px; 
+    line-height:16px; 
+    font-size:0.9em; 
+    font-weight:bold; 
+    text-align:center; 
+    color:#FFF; 
+    cursor:help; 
+    background-color:#00AEEF; 
+    position:relative; 
+    border-radius:10px; 
+}
+.item .tooltip .content{ 
+    opacity:0; width:200px; 
+    background-color:#333; 
+    color:#FFF; 
+    font-size:0.9em; 
+    position:absolute; 
+    top:0; left:20px; 
+    padding:8px; 
+    border-radius:6px; 
+    pointer-events:none; 
+    transition:0.2s cubic-bezier(0.1, 0.1, 0.25, 2); 
+    -webkit-transition:0.3s cubic-bezier(0.1, 0.2, 0.5, 2.2); 
+    -moz-transition:0.3s cubic-bezier(0.1, 0.2, 0.5, 2.2); 
+}
+.item .tooltip p{ 
+    padding:0; 
+}
+.item .tooltip.down .content{ 
+    left:auto; 
+    right:0; 
+    top:30px; 
+}
+.item .tooltip:hover .content{ 
+    opacity:1; 
+    left:36px; 
+}
+.item .tooltip .content b{ 
+    height:0; 
+    width:0; 
+    border-color:#333 #333 transparent transparent; 
+    border-style:solid; 
+    border-width:9px 7px; 
+    position:absolute; 
+    left:-14px; 
+    top:8px; }
+.item .tooltip.down .content b{ 
+    left:auto; 
+    right:6px; 
+    top:-10px; 
+    border-width:5px; 
+    border-color:transparent #333 #333 transparent; 
+}
+
+
   
