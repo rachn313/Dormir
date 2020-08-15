@@ -166,7 +166,7 @@ def roomResults(searched):
 @app.route('/reviews/<rmID>')
 def roomReview(rmID):
     conn = db.getConn(DB)
-    result = db.getRoomInfo(conn, rmID)
+    result = db.getRoomInfo(conn, rmID) #8/14: peggy modified to also return reviewer's username. 
     building = ''
     print("RMID first three letters")
     print(rmID[0:3])
