@@ -22,7 +22,7 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
     <script src="{{url_for('static', filename='flickity.pkgd.min.js')}}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    
 
 
    
@@ -32,21 +32,23 @@
  <!-- Flickity HTML init -->
  <!-- loop through the damn imgs-->
 
- <div class="gallery js-flickity" style="margin-top: 120px; height: 400px;" data-flickity-options='{ "freeScroll": true, "wrapAround": true }'>
+ <div class="gallery js-flickity" style="margin-top: 120px; height: 600px;" data-flickity-options='{ "freeScroll": true, "wrapAround": true }'>
   {% for room in reviews %}
   <img class="gallery-cell" style="height: 600px; width: 700px;" src="{{url_for('static', filename=room.imgPath)}}">
-  
   {% endfor %}
   </div>
 
   <br>
   <br>
+  <style>
 
+  </style>
   <div>
-      <h1 style="margin-left: 50px; font-family: spaceBold"> {{rmID}} </h1>
+      <h1 style="margin-left: 50px; font-family: spaceBold"> {{rmID}}  <svg style="width: 40px;height: 40px; margin-bottom: 10px;" id="bsc-bookmark-save" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 22V4C5 2.89543 5.89543 2 7 2H17C18.1046 2 19 2.89543 19 4V22L12 15.8889L5 22Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg> </h1> 
       <h4 style="margin-left: 50px; font-family: spaceSemiBold"> Building: {{building}} </h4>
       <h4 style="margin-left: 50px; font-family: spaceSemiBold"> Closet Dining Hall: {{diningHall}} </h4>
-    
+     
+
         <style>
             .checked {
               color: gold;
@@ -126,6 +128,13 @@
   {% endfor %}
 </div>
   </body>
+  <script>
+    document.getElementById("bsc-bookmark-save").addEventListener("click", myFunction);
+    
+    function myFunction() {
+      document.getElementById("bsc-bookmark-save").style.fill="black";
+    }
+  </script>
   {% endblock %}
   {% block scripts %}
   {{super()}}
