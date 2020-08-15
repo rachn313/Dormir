@@ -116,7 +116,9 @@ def getSearchedRooms(conn, rmID):
 
 def getRoomInfo(conn, rmID):
   curs = dbi.dictCursor(conn)
-  curs.execute(''' select * from Reviews where rmID = %s''', [rmID])
+  #curs.execute(''' select * from Reviews where rmID = %s''', [rmID])
+  curs.execute('''select uid, username, profpicPath, rmID, rating, review, imgPath, time 
+        from reviews inner join users using (uid) where rmID = %s ''', [rmID])
   return curs.fetchall()
 
 def getAverageRating(conn, rmID):
