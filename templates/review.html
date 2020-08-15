@@ -102,7 +102,7 @@
   <div class="reviews" style="margin-top: 50px;">
     <div class="profile-image">
 
-        <img style="margin-right: 310px;" src="static/img/SnapchatFace.jpg" alt="profile_pic">
+        <img style="margin-right: 310px;" src="{{url_for('static', filename=room.profpicPath)}}" alt="profile_pic">
     </div>
     <p style="font-family: spaceBold" class="profile-user-name" value="{{username}}">{{username}}</p> 
     <br>
