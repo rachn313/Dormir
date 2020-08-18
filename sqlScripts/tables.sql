@@ -27,10 +27,9 @@ create table Reviews(
 
 create table Saves(
   rmID varchar(10),
-  profile_id int,
-  foreign key (rmID) references Reviews(rmID)
-  on delete cascade,
-  foreign key (profile_id) references Users(uid)
+  uid int,
+  primary key (uid, rmID),
+  foreign key (uid) references Users(uid)
    on delete cascade
 );
 
