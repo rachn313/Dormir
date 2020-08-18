@@ -140,12 +140,13 @@ def save_trueFalse(conn, rmID, uid):
 def addSave(conn, rmID, uid): 
     '''adds a like to the post into the Likes table'''
     curs = dbi.dictCursor(conn)
-    curs.execute('''INSERT INTO Saves(rmID, profile_id)
+    curs.execute('''INSERT INTO Saves(rmID, uid)
                                 VALUES(%s, %s)''', [rmID, uid])
+                                
 def removeSave(conn, rmID, uid):
     '''removes a like to the post from the Likes table ''' 
     curs = dbi.dictCursor(conn)
-    curs.execute('''DELETE from Saves where rmID=%s and profile_id=%s''', [rmID, uid])
+    curs.execute('''DELETE from Saves where rmID=%s and uid=%s''', [rmID, uid])
 
 #def getUsersforRoom(conn, rmID):
    # curs = dbi.dictCursor(conn)

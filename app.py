@@ -222,10 +222,38 @@ def roomReview(rmID):
 
         r = db.getAverageRating(conn, rmID)
         username = session['CAS_USERNAME']
-        return render_template('review.html', rmID = rmID, reviews = result, 
-            avg = r, username = username, building = building, diningHall = diningHall)    
+        return render_template('review.html', rmID = rmID, reviews = result, avg = r, username = username, building = building, diningHall = diningHall)    
     else:
         return render_template('base.html')
+
+@app.route('/saved/<rmID>', methods= ["POST"])   
+def Save(rmID):
+    ''' ajax function that updates saving the room'''
+    try: 
+        username = session['CAS_USERNAME']
+        conn = db.getConn(DB)
+        uid = db.getUid(conn, username)
+        db.addSave(conn, rmID, uid)
+        conn.close()
+        return jsonify()
+    except Exception as err:
+        print(err)
+        return jsonify( {'error': True, 'err': str(err) } )
+
+@app.route('/unsaved/<rmID>', methods= ["POST"])   
+def Unsave(rmID):
+    ''' ajax function for unsaving a room'''
+    try: 
+        username = session['CAS_USERNAME']
+        conn = db.getConn(DB)
+        uid = db.getUid(conn, username)
+        db.removeSave(conn, rmID, uid)
+        conn.close()
+        return jsonify()
+    except Exception as err:
+        print(err)
+        return jsonify( {'error': True, 'err': str(err) } )
+
 
 if __name__ == '__main__':
     import sys, os

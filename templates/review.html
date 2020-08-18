@@ -120,7 +120,7 @@
 
     <div style="font-family: spaceGrotesk; text-align: left; margin-right: 1000px;">
     <br>
-        <p> {{room.review}} </p>     
+        <p> {{ room.review }} </p>     
     </div>
         
     
@@ -135,8 +135,8 @@
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
   <script>
 
-var URL_save = "{{url_for('Save', username=username, rmID = rmID}}" 
-var URL_unsave ="{{url_for('Unsave', username = username, rmID = rmID}}"
+var URL_save = "{{url_for('Save', rmID= rmID)}}" 
+var URL_unsave ="{{url_for('Unsave', rmID= rmID)}}"
 
 	
 if ($("#bsc-bookmark-save").attr("data-saved") == "True") {
@@ -151,7 +151,7 @@ $("#bsc-bookmark-save").on('click', function () {
               $.post(URL_save, updateSaved);
           } else {
               $(this).css("fill", "white");
-              $(this).attr("data-liked", "False");
+              $(this).attr("data-saved", "False");
               $.post(URL_unsave, updateUnsaved); 
           }
     
