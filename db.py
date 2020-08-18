@@ -134,7 +134,7 @@ def getMyRooms(conn, uid):
 def save_trueFalse(conn, rmID, uid):
     '''Are you following this profile? Returns true or false'''
     curs = dbi.cursor(conn)
-    curs.execute('''select * from Saves where rmID=%s and profile_id=%s''', [rmID, uid])
+    curs.execute('''select * from Saves where rmID=%s and uid=%s''', [rmID, uid])
     return True if curs.fetchone() else False
 
 def addSave(conn, rmID, uid): 

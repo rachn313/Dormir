@@ -219,10 +219,11 @@ def roomReview(rmID):
         else:
             diningHall = 'Bates/Stone-Davis'
 
-
-        r = db.getAverageRating(conn, rmID)
         username = session['CAS_USERNAME']
-        return render_template('review.html', rmID = rmID, reviews = result, avg = r, username = username, building = building, diningHall = diningHall)    
+        uid = db.getUid(conn, username)
+        saved = db.save_trueFalse(conn, rmID, uid)
+        r = db.getAverageRating(conn, rmID)
+        return render_template('review.html', rmID = rmID, reviews = result, avg = r, username = username, building = building, diningHall = diningHall, saved = saved)    
     else:
         return render_template('base.html')
 
