@@ -1,4 +1,4 @@
-drop table if exists Starred;
+drop table if exists Saves;
 drop table if exists Reviews;
 drop table if exists Users;
 
@@ -25,12 +25,13 @@ create table Reviews(
            on delete cascade   
 );
 
-create table Starred(
-  uid int not null primary key,
+create table Saves(
   rmID varchar(10),
-  foreign key (uid) references Users(uid)
+  profile_id int,
+  foreign key (rmID) references Reviews(rmID)
+  on delete cascade,
+  foreign key (profile_id) references Users(uid)
    on delete cascade
-
 );
 
 -- enter data

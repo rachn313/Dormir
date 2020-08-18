@@ -130,6 +130,23 @@ def getMyRooms(conn, uid):
 	curs.execute('''select * from Reviews where uid=%s''', [uid]) 
 	return curs.fetchall()
 
+
+def save_trueFalse(conn, rmID, uid):
+    '''Are you following this profile? Returns true or false'''
+    curs = dbi.cursor(conn)
+    curs.execute('''select * from Saves where rmID=%s and profile_id=%s''', [rmID, uid])
+    return True if curs.fetchone() else False
+
+def addSave(conn, rmID, uid): 
+    '''adds a like to the post into the Likes table'''
+    curs = dbi.dictCursor(conn)
+    curs.execute('''INSERT INTO Saves(rmID, profile_id)
+                                VALUES(%s, %s)''', [rmID, uid])
+def removeSave(conn, rmID, uid):
+    '''removes a like to the post from the Likes table ''' 
+    curs = dbi.dictCursor(conn)
+    curs.execute('''DELETE from Saves where rmID=%s and profile_id=%s''', [rmID, uid])
+
 #def getUsersforRoom(conn, rmID):
    # curs = dbi.dictCursor(conn)
 	#curs.execute('''select * from Users where uid=%s''', [uid]) 

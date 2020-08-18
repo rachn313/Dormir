@@ -44,7 +44,7 @@
 
   </style>
   <div>
-      <h1 style="margin-left: 50px; font-family: spaceBold"> {{rmID}}  <svg style="width: 40px;height: 40px; margin-bottom: 10px;" id="bsc-bookmark-save" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 22V4C5 2.89543 5.89543 2 7 2H17C18.1046 2 19 2.89543 19 4V22L12 15.8889L5 22Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg> </h1> 
+      <h1 style="margin-left: 50px; font-family: spaceBold"> {{rmID}}  <svg style="width: 40px;height: 40px; margin-bottom: 10px;" id="bsc-bookmark-save" data-saved="{{saved}}" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 22V4C5 2.89543 5.89543 2 7 2H17C18.1046 2 19 2.89543 19 4V22L12 15.8889L5 22Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg> </h1> 
       <h4 style="margin-left: 50px; font-family: spaceSemiBold"> Building: {{building}} </h4>
       <h4 style="margin-left: 50px; font-family: spaceSemiBold"> Closet Dining Hall: {{diningHall}} </h4>
      
@@ -128,14 +128,58 @@
   {% endfor %}
 </div>
   </body>
-  <script>
-    document.getElementById("bsc-bookmark-save").addEventListener("click", myFunction);
-    
-    function myFunction() {
-      document.getElementById("bsc-bookmark-save").style.fill="black";
-    }
-  </script>
+  
   {% endblock %}
   {% block scripts %}
   {{super()}}
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+  <script>
+
+var URL_save = "{{url_for('Save', username=username, rmID = rmID}}" 
+var URL_unsave ="{{url_for('Unsave', username = username, rmID = rmID}}"
+
+	
+if ($("#bsc-bookmark-save").attr("data-saved") == "True") {
+          $("#bsc-bookmark-save").css("fill", "black");
+        };
+
+$("#bsc-bookmark-save").on('click', function () {
+	if ($(this).attr("data-saved")=="False") {
+              //user wants to save
+              $(this).css("fill", "black");
+              $(this).attr("data-saved", "True");
+              $.post(URL_save, updateSaved);
+          } else {
+              $(this).css("fill", "white");
+              $(this).attr("data-liked", "False");
+              $.post(URL_unsave, updateUnsaved); 
+          }
+    
+});
+
+function updateSaved(obj) {
+        console.log(obj);
+        if(obj.error) {
+            $("#errors").empty().html('Error: '+obj.err);
+            console.log('obj error')
+        } else {
+			      console.log("SAVED")
+        }
+	}
+
+  function updateUnsaved(obj) {
+        console.log(obj);
+        if(obj.error) {
+            $("#errors").empty().html('Error: '+obj.err);
+            console.log('obj error')
+        } else {
+			      console.log("UNSAVED")
+        }
+	}
+   // document.getElementById("bsc-bookmark-save").addEventListener("click", myFunction);
+    
+   // function myFunction() {
+   //   document.getElementById("bsc-bookmark-save").style.fill="black";
+   // }
+  </script>
   {% endblock %}
