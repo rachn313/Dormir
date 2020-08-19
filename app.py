@@ -124,12 +124,14 @@ def profile():
     conn = db.getConn(DB)
     if session['CAS_USERNAME']:
     #    return redirect(url_for("profile"))
-        uid = 1 #replace with getting it from the table
+        uid = session['uid'] 
         user = session['CAS_USERNAME']
-        rooms = db.getMyRooms(conn, uid)
-        return render_template('profile.html', page_title='Dormir', my_rooms = rooms, username = user)   
+        myRooms = db.getMyRooms(conn, uid)
+        starredRooms = db.getSaved(conn, uid)
+        return render_template('profile.html', page_title='Dormir', 
+            my_rooms = myRooms, starred_rooms = starredRooms, username = user)   
     else:
-        return render_template('profile.html', my_rooms = {}, username = "Not logged in!")
+        return render_template('base.html')
 
 #handler for searching
 @app.route('/roomsearch/', methods=["POST"])

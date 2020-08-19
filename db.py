@@ -148,6 +148,11 @@ def removeSave(conn, rmID, uid):
     curs = dbi.dictCursor(conn)
     curs.execute('''DELETE from Saves where rmID=%s and uid=%s''', [rmID, uid])
 
+def getSaved(conn, uid):
+    '''' get all starred rooms for user'''
+    curs = dbi.dictCursor(conn)
+    curs.execute('''SELECT * FROM Saves WHERE uid = %s''', [uid])
+    return curs.fetchall()
 #def getUsersforRoom(conn, rmID):
    # curs = dbi.dictCursor(conn)
 	#curs.execute('''select * from Users where uid=%s''', [uid]) 
