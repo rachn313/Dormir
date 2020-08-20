@@ -92,6 +92,7 @@ def upload():
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
+    #add code to change file name
     #check allowed files 
     def allowed_file(filename):
         return '.' in filename and \
