@@ -133,6 +133,16 @@ def star():
 
     return jsonify({'starred': alreadyStarred})
 
+#handler for delete review (my room)
+@app.route('/deleteReview/', methods = ["POST"])
+def deleteReview():
+    conn = db.getConn(DB)
+    room = request.form.get('rmID')
+    uid = 1
+    #uid = getUid(conn, session['CAS_USERNAME'])
+    db.deleteReview(conn, uid, room)
+    print(room, " review deleted")
+    return redirect(request.referrer)
 
 
 if __name__ == '__main__':

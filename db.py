@@ -73,3 +73,7 @@ def alreadyStarred(conn, uid, rmID):
     curs.execute('''select * from Starred where uid = %s and rmID = %s''', [uid, rmID])
     res = curs.fetchone()
     return (res is not None)
+
+def deleteReview(conn, uid, rmID):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''delete from Reviews where uid = %s and rmID = %s''', [uid, rmID])
