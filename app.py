@@ -78,15 +78,10 @@ def upload():
     rating = request.form.get("rating")
     review = request.form.get("review")
 
-    uid = session['uid']
     rmID = roomCode + roomNum
-    roomID = roomCode + ' ' + roomNum
     username = session['CAS_USERNAME']
-    #uid = session['uid'] FIGURE OUT WHAT THIS WILL BE 
     postconn = db.getConn(DB)
-    if roomCode == 'MCA':
-        building = 'McAfee'
-  
+    uid = db.getUid(postconn, username)
     #upload folder path, and allowed extension of file images
     #check if this exists
     path = 'static/img/{}'.format(username)
@@ -124,8 +119,8 @@ def profile():
     conn = db.getConn(DB)
     if session['CAS_USERNAME']:
     #    return redirect(url_for("profile"))
-        uid = session['uid'] 
         user = session['CAS_USERNAME']
+        uid = db.getUid(conn, user)
         myRooms = db.getMyRooms(conn, uid)
         starredRooms = db.getSaved(conn, uid)
         return render_template('profile.html', page_title='Dormir', 
@@ -257,6 +252,28 @@ def Unsave(rmID):
         print(err)
         return jsonify( {'error': True, 'err': str(err) } )
 
+
+@app.route('/editReview/', methods=["POST"])
+def edit(): 
+    
+    conn = db.getConn(DB)
+    username = session['CAS_USERNAME']
+    roomCode = request.form.get("rCode")
+    roomNum = request.form.get("rNum")
+    rating = request.form.get("rating")
+    review = request.form.get("review")
+    rmID = roomCode + roomNum
+    uid = db.getUid(conn, username)
+    try:
+        db.editReview(db.getConn(DB), uid, rmID, rating, review)
+
+    except Exception as err:
+        print("error editing review")
+        flash("error editing review")
+        return render_template('profile.html')
+
+    flash("Sucessfully edited post")
+    return redirect(url_for('roomReview', rmID = rmID))
 
 if __name__ == '__main__':
     import sys, os

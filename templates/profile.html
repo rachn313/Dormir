@@ -10,21 +10,25 @@
 
 {% block content %}
 <head>
+  <link rel="stylesheet" type="text/css"
+  href="{{url_for('static', filename='home.css')}}">
 	<link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Montserrat">
      <link rel="icon" type="image/png" href="static/img/LogoIcon.png"/>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet">
+     <script async src="https://basicons.xyz/embed.js"> </script>
+    </head>
 <!-- source: https://codepen.io/Joshuasm32/pen/ILJHp -->
 
 <div class="cover">
   <div class="profile-image">
 
-    <img style="margin-right: 310px; padding-top: 30px;" src="{{url_for('static', filename='img/default_profilepic.jpg')}}" alt="profile_pic">
+    <img style="width: 200px; height: 200px" src="{{url_for('static', filename='img/default_profilepic.jpg')}}" alt="profile_pic">
     </div>
 
-  <div class="username"> {{username}} <br>
-  </div>
+    <p style="font-family: spaceBold; margin-left: -80%; margin-top: 40px;" class="profile-user-name" value="{{username}}">{{username}}</p> 
 
   
 
@@ -36,8 +40,95 @@
 			<div class="row">
         {% for room in my_rooms %}
 					<div class="column">
-               <a href="{{url_for('roomReview', rmID = room.rmID)}}">{{ room.rmID }}  </a>
-  				 	</div>
+            <!-- <div class="edit-delete"> -->
+              
+            
+                
+                 <!-- <svg type="button" id="edit-button" class="btn btn-light" data-toggle="modal" data-target="#edit-modal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" stroke-width="2.5" stroke="#CACBD2" fill="none" style="width: 48px; height: 48px;"><path d="M45.56 46.83v9.43H7.94V20.6L19.9 7.74h25.66v13.55"></path><path d="M19.92 7.74L19.9 20.6H7.94M13.09 47.67H31.1M13.09 41.14H29.1M13.09 35.04H33.1M13.09 28.94H39.1M34.45 43.23l.15 4.3a.49.49 0 00.62.46l4.13-1.11a.54.54 0 00.34-.23l18.07-24.44a1.23 1.23 0 00-.26-1.72l-3.14-2.34a1.22 1.22 0 00-1.72.26L34.57 42.84a.67.67 0 00-.12.39zM50.2 21.7l5.07 3.87"></path></svg> -->
+                    
+             
+            <!-- </div> -->
+              <div style="position: relative; padding-top:65px; font-size: 30px;"><a href="{{url_for('roomReview', rmID = room.rmID)}}">{{ room.rmID }}  </a></div> 
+              <i class="bsc-edit-write" type="button" id="edit-button" class="btn btn-light" data-toggle="modal" data-target="#edit-modal"></i>
+             </div>
+             
+             <!-- edit form section -->
+             <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Review</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <!-- EDIT POST FORM -->
+                  <form id="upload-post-form" method=POST action="{{url_for('edit')}}" enctype="multipart/form-data">
+                    <div class="form-group form-inline item">
+                      <label class="form-options"> Room Code 
+                        <select class="required" name="rCode" style="margin-left: 10px;">
+                          <option value="BAT" name="rCode">BAT</option>
+                          <option value="BEB" name="rCode">BEB</option>
+                          <option value="CAS" name="rCode">CAS</option>
+                          <option value="CAS" name="rCode">CAZ</option>
+                          <option value="CLA" name="rCode">CLA</option>
+                          <option value="DAV" name="rCode">DAV</option>
+                          <option value="DOW" name="rCode">DOW</option>
+                          <option value="FRE" name="rCode">FRE</option>
+                          <option value="FRH" name="rCode">FRH</option>
+                          <option value="HEM" name="rCode">HEM</option>
+                          <option value="INS" name="rCode">INS</option>
+                          <option value="LAK" name="rCode">LAK</option>
+                          <option value="MCA" name="rCode">MCA</option>
+                          <option value="MUN" name="rCode">MUN</option>
+                          <option value="ORC" name="rCode">ORC</option>
+                          <option value="POM" name="rCode">POM</option>
+                          <option value="SEV" name="rCode">SEV</option> 
+                          <option value="SHA" name="rCode">SHA</option>
+                          <option value="STO" name="rCode">STO</option>
+                          <option value="TCE" name="rCode">TCE</option>
+                          <option value="TCW" name="rCode">TCW</option>
+                      </select>
+                      </label>
+                      <a style="margin-left: 10px" class= "help" href=" " title="CAS = spanish house, FRH = french house, INS = instead, HEM = hemlock apartments, ORC = orchid apartments, LAK = Lake House, CAS = Casa Cervantes" style="background-color:#FFFFFF;color: blue;text-decoration:none">?</a>
+                      
+                    </div>
+                    <div class="form-group form-inline"> 
+                      <label class="form-options">Room Number 
+                      <input style="margin-left: 10px;" type="text" id = "edit-rn" class="form-control" name="rNum" 
+                            value="{{room.rmID[3:6]}}" maxlength="30" required /> 
+                          </label>
+                    </div>   
+            
+                    <!-- rating -->
+                    <div class="form-group form-inline">
+                        <label class="form-options">Dormir Rating </label>
+                            <label style="margin-left: 10px;" class="radio-inline"><input type="radio" value="1" name="rating">1</label>
+                            <label class="radio-inline"><input type="radio" value="2" name="rating">2</label>
+                            <label class="radio-inline"><input type="radio" value="3" name="rating">3</label>
+                            <label class="radio-inline"><input type="radio" value="4" name="rating">4</label>
+                            <label class="radio-inline"><input type="radio" value="5" name="rating">5</label>
+                       
+                    </div>   
+                    <div class="form-group form-inline">
+                      <label style="font-family: spaceBold;">Review 
+                    </label>
+                    <br>
+                    <br>
+                      <textarea style="margin-left: 10px; border: 2px solid black" class="radio-inline" placeholder="{{room.review}}" class="form-control" rows="5" cols="45" name="review" maxlength="500"></textarea>
+                
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            
+                    <button type="button submit" class="btn btn-primary" form="upload-post-form">Save Changes</button>
+                  </form>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
   				{% endfor %}
 				
 
@@ -47,13 +138,18 @@
   	</div> 
 
   <div class="starredRoom">
-  	<div class="title"> Starred Rooms</div>
+    
+    <div class="title"> Starred Rooms</div>
+    
+  <br>
+  <br>
+  <br>
   	<div class= "clearFloat" >
 		<div class= "content" id="starred-rooms">
 			<div class="row">
 		    {% for r in starred_rooms %}
 				  <div class="column">
-					   <a href="{{url_for('roomReview', rmID = r.rmID)}}">{{ r.rmID }}  </a>
+					   <div style="position: relative; padding-top:65px; font-size: 30px;"><a href="{{url_for('roomReview', rmID = r.rmID)}}">{{ r.rmID }}  </a></div>
 				  </div>
         {% endfor %}
 
@@ -62,11 +158,8 @@
   	</div> <!-- end clearFloat -->
   </div>
 
-  <div class="description" style="display:none;">
-   Welcome to my profile. I want to find a nice dorm room. <br>
-   I sleep 24/7 so I need a very comfortable room. 
-  </div>
-  <div id="home"> <a href={{url_for("index")}}> Home </a></div>
+
+  <div id="home"> <a href="{{url_for('index')}}"> Home </a></div>
   <div class="iconCredits" style="display:none;">
   Icons made by <a href="https://icon54.com/" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> <br>
   <a href="https://icons8.com/icon/132/search">Search and Logout icon by Icons8</a>
@@ -79,7 +172,38 @@
 
 </div>
 
+
+
 <style>
+.profile-user-name {
+    display: inline-block;
+    font-size: 36px;
+    font-weight: 300;
+    text-align: left;
+    margin: 20px;
+    object-fit: cover;
+    object-position: center;
+    padding-top: 25px;
+    margin-left: -320px;
+}
+    .profile-image {
+    float: left;
+    width: calc(33.333% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+.profile-image img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 20px;
+  
+    object-fit: cover;
+    object-position: center;
+}
 * {
   margin: 0;
   padding: 0;
@@ -166,10 +290,10 @@ body {
 }
 
 .column{
-  background-color: #FFF4CF;
+  background-color: #f7f7f5;
   float: left;
-  width: 12%;
-  height: 150px;
+  width: 20%;
+  height: 250px;
   padding:5px;
   margin:5% 5% 5%;
   font-size: 16;
@@ -206,6 +330,16 @@ body {
     margin-left: -320px;
 }
 
+
+.edit-delete {
+    position: absolute;
+    right: 0px;
+}
+
+#edit-post-form label:not(.radio-inline){
+    width:68px;
+    justify-content: flex-start;
+}
 
 </style>
 

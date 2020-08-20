@@ -129,8 +129,6 @@ def getMyRooms(conn, uid):
 	curs = dbi.dictCursor(conn)
 	curs.execute('''select * from Reviews where uid=%s''', [uid]) 
 	return curs.fetchall()
-
-
 def save_trueFalse(conn, rmID, uid):
     '''Are you following this profile? Returns true or false'''
     curs = dbi.cursor(conn)
@@ -153,6 +151,13 @@ def getSaved(conn, uid):
     curs = dbi.dictCursor(conn)
     curs.execute('''SELECT * FROM Saves WHERE uid = %s''', [uid])
     return curs.fetchall()
+
+# edit a review by its uid 
+def editReview(conn, uid, rmID, rating, review):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''update Reviews set uid=%s, rmID=%s, rating=%s, review=%s''', 
+                        [uid, rmID, rating, review])
+
 #def getUsersforRoom(conn, rmID):
    # curs = dbi.dictCursor(conn)
 	#curs.execute('''select * from Users where uid=%s''', [uid]) 
