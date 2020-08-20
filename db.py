@@ -81,19 +81,6 @@ def getQueryReviewSortByRating(conn, query):
                     '%'+query+'%', '%'+query+'%'])
     return curs.fetchall()
 
-# delete a post in the db 
-def deleteReview(conn, rid):
-    curs = dbi.dictCursor(conn)
-    curs.execute('''delete from Reviews where pid = %s''', [rid])
-
-# edit a post by its pid. can edit pname, restaurant, review
-#fix
-def editReview(conn, pid, pname, restaurant, location, rating, price, review):
-    curs = dbi.dictCursor(conn)
-    curs.execute('''update Posts set pname = %s, restaurant = %s, location=%s,
-                        rating=%s, price=%s, review=%s where pid = %s''', 
-                        [pname, restaurant, location, rating, price, review, pid])
-
 #insert everything but filename and return the pid of the inserted image
 #FIX
 def insertReview(conn, uid, rmID, rating, review, imgPath):
@@ -153,10 +140,14 @@ def getSaved(conn, uid):
     return curs.fetchall()
 
 # edit a review by its uid 
-def editReview(conn, uid, rmID, rating, review):
+def editReview(conn, uid, rating, review):
     curs = dbi.dictCursor(conn)
-    curs.execute('''update Reviews set uid=%s, rmID=%s, rating=%s, review=%s''', 
-                        [uid, rmID, rating, review])
+    curs.execute('''update Reviews set uid=%s, rating=%s, review=%s''', 
+                        [uid, rating, review])
+
+def deleteReview(conn, uid, rmID):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''delete from Reviews where uid = %s and rmID = %s''', [uid, rmID])
 
 #def getUsersforRoom(conn, rmID):
    # curs = dbi.dictCursor(conn)

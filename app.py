@@ -253,27 +253,28 @@ def Unsave(rmID):
         return jsonify( {'error': True, 'err': str(err) } )
 
 
-@app.route('/editReview/', methods=["POST"])
-def edit(): 
-    
+@app.route('/editReview/<rmID>', methods=["POST"])
+def edit(rmID): 
+    print("hello, it's me")
     conn = db.getConn(DB)
     username = session['CAS_USERNAME']
-    roomCode = request.form.get("rCode")
-    roomNum = request.form.get("rNum")
     rating = request.form.get("rating")
     review = request.form.get("review")
-    rmID = roomCode + roomNum
     uid = db.getUid(conn, username)
-    try:
-        db.editReview(db.getConn(DB), uid, rmID, rating, review)
-
-    except Exception as err:
-        print("error editing review")
-        flash("error editing review")
-        return render_template('profile.html')
-
-    flash("Sucessfully edited post")
+    db.editReview(db.getConn(DB), uid, rating, review)
     return redirect(url_for('roomReview', rmID = rmID))
+
+    
+
+#handler for delete review (my room)
+@app.route('/deleteReview/', methods = ["POST"])
+def deleteReview():
+    conn = db.getConn(DB)
+    room = request.form.get('rmID')
+    uid = db.getUid(conn, session['CAS_USERNAME'])
+    db.deleteReview(conn, uid, room)
+    print(room, " review deleted")
+    return redirect(request.referrer)
 
 if __name__ == '__main__':
     import sys, os
