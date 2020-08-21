@@ -149,14 +149,15 @@ def deleteReview():
 @app.route('/changePfp', methods = ["POST"])
 def pic():
     conn = db.getConn(DB)
-    #uid = db.getUid(postconn, username)
-    uid = 1
+    uid = db.getUid(conn, username)
+    #uid = 1
     #upload folder path, and allowed extension of file images
     #check if this exists
-    username = "zwang11"
+    # username = "zwang11"
+    username = session['CAS_USERNAME']
     path = 'static/img/{}'.format(username)
-    print(path)
-    print(os.path.exists(path))
+    # print(path)
+    # print(os.path.exists(path))
     if not os.path.exists(path):
         os.mkdir('static/img/{}'.format(username))
     UPLOAD_FOLDER = 'static/img/{}/'.format(username)
@@ -165,15 +166,13 @@ def pic():
 
     #add code to change file name
     #check allowed files 
-    # def allowed_file(filename):
-    #     return '.' in filename and \
-    #         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    def allowed_file(filename):
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
     file = request.files['newpic']
-    print('here')
     filePath = None
-    #if file and allowed_file(file.filename):
-    if file:
+    if file and allowed_file(file.filename):
         filename = secure_filename(file.filename) #get the filename
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
         filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
