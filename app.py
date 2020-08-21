@@ -2,7 +2,7 @@ from flask import (Flask, render_template, make_response, url_for, request,
                    redirect, flash, session, send_from_directory, Response, jsonify)
 
 
-
+from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 import os
@@ -29,7 +29,10 @@ def profile():
     #uid = get it from session. 
     uid = 1 #temporary.
     rooms = db.getMyRooms(conn, uid)
-    return render_template('profile.html', page_title='Dormir', my_rooms = rooms)   
+    path = db.getPicPath(conn, uid)
+    print(path)
+    #path = "img/incognito.png"
+    return render_template('profile.html', page_title='Dormir', my_rooms = rooms, pic = path)   
 
 @app.route('/upload/', methods=["POST"])
 def upload(): 
@@ -138,10 +141,44 @@ def star():
 def deleteReview():
     conn = db.getConn(DB)
     room = request.form.get('rmID')
-    uid = 1
-    #uid = getUid(conn, session['CAS_USERNAME'])
+    uid = getUid(conn, session['CAS_USERNAME'])
     db.deleteReview(conn, uid, room)
     print(room, " review deleted")
+    return redirect(request.referrer)
+
+@app.route('/changePfp', methods = ["POST"])
+def pic():
+    conn = db.getConn(DB)
+    #uid = db.getUid(postconn, username)
+    uid = 1
+    #upload folder path, and allowed extension of file images
+    #check if this exists
+    username = "zwang11"
+    path = 'static/img/{}'.format(username)
+    print(path)
+    print(os.path.exists(path))
+    if not os.path.exists(path):
+        os.mkdir('static/img/{}'.format(username))
+    UPLOAD_FOLDER = 'static/img/{}/'.format(username)
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
+
+    #add code to change file name
+    #check allowed files 
+    # def allowed_file(filename):
+    #     return '.' in filename and \
+    #         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    file = request.files['newpic']
+    print('here')
+    filePath = None
+    #if file and allowed_file(file.filename):
+    if file:
+        filename = secure_filename(file.filename) #get the filename
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
+        filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
+        db.changePfp(conn, uid, filePath)
+        print('successfully updated.')
     return redirect(request.referrer)
 
 

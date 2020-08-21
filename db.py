@@ -77,3 +77,12 @@ def alreadyStarred(conn, uid, rmID):
 def deleteReview(conn, uid, rmID):
     curs = dbi.dictCursor(conn)
     curs.execute('''delete from Reviews where uid = %s and rmID = %s''', [uid, rmID])
+
+def changePfp(conn, uid, path):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''update Users set profpicPath=%s where uid = %s''', [path, uid])
+
+def getPicPath(conn, uid):
+    curs = dbi.dictCursor(conn)
+    curs.execute(''' select profpicPath from Users where uid = %s''', [uid])
+    return curs.fetchone()
