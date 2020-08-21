@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="y-container homepage-hero" style="background-image: url(static/img/cooldesk.jpg);">
+<div class="y-container homepage-hero" style="background-image: url(static/img/people_hero_img.jpg);">
     <div class="y-container_content">
 
    <!-- <div class="hero-header js-main-header">
@@ -20,6 +20,56 @@
         </div>
     </div> -->
 
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 60%;
+  border: 3px solid #002776;
+  border-right: none;
+  padding: 5px;
+  height: 36px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #002776;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #002776;
+  background: #002776;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+    </style>
 
     <div class="homepage-hero_inner">
         <div class="u-text-centered">
@@ -31,11 +81,16 @@
            <!-- input search bar -->
 
         <div class="home-search">
-            <div class="title">
-            <img src="https://img.icons8.com/ios/50/000000/search--v1.png" style="width: 30px; position:relative;"/>  Search for a Room or Hall </div> 
+            <div class="title" style="margin-right: 540px; text-decoration: underline;">
+            <br>
+              Find a Room or Hall 
+            </div> 
+            <br>
     <form id="search-form" method=POST action="{{url_for('search')}}">
-        <label for="Hall"> Residence Hall: 
-            <select class="required" name="rCode" style="margin-left: 10px;">
+   
+        <div style="margin-right: 464px;"> 
+        <label for="Hall" > Residence Hall: 
+            <select class="required" name="rCode" style="margin-left: 10px; color: #002776">
                 <option value="BAT" name="rCode">BAT</option>
                 <option value="BEB" name="rCode">BEB</option>
                 <option value="CAS" name="rCode">CAS</option>
@@ -59,14 +114,23 @@
                 <option value="TCW" name="rCode">TCW</option>
             </select>
         </label>
-
-        <a style="margin-left: 10px" class= "help" href=" " title="CAS = spanish house, FRH = french house, INS = instead, HEM = hemlock apartments, ORC = orchid apartments, LAK = Lake House, CAS = Casa Cervantes" style="background-color:#FFFFFF;color: blue;text-decoration:none">?</a>
-
-         Room number (optional) <input id="roomnumber" placeholder="318" name="rNum">
-    <!--     <button id="searchbutton" type="submit" name="submit" value="Search">Search</button>
-     -->
-     <button type="button submit" class="btn btn-primary">Search</button>
+            <a style="font-size: 20px;color: #002776; margin-left: 10px" class= "help" href=" " title="CAS = spanish house, FRH = french house, INS = instead, HEM = hemlock apartments, ORC = orchid apartments, LAK = Lake House, CAS = Casa Cervantes" style="background-color:#FFFFFF;color:#002776;text-decoration:none">?</a>
+        
+           
+            <div class="search" style="margin-left: 80%; margin-top: -40px;">
+               <input  id="roomnumber" name="rNum" type="text" class="searchTerm" placeholder="Room number (optional)">
+               <button type="submit" class="searchButton">
+                 <i class="fa fa-search"></i>
+              </button>
+           
+         </div>
+        </div>
+        <!--  Room number (optional) <input style="height: 30px;" id="roomnumber" placeholder="318" name="rNum"> 
+    
+    
+         <button type="button submit" class="btn btn-primary"><img style="height:25px" src="https://img.icons8.com/ios/50/000000/search--v1.png" style="width: 30px; position:relative;"/></button> 
     </form> 
+    <br>
     </div> <!-- end searchform -->
         </div>
                    
@@ -81,7 +145,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<footer>
+<footer style="font-size:10px;">
   <a href="https://icons8.com/icon/132/search">Search, </a> 
   <a href="https://icons8.com/icon/1090/enter"> Login </a> and 
   <a hred="https://img.icons8.com/ios/50/000000/exit.png"> Logout </a> icons by Icons8
@@ -100,6 +164,7 @@
         background-color:#adafb3;
         opacity:90%;
         border-radius: 20px;
+        height: 135px;
     }
 .homepage-hero{
     opacity:80%;
