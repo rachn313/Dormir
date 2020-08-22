@@ -42,6 +42,7 @@ def after_logout():
 application = app
 
 
+
 @app.route('/')
 def index():
     if 'CAS_USERNAME' in session:
@@ -69,6 +70,10 @@ def index():
      #   print(k,' => ',session[k])
     else:
         return render_template('base.html')
+
+@app.route('/team/', methods=["GET"])
+def team():
+    return render_template('team.html')
 
 @app.route('/upload/', methods=["POST"])
 def upload(): 
