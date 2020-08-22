@@ -25,15 +25,23 @@
 <div class="cover">
   <div class="profile-image">
 
-    <img style="width: 200px; height: 200px" src="{{url_for('static', filename='img/default_profilepic.jpg')}}" alt="profile_pic">
+    <img class="avatar" style="width: 200px; height: 200px" src="{{url_for('static', filename=pic.profpicPath)}}" alt="profile_pic">
     </div>
 
-    <p style="font-family: spaceBold; margin-left: -75%; margin-top: 55px;" class="profile-user-name" value="{{username}}">{{username}}</p> 
+    <p style="font-family: spaceBold; margin-left: -75%; margin-top: 75px;" class="profile-user-name" value="{{username}}">{{username}}</p> 
 
+    <div id="edit-pic-form" style="width: 30%;height: 50%;display:none;background-color: #bbcbf2;text-align: center;z-index: 1000;margin-left: 30%;position: fixed;padding-top: 2%;">
+      <form id="pfp" method="POST" action="{{url_for('pic')}}" enctype = "multipart/form-data">
+      <label class="form-options"> Change Profile Picture
+        <input style="margin-left: 10px;" type="file" id="upload-pic" name="newpic">
+      </label>
+       <button type="button submit" class="btn btn-primary" form="pfp">Upload</button>
+        <button type="button" class="btn btn-secondary" id= "hide-form">Cancel</button>
+    </form>
+    </div>
   
-
   <div class="myRoom">
-  	<div class="title" style="padding-right: 37%;"> My Rooms </div>
+  	<div class="title"> My Rooms </div>
   	<div class= "clearFloat" >
 		<div class= "content" id="my-rooms">
       
@@ -42,7 +50,7 @@
 					<div class="column">
             <span style="text-align:right;"> 
               <form class="delete-review-button" action="{{url_for('deleteReview')}}" method=POST>
-                <img src="{{url_for('static', filename='img/close-round-line.png')}}" style="width:25px; height:25px;">
+                <i class="bsc-trash-delete-bin"></i>
                  <input type="hidden" name="rmID" value={{room.rmID}}>
               </form>
             </span>
@@ -51,10 +59,11 @@
 
               <div style="position: relative; padding-top:65px; font-size: 30px;"><a href="{{url_for('roomReview', rmID = room.rmID)}}">{{ room.rmID }}  </a></div> 
              
-                
+                <span>
                   <button type="button" data-toggle="modal" data-target="#edit-modal">  
                     <i class="bsc-edit-write"></i>
-                  </button>  
+                  </button> 
+                </span>
                   
               
              </div>
@@ -312,6 +321,26 @@ body {
     justify-content: flex-start;
 }
 
+.avatar{
+  width: 120px;
+  height: 120px;
+  left:50px;
+  right:50px;
+  margin-top: 50px;
+  position:absolute;
+
+}
+
+#change-pic{
+  opacity: 0;
+  position: absolute;
+  right: 50%;
+  left: 8%;
+  margin-top: 6%;
+  color: #4563d9;
+  transform: translate(-50%, -50%);
+}
+
 </style>
 
 <!-- bootstrap stuff -->
@@ -333,6 +362,39 @@ $(".delete-review-button").click(function(event){
 $("#edit-post-form").on("submit", function(){
 
 });
+
+$(".avatar").hover(
+    function() {
+      $("#change-pic").css("opacity", "1");
+      $(".avatar").css("opacity", "0.3");
+  }, 
+  function() {
+    $("#change-pic").css( "opacity", "0");
+    $(".avatar").css("opacity", "1");
+  });
+
+  $("#change-pic").hover(
+    function(){
+      $(".avatar").css("opacity", "0.3");
+      $("#change-pic").css("opacity", "1");
+    }, 
+
+    function(){
+      $(".avatar").css("opacity", "1");
+      $("#change-pic").css( "opacity", "0");
+    });
+
+  $(".avatar").click(function(){
+      $("#edit-pic-form").css("display", "block");
+  });
+
+   $("#change-pic").click(function(){
+      $("#edit-pic-form").css("display", "block");
+  });
+
+  $("#hide-form").click(function(){
+    $("#edit-pic-form").css("display", "none");
+  });
 </script>
 
 

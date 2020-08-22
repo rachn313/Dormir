@@ -1,4 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet"> 
+<script async src="https://basicons.xyz/embed.js"> </script>
+
 <style>
 html {
   box-sizing: border-box;
@@ -13,6 +16,7 @@ html {
   width: 33.3%;
   margin-bottom: 16px;
   padding: 0 8px;
+  margin-left: 165px;
 }
 
 @media screen and (max-width: 650px) {
@@ -55,6 +59,16 @@ html {
 .button:hover {
   background-color: #555;
 }
+
+h2 {
+  font-family: 'Alata', sans-serif;
+  font-size: 50px;
+  text-align: center;
+}
+
+p {
+  font-family: 'Alata', sans-serif;
+}
 </style>
 
 <h2>The Team</h2>
@@ -64,26 +78,46 @@ html {
 <div class="row">
     <div class="column">
       <div class="card">
-        <img src="{{url_for('static', filename= 'img/rachel_navarrette.jpg')}}" alt="Rachel" style="width:100%">
+        <img src="{{url_for('static', filename= 'img/2.png')}}" alt="Rachel" style="width:100%">
         <div class="container">
-          <h2>Jane Doe</h2>
-          <p class="title">CEO & Founder</p>
-          <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-          <p>example@example.com</p>
-          <p><button class="button">Contact</button></p>
+          <h2>Rachel Navarrette</h2>
+          <p class="title">Founder</p>
+          <p>Rachel is a Computer Science Major, Economics Minor (Class of 2021). She is an aspiring product manager, 
+            interested in the intersection of design, technology, and business. She hopes to share design thinking 
+            and the “entrepreneurship mindset” with the BOW community and give empowerment to women to pursue and 
+            achieve their goals. She is the co-founder of Wellesley in Product, an initiative to build a community 
+            of Wellesley students interested in product as well as Head of Product & Co-Founder at Project W, a community of BOW womxn 
+            interested in entrepreneurship, innovation, and colloboration. 
+          </p>
+          <br>
+          <br>
+          <a href="https://www.linkedin.com/in/rachelnavarrette/"><i style="margin-left: 20px" class="bsc-linkedin-social"></i></a>
+          <a > <i style="margin-left: 100px" class="bsc-facebook-social"></i></a>
+          <i style="margin-left: 100px" class="bsc-instagram-social"></i>
+          <i style="margin-left: 100px" class="bsc-email-message-inbox"></i>
         </div>
       </div>
     </div>
   
     <div class="column">
       <div class="card">
-        <img src="{{url_for('static', filename='img/peggy_wang.jpg')}}" alt="Peggy" style="width:100%">
+        <img src="{{url_for('static', filename='img/1.png')}}" alt="Peggy" style="width:100%">
         <div class="container">
-          <h2>Mike Ross</h2>
-          <p class="title">Art Director</p>
-          <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-          <p>example@example.com</p>
-          <p><button class="button">Contact</button></p>
+          <h2>Peggy Wang</h2>
+          <p class="title">Founder</p>
+          <p>Peggy is a Data Science Major concentrating in Computer Science (Class of 2021). 
+            She loves working with data and is particularly interested in the intersection of data, 
+            statistics, and technology. She hopes to become a Data Scientist one day, focusing on Machine 
+            Learning. She is on the web development team at WHACK (Wellesley College Hackathon) and has worked 
+            on Annotation Studio, a document annotation website, in the past, through a UROP at MIT. She is also involved with the Math and Stats 
+            departments at Wellesley, as a grader and TA.</p>
+          <br>
+          <br>
+          <br>
+          <a href="https://www.linkedin.com/in/peggy-wang-06927b140/"> <i style="margin-left: 20px" class="bsc-linkedin-social"></i></a>
+          <i style="margin-left: 100px" class="bsc-facebook-social"></i>
+          <i style="margin-left: 100px" class="bsc-instagram-social"></i>
+          <i style="margin-left: 100px" class="bsc-email-message-inbox"></i>
         </div>
       </div>
     </div>
