@@ -82,10 +82,12 @@ def upload():
     username = session['CAS_USERNAME']
     postconn = db.getConn(DB)
     uid = db.getUid(postconn, username)
+    if db.checkReview(postconn, uid, rmID):
+        flash('Already posted a review. Go to your profile to edit your review!')
+        return redirect(url_for('index'))
     #upload folder path, and allowed extension of file images
     #check if this exists
     path = 'static/img/{}'.format(username)
-    print(os.path.isfile(path))
     if not os.path.exists(path):
         os.mkdir('static/img/{}'.format(username))
     UPLOAD_FOLDER = 'static/img/{}/'.format(username)
@@ -98,13 +100,21 @@ def upload():
         return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+    uid = db.getUid(postconn, username)
     file = request.files['upload']
+    print("FILE:")
+    print(file)
+    if file.filename == '': #check if they uploaded an img
+        filePath = 'NA'
+        db.insertReview(postconn, uid, rmID, rating, review, filePath)
+        return redirect(url_for('roomReview', rmID = rmID))
+
     filePath = None
     if file and allowed_file(file.filename):
             filename = secure_filename(file.filename) #get the filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
             filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
-            db.insertReview(postconn, 1, rmID, rating, review, filePath)
+            db.insertReview(postconn, uid, rmID, rating, review, filePath)
             return redirect(url_for('roomReview', rmID = rmID))
     
     return redirect(url_for('index'))

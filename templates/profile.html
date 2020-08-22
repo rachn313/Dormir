@@ -28,7 +28,7 @@
     <img style="width: 200px; height: 200px" src="{{url_for('static', filename='img/default_profilepic.jpg')}}" alt="profile_pic">
     </div>
 
-    <p style="font-family: spaceBold; margin-left: -80%; margin-top: 40px;" class="profile-user-name" value="{{username}}">{{username}}</p> 
+    <p style="font-family: spaceBold; margin-left: -75%; margin-top: 55px;" class="profile-user-name" value="{{username}}">{{username}}</p> 
 
   
 
@@ -76,7 +76,7 @@
                     <!-- rating -->
                     <div class="form-group form-inline">
                         <label class="form-options">Dormir Rating </label>
-                            <label style="margin-left: 10px;" class="radio-inline"><input type="radio" value="1" name="rating">1</label>
+                            <label style="margin-left: 10px;" class="radio-inline"><input type="radio" value="1" name="rating" required>1</label>
                             <label class="radio-inline"><input type="radio" value="2" name="rating">2</label>
                             <label class="radio-inline"><input type="radio" value="3" name="rating">3</label>
                             <label class="radio-inline"><input type="radio" value="4" name="rating">4</label>
@@ -88,7 +88,7 @@
                     </label>
                     <br>
                     <br>
-                      <textarea style="margin-left: 10px; border: 2px solid black" class="radio-inline" placeholder="{{room.review}}" class="form-control" rows="5" cols="45" name="review" maxlength="500">{{room.review}}</textarea>
+                      <textarea style="border: 2px solid black" class="radio-inline" placeholder="{{room.review}}" class="form-control" rows="5" cols="45" name="review" maxlength="500">{{room.review}}</textarea>
                 
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

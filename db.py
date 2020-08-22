@@ -81,8 +81,13 @@ def getQueryReviewSortByRating(conn, query):
                     '%'+query+'%', '%'+query+'%'])
     return curs.fetchall()
 
+#check if the review exists
+def checkReview(conn, uid,rmID):
+    curs = dbi.cursor(conn)
+    curs.execute('''select * from Reviews where rmID=%s and uid=%s''', [rmID, uid])
+    return True if curs.fetchone() else False
+
 #insert everything but filename and return the pid of the inserted image
-#FIX
 def insertReview(conn, uid, rmID, rating, review, imgPath):
     #add to post table
     curs = dbi.dictCursor(conn)

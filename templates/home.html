@@ -7,7 +7,10 @@
 {{super()}}
 {% endblock %}
 
+
 {% block content %}
+
+
 <div class="y-container homepage-hero" style="background-image: url(static/img/people_hero_img.jpg);">
     <div class="y-container_content">
 
@@ -140,6 +143,7 @@ body{
     </div>
     </div>
 </div>
+
 <!-- bootstrap stuff -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -150,6 +154,17 @@ body{
   <a href="https://icons8.com/icon/1090/enter"> Login </a> and 
   <a hred="https://img.icons8.com/ios/50/000000/exit.png"> Logout </a> icons by Icons8
   <span>Photo by <a href="https://unsplash.com/@hutomoabrianto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hutomo Abrianto</a> on <a href="https://unsplash.com/s/photos/bedroom?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+  <br>
+  <br>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <p style="font-size: 20px;color: red; font-weight: bold; margin-left: 27%;">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  
+
 </footer>
 
 <style>
