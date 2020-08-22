@@ -132,17 +132,50 @@ def upload():
 
 @app.route('/profile/')
 def profile():
-    conn = db.getConn(DB)
     if session['CAS_USERNAME']:
-    #    return redirect(url_for("profile"))
-        user = session['CAS_USERNAME']
-        uid = db.getUid(conn, user)
-        myRooms = db.getMyRooms(conn, uid)
-        starredRooms = db.getSaved(conn, uid)
-        return render_template('profile.html', page_title='Dormir', 
-            my_rooms = myRooms, starred_rooms = starredRooms, username = user)   
+        conn = db.getConn(DB)
+        username = session['CAS_USERNAME']
+        uid = db.getUid(conn, username)
+        rooms = db.getMyRooms(conn, uid)
+        path = db.getPicPath(conn, uid)
+        savedRooms = db.getSaved(conn, uid)
+        return render_template('profile.html', page_title='Dormir', my_rooms = rooms, pic = path, username = username, starred_rooms = savedRooms) 
     else:
         return render_template('base.html')
+
+@app.route('/changePfp', methods = ["POST"])
+def pic():
+    conn = db.getConn(DB)
+    username = session['CAS_USERNAME']
+    uid = db.getUid(conn, username)
+    #uid = 1
+    #upload folder path, and allowed extension of file images
+    #check if this exists
+    # username = "zwang11"
+    
+    path = 'static/img/{}'.format(username)
+    # print(path)
+    # print(os.path.exists(path))
+    if not os.path.exists(path):
+        os.mkdir('static/img/{}'.format(username))
+    UPLOAD_FOLDER = 'static/img/{}/'.format(username)
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
+
+    #add code to change file name
+    #check allowed files 
+    def allowed_file(filename):
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    file = request.files['newpic']
+    filePath = None
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename) #get the filename
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
+        filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
+        db.changePfp(conn, uid, filePath)
+    return redirect(request.referrer)
 
 #handler for searching
 @app.route('/roomsearch/', methods=["POST"])
