@@ -21,6 +21,18 @@ def getUid(conn, username):
     result = curs.fetchone()
     return result['uid']
 
+def getUsername(conn, uid):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''select username from Users where uid = %s''', [uid])
+    result = curs.fetchone()
+    return result['username']
+
+def getUidwithRmID(conn, rmID):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''select uid from Reviews where rmID = %s''', [rmID])
+    result = curs.fetchone()
+    return result['uid']
+
 # gets all reviews
 def getAllReviews(conn):
     ''' get all the info for each post in the Reviews table'''

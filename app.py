@@ -71,7 +71,8 @@ def index():
     else:
         conn = db.getConn(DB)
         random = db.randomReviewoftheDay(conn)
-        print(random)
+        randomUid = db.getUidwithRmID(conn, random.get('rmID'))
+        randomUsername = db.getUsername(conn, randomUid)
         allRooms = db.getallRooms(conn)
         topRooms = {}
         for roomID in allRooms:
@@ -86,7 +87,7 @@ def index():
         #top2Rating = sort_rooms[1][1]
         #top3 = sort_rooms[2][0]
         #top3Rating = sort_rooms[2][1]
-        return render_template('base.html', random = random, top1 = top1, top1Rating = top1Rating, img1 = img1)
+        return render_template('base.html', random = random, top1 = top1, top1Rating = top1Rating, img1 = img1, randomUsername = randomUsername)
 
 
 @app.route('/team/', methods=["GET"])
