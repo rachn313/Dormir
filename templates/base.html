@@ -3,6 +3,8 @@
 <link rel="stylesheet" type="text/css"
 href="{{url_for('static', filename='home.css')}}">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;700&display=swap" rel="stylesheet"> 
 </head>
 <style>
 .btn {
@@ -53,6 +55,227 @@ body, html {
   font-weight: bold;
 }
 
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  height: 50%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.footer-wrap {
+	background: #f8fafc;
+	border-top: 1px solid #e0e4f6;
+}
+.footer-top .container {
+	border-bottom: 1px solid #e0e4f6;
+	padding-bottom: 20px;
+}
+.f-menu-list {
+	margin-bottom: 20px;
+	padding-top: 30px;
+}
+.f-menu-list .f-menu {
+	float: left;
+	width: 18.75%;
+	padding: 0 15px;
+	margin: 0 0 25px;
+}
+.f-menu-list .f-menu h3 {
+	color: #373d54;
+	font-size: 16px;
+	font-weight: 500;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+}
+.f-menu-list .f-menu ul li a{
+	color: #616161;
+	font-size: 14px;
+	font-weight: 300;
+	padding: 5px 0;
+}
+.f-menu-list .f-menu ul li a i {
+	margin-right: 18px;
+}
+.f-menu-list .f-menu ul li a:hover{
+	background:none;
+	color:#3a89cf;
+}
+.f-menu-list .f-menu ul li a {
+	color: #373d54;
+	background-color: transparent;
+	border-radius: 0;
+}
+.f-menu-list .f-menu ul li a:hover {
+	color: #3a89cf;
+	background-color: transparent;
+}
+.f-menu-list .f-menu ul li.active a {
+	color: #3a89cf;
+}
+.f-subscribe {
+	float: left;
+	width: 25%;
+	padding: 0 15px;
+	margin: 0 0 10px;
+}
+.f-subscribe h3 {
+	color: #373d54;
+	font-size: 16px;
+	font-weight: 500;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+}
+.f-subscribe-form {
+	position: relative;
+}
+.f-subscribe-form input[type=text] {
+	border: 1px solid #e0e4f6;
+	color: #373d54;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	margin-top: 0;
+	outline: none;
+	padding: 7px 50px 7px 12px;
+	width: 100%;
+	max-width: 100%;
+	transition: all 0.2s;
+}
+.f-subscribe-form input[type=text]:focus {
+	border-color: #d1d5e5;
+}
+.f-subscribe-form input[type=text]::-webkit-input-placeholder {
+	color: #c7cbdc;
+}
+.f-subscribe-form input[type=text]::-moz-placeholder {
+	color: #c7cbdc;
+	opacity: 1;
+}
+.f-subscribe-form input[type=text]:-ms-input-placeholder {
+	color: #c7cbdc;
+}
+.f-subscribe-form button {
+	background: #313b54;
+	border: none;
+	border-radius: 0;
+	line-height: 1;
+	padding: 7px 17px 8px;
+	transition: all 0.2s;
+	color: #fff;
+	height: 35px;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.f-subscribe-form button i {
+	font-size: 14px;
+}
+.f-subscribe-form button:hover,
+.f-subscribe-form button:focus {
+	background:#404d6e;
+	color: #fff;
+}
+.f-subscribe p {
+	margin-top: 13px;
+	color: #acadae;
+	font-size: 12px;
+	font-weight: 300;
+}
+.footer-bottom {
+	background: #eff1fa;
+	border-top: 1px solid #e0e4f6;
+}
+.footer-bottom p {
+	color: #373d54;
+	font-size: 14px;
+}
+.footer-bottom p span a {
+	color: #28a906;
+	font-style: italic;
+	text-decoration: underline;
+}
+.footer-copyright {
+	margin: 10px 0 0 15px;
+	float: left;
+}
+.social-icons {
+	text-align: right;
+  float:right;
+	margin: 0;
+}
+.social-icons li a {
+	border: 0 none;
+	border-radius: 0;
+	color: #5f6680;
+	padding:0px;
+}
+.social-icons li{
+	display:inline-block;
+}
+.social-icons li a i {
+	padding: 11px 15px;
+	margin-bottom: -1px;
+	transition: all 0.5s ease 0s;
+	-moz-transition: all 0.5s ease 0s;
+	-webkit-transition: all 0.5s ease 0s;
+	-o-transition: all 0.5s ease 0s;
+}
+.social-icons li a i:hover{
+	color: #fff;
+	transition: all 0.5s ease 0s;
+	-moz-transition: all 0.5s ease 0s;
+	-webkit-transition: all 0.5s ease 0s;
+	-o-transition: all 0.5s ease 0s;
+}
+.social-icons .fa-facebook:hover {
+	background: #0083C9;
+}
+.social-icons .fa-twitter:hover  {
+	background:#5BBCEC;
+}
+.social-icons .fa-linkedin:hover  {
+	background:#FF4518;
+}
+.social-icons .fa-dribbble:hover  {
+	background:#90C9DC;
+}
+.social-icons .fa-google-plus:hover  {
+	background:#CE3C2D;
+}
+.social-icons .fa-instagram:hover  {
+	background:#b4307d;
+}
+.social-icons .fa-vk:hover  {
+	background:#4c75a3;
+}
+@media only screen and (max-width : 768px) {
+  /* Footer */
+    .f-menu-list .f-menu {
+        width: 25%;
+    }
+    .f-subscribe {
+        float: none;
+        clear: both;
+        max-width: 400px;
+        width: 100%;
+    }
+    .f-block-modal-wrap .f-block-modal.f-block-modal-map {
+        width: 420px;
+    }
+    .f-block-modal.f-block-modal-map .allstore-gmap {
+        width: 420px;
+    }
+    /* Footer */
+}
+
 </style>
 <!-- <img style="margin-left: 520px;" src="{{url_for('static', filename='img/Dormir_Logo.png')}}"> -->
 <div class="hero-image">
@@ -67,7 +290,164 @@ body, html {
       <h1 style="font-size:50px">Welcome to Dormir</h1>
       <p>Find the best room for you!</p>
     </div>
+
   </div>
+  <div style="line-height: 1.5; font-size: 20px; margin-top: 100px; margin-left: 250px;width: 1000px">
+    <p style="font-family: 'Quicksand', sans-serif;"> 
+      What is dormir? Find the dorm room perfect for you. Think <b>Yelp</b>, <b>Instagram</b>, and <b>Red Fin</b>, 
+      but for dorm rooms. Find rooms on campus with images and real talk from Wellesley students
+      who have lived in those rooms. Each room review is assigned a <b>dorm building</b>, <b>closest dining hall</b>, 
+      and the <b>average review rating</b>. <b>Rate</b>, <b>add pictures</b>, <b>comment</b> your real thoughts on your dorm room experience. 
+      Using the search bar, you can search by dorm building or specific dorm hall. If no results show,
+      it's because there isn't a review yet!
+      It's super easy to use the platform, just log in with your Wellesley credentials and start searching,
+      reviewing, and bookmarking rooms you like! 
+  
+    </p>
+    
+    <h2 style="text-align: center"> Hot Rooms </h2>
+    <br>
+    <div class="card" style="margin-left: -160px">
+      <img style="margin-left: 35px; height: 300px"src="{{url_for('static', filename='img/1.png')}}" alt="Avatar" style="width:100%">
+      <div class="container">
+        <h4>ROOM ID</h4> 
+        <h4>RATING</h4> 
+      </div>
+    </div>    
+
+    <div class="card" style="margin-left: 31%; margin-top: -43.7%">
+      <img style="margin-left: 35px; height: 300px" src="{{url_for('static', filename='img/1.png')}}" alt="Avatar" style="width:100%;">
+      <div class="container">
+        <h4><b>ROOM ID</b></h4> 
+        <p>RATING</p> 
+      </div>
+    </div>   
+
+    <div class="card" style="margin-left: 78%; margin-top: -43.7%">
+      <img style="margin-left: 35px; height: 300px" src="{{url_for('static', filename='img/1.png')}}" alt="Avatar" style="width:100%">
+      <div class="container">
+        <h4><b>ROOM ID</b></h4> 
+        <p>RATING</p> 
+      </div>
+    </div> 
+    
+    <br>
+    <br>
+
+    <h2 style="text-align: center">Review of the Day</h2>
+    <br>
+    <div class="card" style="margin-left:310px">
+      <img style="width: 400px;height: 300px" src="{{url_for('static', filename='img/1.png')}}" alt="Avatar" style="width:100%">
+      <div class="container">
+        <h4><b>ROOM ID</b></h4> 
+        <p>RATING</p> 
+      </div>
+    </div> 
+    <br>
+    <br>
+  </div>
+  
+  <footer class="footer-wrap">
+    <div class="container f-menu-list">
+          <div class="row">
+              <div class="f-menu">
+                  <h3>
+                      About us
+                  </h3>
+                  <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="#">Home</a></li>
+                      <li><a href="#">Catalog</a></li>
+                      <li><a href="#">Elements</a></li>
+                      <li><a href="#">Blog</a></li>
+                      <li><a href="#">Contacts</a></li>
+                  </ul>
+              </div>
+              <div class="f-menu">
+                  <h3>
+                      Shop
+                  </h3>
+                  <ul class="nav nav-pills nav-stacked">
+                      <li><a href="#">Women</a></li>
+                      <li><a href="#">Men</a></li>
+                      <li><a href="#">Kids</a></li>
+                      <li><a href="#">Shoes</a></li>
+                      <li><a href="#">Accessories</a></li>
+                  </ul>
+              </div>
+              <div class="f-menu">
+                  <h3>
+                      Information
+                  </h3>
+                  <ul class="nav nav-pills nav-stacked">
+                      <li><a href="#">Blog</a></li>
+                      <li><a href="#">News</a></li>
+                      <li><a href="#">Reviews</a></li>
+                      <li><a href="#">Articles</a></li>
+                      <li><a href="#">Contacts</a></li>
+                  </ul>
+              </div>
+              <div class="f-menu">
+                  <h3>
+                      Pages
+                  </h3>
+                  <ul class="nav nav-pills nav-stacked">
+                      <li><a href="#">About us</a></li>
+                      <li><a href="#">Delivery</a></li>
+                      <li><a href="#">Guarantees</a></li>
+                      <li><a href="#">Contacts</a></li>
+                      <li><a href="#">Page 404</a></li>
+                  </ul>
+              </div>
+              <div class="f-subscribe">
+                  <h3>Subscribe to news</h3>
+                  <form class="f-subscribe-form" action="#">
+                      <input placeholder="Your e-mail" type="text">
+                      <button type="submit"><i class="fa fa-paper-plane"></i></button>
+                  </form>
+                  <p>Enter your email address if you want to receive our newsletter. Subscribe now!</p>
+              </div>
+          </div>
+      </div>
+  
+      <div class="footer-bottom">
+          <div class="container">
+              <div class="row">
+                  <ul class="social-icons nav navbar-nav">
+                      <li>
+                          <a href="http://facebook.com/" rel="nofollow" target="_blank">
+                              <i class="fa fa-facebook"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="http://google.com/" rel="nofollow" target="_blank">
+                              <i class="fa fa-google-plus"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="http://twitter.com/" rel="nofollow" target="_blank">
+                              <i class="fa fa-twitter"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="http://vk.com/" rel="nofollow" target="_blank">
+                              <i class="fa fa-vk"></i>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="http://instagram.com/" rel="nofollow" target="_blank">
+                              <i class="fa fa-instagram"></i>
+                          </a>
+                      </li>
+                  </ul>
+                  <div class="footer-copyright">
+                      <a href="#">Scanfcode</a> © Copyright 2017
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+  </footer>
+  
 
 <!-- <form method="GET" action="{{url_for('cas.login')}}"><button  class="button-container btn">login</button></form>-->
 
