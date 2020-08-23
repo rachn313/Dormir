@@ -37,7 +37,7 @@ def logged_in():
 @app.route('/after_logout/')
 def after_logout():
     flash('successfully logged out!')
-    return render_template('base.html') 
+    return redirect( url_for('base') )
 
 application = app
 
@@ -69,7 +69,25 @@ def index():
     #for k in list(session.keys()):
      #   print(k,' => ',session[k])
     else:
-        return render_template('base.html')
+        conn = db.getConn(DB)
+        random = db.randomReviewoftheDay(conn)
+        print(random)
+        allRooms = db.getallRooms(conn)
+        topRooms = {}
+        for roomID in allRooms:
+            rating = db.getAverageRating(conn,roomID.get('rmID'))
+            topRooms[roomID.get('rmID')] = rating.get('rate')
+        sort_rooms = sorted(topRooms.items(), key=lambda x: x[1], reverse=True)
+ 
+        top1 = sort_rooms[0][0]
+        top1Rating = sort_rooms[0][1]
+        img1 = db.getImgfromRmID(conn, top1)
+         #top2 = sort_rooms[1][0]
+        #top2Rating = sort_rooms[1][1]
+        #top3 = sort_rooms[2][0]
+        #top3Rating = sort_rooms[2][1]
+        return render_template('base.html', random = random, top1 = top1, top1Rating = top1Rating, img1 = img1)
+
 
 @app.route('/team/', methods=["GET"])
 def team():
@@ -141,7 +159,7 @@ def profile():
         savedRooms = db.getSaved(conn, uid)
         return render_template('profile.html', page_title='Dormir', my_rooms = rooms, pic = path, username = username, starred_rooms = savedRooms) 
     else:
-        return render_template('base.html')
+        return redirect( url_for('base') )
 
 @app.route('/changePfp', methods = ["POST"])
 def pic():
@@ -205,7 +223,7 @@ def roomResults(searched):
         else:
             return redirect(url_for('roomReview', rmID = searched))
     else: #not logged in:
-        return render_template('base.html')
+        return redirect(url_for('index'))
 
 @app.route('/reviews/<rmID>')
 def roomReview(rmID):
@@ -271,7 +289,7 @@ def roomReview(rmID):
         r = db.getAverageRating(conn, rmID)
         return render_template('review.html', rmID = rmID, reviews = result, avg = r, username = username, building = building, diningHall = diningHall, saved = saved)    
     else:
-        return render_template('base.html')
+        return redirect(url_for('index'))
 
 @app.route('/saved/<rmID>', methods= ["POST"])   
 def Save(rmID):

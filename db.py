@@ -114,13 +114,19 @@ def getRoomInfo(conn, rmID):
 
 def getAverageRating(conn, rmID):
   curs = dbi.dictCursor(conn)
-  curs.execute(''' select avg(rating) as rate from Reviews where rmID = %s group by rmID''', [rmID])
+  curs.execute('''select avg(rating) as rate from Reviews where rmID = %s group by rmID''', [rmID])
   return curs.fetchone()
+
+def getallRooms(conn):
+    curs = dbi.dictCursor(conn)
+    curs.execute(''' select rmID from Reviews ''')
+    return curs.fetchall()
 
 def getMyRooms(conn, uid):
 	curs = dbi.dictCursor(conn)
 	curs.execute('''select * from Reviews where uid=%s''', [uid]) 
 	return curs.fetchall()
+
 def save_trueFalse(conn, rmID, uid):
     '''Are you following this profile? Returns true or false'''
     curs = dbi.cursor(conn)
@@ -162,6 +168,17 @@ def getPicPath(conn, uid):
     curs = dbi.dictCursor(conn)
     curs.execute(''' select profpicPath from Users where uid = %s''', [uid])
     return curs.fetchone()
+
+def randomReviewoftheDay(conn):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''select * from Reviews order by rand() limit 1''')
+    return curs.fetchone()
+
+def getImgfromRmID(conn, rmID):
+    curs = dbi.dictCursor(conn)
+    curs.execute('''select imgPath from Reviews where rmID=%s;''', [rmID])
+    return curs.fetchone()
+
 #def getUsersforRoom(conn, rmID):
    # curs = dbi.dictCursor(conn)
 	#curs.execute('''select * from Users where uid=%s''', [uid]) 

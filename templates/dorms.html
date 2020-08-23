@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+      <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox" data-gallery="gallery" class="col-md-4">
+        <img src="https://unsplash.it/600.jpg?image=251" class="img-fluid rounded"> Beebe Hall
+      </a>
+      <a href="https://unsplash.it/1200/768.jpg?image=252" data-toggle="lightbox" data-gallery="gallery" class="col-md-4">
+        <img style="margin-left: 32%; margin-top: -36.58%;" src="https://unsplash.it/600.jpg?image=252" class="img-fluid rounded">
+      </a>
+      <a href="https://unsplash.it/1200/768.jpg?image=253" data-toggle="lightbox" data-gallery="gallery" class="col-md-4">
+        <img style="margin-left: 64%; margin-top: -43%;" src="https://unsplash.it/600.jpg?image=253" class="img-fluid rounded">
+      </a>
+    </div>
+    <div class="row">
+      <a href="https://unsplash.it/1200/768.jpg?image=254" data-toggle="lightbox" data-gallery="gallery" class="col-md-4">
+        <img src="https://unsplash.it/600.jpg?image=254" class="img-fluid rounded">
+      </a>
+      <a href="https://unsplash.it/1200/768.jpg?image=255" data-toggle="lightbox" data-gallery="gallery" class="col-md-4">
+        <img src="https://unsplash.it/600.jpg?image=255" class="img-fluid rounded">
+      </a>
+      <a href="https://unsplash.it/1200/768.jpg?image=256" data-toggle="lightbox" data-gallery="gallery" class="col-md-4">
+        <img src="https://unsplash.it/600.jpg?image=256" class="img-fluid rounded">
+      </a>
+    </div>
+  </div>
+
+  <style>
+      .row {
+        margin: 50px;
+        margin-left:150px;
+        margin-right: 10px;
+    }
+    .img-fluid {
+            width: 30%;
+        }
+  </style>
+  <script>
+      $(document).on("click", '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+        });
+  </script>
