@@ -149,12 +149,12 @@ def deleteReview():
 @app.route('/changePfp', methods = ["POST"])
 def pic():
     conn = db.getConn(DB)
-    uid = db.getUid(conn, username)
-    #uid = 1
+    #uid = db.getUid(conn, username)
+    uid = 1
     #upload folder path, and allowed extension of file images
     #check if this exists
-    # username = "zwang11"
-    username = session['CAS_USERNAME']
+    username = "zwang11"
+    #username = session['CAS_USERNAME']
     path = 'static/img/{}'.format(username)
     # print(path)
     # print(os.path.exists(path))

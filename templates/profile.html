@@ -19,7 +19,12 @@
 
 
   <div class="profile">
+    {% if pic.profpicPath %}
      <img class="avatar" src="{{url_for('static', filename=pic.profpicPath)}}" alt="profile_pic">
+    {% else %}
+    <img class="avatar" src="{{url_for('static', filename='img/incognito.png')}}" alt="profile_pic">
+
+    {% endif %}
     <span id="change-pic"> Change </span>
   </div>
   <div class="username">@pegolegoeggo <br>
