@@ -6,7 +6,7 @@ create table Users(
        uid int auto_increment,
        fullname varchar(50) not null,
        username varchar(20) not null,
-       profpicPath varchar(50),
+       profpicPath varchar(50) default 'img/default_profilepic.jpg',
        unique(username),
        index(username),
        primary key (uid)
