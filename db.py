@@ -103,10 +103,14 @@ def checkReview(conn, uid,rmID):
 def insertReview(conn, uid, rmID, rating, review, imgPath):
     #add to post table
     curs = dbi.dictCursor(conn)
-    curs.execute(
-        '''insert into Reviews(uid, rmID, rating, review, imgPath, time) 
-        values (%s,%s,%s,%s,%s, now())''',
-        [uid, rmID, rating, review, imgPath])
+    try:
+        curs.execute(
+            '''insert into Reviews(uid, rmID, rating, review, imgPath, time) 
+            values (%s,%s,%s,%s,%s, now())''',
+            [uid, rmID, rating, review, imgPath])
+    except Exception as err:
+        print(repr(err))
+        return None
    
 
 def getSearchedRooms(conn, rmID):
@@ -148,8 +152,12 @@ def save_trueFalse(conn, rmID, uid):
 def addSave(conn, rmID, uid): 
     '''adds a like to the post into the Likes table'''
     curs = dbi.dictCursor(conn)
-    curs.execute('''INSERT INTO Saves(rmID, uid)
+    try:
+        curs.execute('''INSERT INTO Saves(rmID, uid)
                                 VALUES(%s, %s)''', [rmID, uid])
+    except Exception as err:
+        print(repr(err))
+        return None
                                 
 def removeSave(conn, rmID, uid):
     '''removes a like to the post from the Likes table ''' 

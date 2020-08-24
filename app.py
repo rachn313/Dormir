@@ -45,50 +45,53 @@ application = app
 
 @app.route('/')
 def index():
-    if 'CAS_USERNAME' in session:
-        username = session['CAS_USERNAME']
-        profpicPath = 'img/default_profilepic.jpg'
-        username = session['CAS_USERNAME']
-        attribs = session['CAS_ATTRIBUTES']
-        firstName = attribs['cas:givenName']
-        lastName = attribs['cas:sn']
-        fullname = firstName + ' ' + lastName
-        conn = db.getConn(DB)
-        curs = dbi.cursor(conn)
-        curs.execute('''SELECT * FROM Users WHERE username = %s''', [username])
-        row = curs.fetchone()
-        if row is None:
-            curs.execute('''INSERT INTO Users(fullname, username, profpicPath) VALUES(%s,%s,%s)''', [fullname, username, profpicPath])
-        curs.execute('select last_insert_id()')
-        row = curs.fetchone()
-        uid = row[0]
-        session['username'] = username
-        session['uid'] = uid
-        return render_template('home.html')
-    #print('Session keys: ',list(session.keys()))
-    #for k in list(session.keys()):
-     #   print(k,' => ',session[k])
-    else:
-        conn = db.getConn(DB)
-        random = db.randomReviewoftheDay(conn)
-        randomUid = db.getUidwithRmID(conn, random.get('rmID'))
-        randomUsername = db.getUsername(conn, randomUid)
-        allRooms = db.getallRooms(conn)
-        topRooms = {}
-        for roomID in allRooms:
-            rating = db.getAverageRating(conn,roomID.get('rmID'))
-            topRooms[roomID.get('rmID')] = rating.get('rate')
-        sort_rooms = sorted(topRooms.items(), key=lambda x: x[1], reverse=True)
- 
-        top1 = sort_rooms[0][0]
-        top1Rating = sort_rooms[0][1]
-        img1 = db.getImgfromRmID(conn, top1)
-         #top2 = sort_rooms[1][0]
-        #top2Rating = sort_rooms[1][1]
-        #top3 = sort_rooms[2][0]
-        #top3Rating = sort_rooms[2][1]
-        return render_template('base.html', random = random, top1 = top1, top1Rating = top1Rating, img1 = img1, randomUsername = randomUsername)
-
+    try: 
+        if 'CAS_USERNAME' in session:
+            username = session['CAS_USERNAME']
+            profpicPath = 'img/default_profilepic.jpg'
+            username = session['CAS_USERNAME']
+            attribs = session['CAS_ATTRIBUTES']
+            firstName = attribs['cas:givenName']
+            lastName = attribs['cas:sn']
+            fullname = firstName + ' ' + lastName
+            conn = db.getConn(DB)
+            curs = dbi.cursor(conn)
+            curs.execute('''SELECT * FROM Users WHERE username = %s''', [username])
+            row = curs.fetchone()
+            if row is None:
+                curs.execute('''INSERT INTO Users(fullname, username, profpicPath) VALUES(%s,%s,%s)''', [fullname, username, profpicPath])
+            curs.execute('select last_insert_id()')
+            row = curs.fetchone()
+            uid = row[0]
+            session['username'] = username
+            session['uid'] = uid
+            return render_template('home.html')
+        #print('Session keys: ',list(session.keys()))
+        #for k in list(session.keys()):
+         #   print(k,' => ',session[k])
+        else:
+            conn = db.getConn(DB)
+            random = db.randomReviewoftheDay(conn)
+            randomUid = db.getUidwithRmID(conn, random.get('rmID'))
+            randomUsername = db.getUsername(conn, randomUid)
+            allRooms = db.getallRooms(conn)
+            topRooms = {}
+            for roomID in allRooms:
+                rating = db.getAverageRating(conn,roomID.get('rmID'))
+                topRooms[roomID.get('rmID')] = rating.get('rate')
+            sort_rooms = sorted(topRooms.items(), key=lambda x: x[1], reverse=True)
+     
+            top1 = sort_rooms[0][0]
+            top1Rating = sort_rooms[0][1]
+            img1 = db.getImgfromRmID(conn, top1)
+             #top2 = sort_rooms[1][0]
+            #top2Rating = sort_rooms[1][1]
+            #top3 = sort_rooms[2][0]
+            #top3Rating = sort_rooms[2][1]
+            return render_template('base.html', random = random, top1 = top1, top1Rating = top1Rating, img1 = img1, randomUsername = randomUsername)
+    except Exception as err:
+        flash('login error ' + str(err))
+        return redirect(request.referrer)
 
 @app.route('/team/', methods=["GET"])
 def team():
@@ -106,47 +109,48 @@ def upload():
     username = session['CAS_USERNAME']
     postconn = db.getConn(DB)
     uid = db.getUid(postconn, username)
-    if db.checkReview(postconn, uid, rmID):
-        flash('Already posted a review. Go to your profile to edit your review!')
-        return redirect(url_for('index'))
-    #upload folder path, and allowed extension of file images
-    #check if this exists
-    path = 'static/img/{}'.format(username)
-    if not os.path.exists(path):
-        os.mkdir('static/img/{}'.format(username))
-    UPLOAD_FOLDER = 'static/img/{}/'.format(username)
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
+    try: 
+        if db.checkReview(postconn, uid, rmID):
+            flash('Already posted a review. Go to your profile to edit your review!')
+            return redirect(url_for('index'))
+        #upload folder path, and allowed extension of file images
+        #check if this exists
+        path = 'static/img/{}'.format(username)
+        if not os.path.exists(path):
+            os.mkdir('static/img/{}'.format(username))
+        UPLOAD_FOLDER = 'static/img/{}/'.format(username)
+        ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
-    #add code to change file name
-    #check allowed files 
-    def allowed_file(filename):
-        return '.' in filename and \
-            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        #add code to change file name
+        #check allowed files 
+        def allowed_file(filename):
+            return '.' in filename and \
+                filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-    uid = db.getUid(postconn, username)
-    file = request.files['upload']
-    print("FILE:")
-    print(file)
-    if file.filename == '': #check if they uploaded an img
-        filePath = 'NA'
-        db.insertReview(postconn, uid, rmID, rating, review, filePath)
-        return redirect(url_for('roomReview', rmID = rmID))
-
-    filePath = None
-    if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename) #get the filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
-            filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
+        uid = db.getUid(postconn, username)
+        file = request.files['upload']
+        print("FILE:")
+        print(file)
+        if file.filename == '': #check if they uploaded an img
+            filePath = 'NA'
             db.insertReview(postconn, uid, rmID, rating, review, filePath)
             return redirect(url_for('roomReview', rmID = rmID))
-    
-    return redirect(url_for('index'))
 
-    #except Exception as err:
+        filePath = None
+        if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename) #get the filename
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
+                filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
+                db.insertReview(postconn, uid, rmID, rating, review, filePath)
+                return redirect(url_for('roomReview', rmID = rmID))
+        
+        return redirect(url_for('index'))
+
+    except Exception as err:
     #     print("upload failed because " + str(err))
-    #     flash('Upload failed {why}'.format(why=err))
-    #     return redirect( url_for('index') )
+        flash('Upload failed {why}'.format(why=err))
+         return redirect(request.referrer)
 
 
 @app.route('/profile/')
@@ -175,26 +179,30 @@ def pic():
     path = 'static/img/{}'.format(username)
     # print(path)
     # print(os.path.exists(path))
-    if not os.path.exists(path):
-        os.mkdir('static/img/{}'.format(username))
-    UPLOAD_FOLDER = 'static/img/{}/'.format(username)
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
+    try: 
+        if not os.path.exists(path):
+            os.mkdir('static/img/{}'.format(username))
+        UPLOAD_FOLDER = 'static/img/{}/'.format(username)
+        ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
-    #add code to change file name
-    #check allowed files 
-    def allowed_file(filename):
-        return '.' in filename and \
-            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        #add code to change file name
+        #check allowed files 
+        def allowed_file(filename):
+            return '.' in filename and \
+                filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-    file = request.files['newpic']
-    filePath = None
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename) #get the filename
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
-        filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
-        db.changePfp(conn, uid, filePath)
-    return redirect(request.referrer)
+        file = request.files['newpic']
+        filePath = None
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename) #get the filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
+            filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
+            db.changePfp(conn, uid, filePath)
+        return redirect(request.referrer)
+    except Exception as err:
+        flash(repr(err))
+        return redirect(request.referrer)
 
 #handler for searching
 @app.route('/roomsearch/', methods=["POST"])
@@ -228,69 +236,73 @@ def roomResults(searched):
 
 @app.route('/reviews/<rmID>')
 def roomReview(rmID):
-    if 'CAS_USERNAME' in session:
-        conn = db.getConn(DB)
-        result = db.getRoomInfo(conn, rmID) 
-        building = ''
-        print("RMID first three letters")
-        print(rmID[0:3])
-        if rmID[0:3] == 'MCA':
-            building = 'McAfee'
-        elif rmID[0:3] == 'BEB':
-            building = 'Beebe'
-        elif rmID[0:3] == 'BAT':
-            building = 'Bates'
-        elif rmID[0:3] == 'CAS':
-            building = 'Casa Cervantes'
-        elif rmID[0:3] == 'CAZ':
-            building = 'Cazenove'
-        elif rmID[0:3] == 'CLA':
-            building = 'Claflin'
-        elif rmID[0:3] == 'DAV':
-            building = 'Stone-DAVIS'
-        elif rmID[0:3] == 'DOW':
-            building = 'Dower'
-        elif rmID[0:3] == 'FRE':
-            building = 'Freeman'
-        elif rmID[0:3] == 'FRH':
-            building = 'French House'
-        elif rmID[0:3] == 'HEM':
-            building = 'Hemlock Apartments'
-        elif rmID[0:3] == 'INS':
-            building = 'Instead'
-        elif rmID[0:3] == 'LAK':
-            building = 'Lakehouse'
-        elif rmID[0:3] == 'MUN':
-            building = 'Munger'
-        elif rmID[0:3] == 'ORC':
-            building = 'Orchid Apartments'
-        elif rmID[0:3] == 'POM':
-            building = 'Pomeroy'
-        elif rmID[0:3] == 'SEV':
-            building = 'Severance'
-        elif rmID[0:3] == 'SHA':
-            building = 'Shafer'
-        elif rmID[0:3] == 'STO':
-            building = 'STONE-davis'
-        elif rmID[0:3] == 'TCE':
-            building = 'Tower Court'
-        elif rmID[0:3] == 'TCW':
-            building = 'Tower Court'
-        
-        if (building == 'Tower Court' or building == 'Lakehouse' or building == 'Severance' or building == 'Claflin'):
-            diningHall = 'Lulu/Tower'
-        elif (building == 'Beebe' or building == 'Munger' or building == 'Shafer' or building == 'Pomeroy' or building == 'Cazenove'):
-            diningHall = 'Pomeroy/Lulu'
-        else:
-            diningHall = 'Bates/Stone-Davis'
+    try: 
+        if 'CAS_USERNAME' in session:
+            conn = db.getConn(DB)
+            result = db.getRoomInfo(conn, rmID) 
+            building = ''
+            print("RMID first three letters")
+            print(rmID[0:3])
+            if rmID[0:3] == 'MCA':
+                building = 'McAfee'
+            elif rmID[0:3] == 'BEB':
+                building = 'Beebe'
+            elif rmID[0:3] == 'BAT':
+                building = 'Bates'
+            elif rmID[0:3] == 'CAS':
+                building = 'Casa Cervantes'
+            elif rmID[0:3] == 'CAZ':
+                building = 'Cazenove'
+            elif rmID[0:3] == 'CLA':
+                building = 'Claflin'
+            elif rmID[0:3] == 'DAV':
+                building = 'Stone-DAVIS'
+            elif rmID[0:3] == 'DOW':
+                building = 'Dower'
+            elif rmID[0:3] == 'FRE':
+                building = 'Freeman'
+            elif rmID[0:3] == 'FRH':
+                building = 'French House'
+            elif rmID[0:3] == 'HEM':
+                building = 'Hemlock Apartments'
+            elif rmID[0:3] == 'INS':
+                building = 'Instead'
+            elif rmID[0:3] == 'LAK':
+                building = 'Lakehouse'
+            elif rmID[0:3] == 'MUN':
+                building = 'Munger'
+            elif rmID[0:3] == 'ORC':
+                building = 'Orchid Apartments'
+            elif rmID[0:3] == 'POM':
+                building = 'Pomeroy'
+            elif rmID[0:3] == 'SEV':
+                building = 'Severance'
+            elif rmID[0:3] == 'SHA':
+                building = 'Shafer'
+            elif rmID[0:3] == 'STO':
+                building = 'STONE-davis'
+            elif rmID[0:3] == 'TCE':
+                building = 'Tower Court'
+            elif rmID[0:3] == 'TCW':
+                building = 'Tower Court'
+            
+            if (building == 'Tower Court' or building == 'Lakehouse' or building == 'Severance' or building == 'Claflin'):
+                diningHall = 'Lulu/Tower'
+            elif (building == 'Beebe' or building == 'Munger' or building == 'Shafer' or building == 'Pomeroy' or building == 'Cazenove'):
+                diningHall = 'Pomeroy/Lulu'
+            else:
+                diningHall = 'Bates/Stone-Davis'
 
-        username = session['CAS_USERNAME']
-        uid = db.getUid(conn, username)
-        saved = db.save_trueFalse(conn, rmID, uid)
-        r = db.getAverageRating(conn, rmID)
-        return render_template('review.html', rmID = rmID, reviews = result, avg = r, username = username, building = building, diningHall = diningHall, saved = saved)    
-    else:
-        return redirect(url_for('index'))
+            username = session['CAS_USERNAME']
+            uid = db.getUid(conn, username)
+            saved = db.save_trueFalse(conn, rmID, uid)
+            r = db.getAverageRating(conn, rmID)
+            return render_template('review.html', rmID = rmID, reviews = result, avg = r, username = username, building = building, diningHall = diningHall, saved = saved)    
+        else:
+            return redirect(url_for('index'))
+    except Exception as err:
+        flash(repr(err))
+        return (redirect(request.referrer))
 
 @app.route('/saved/<rmID>', methods= ["POST"])   
 def Save(rmID):
