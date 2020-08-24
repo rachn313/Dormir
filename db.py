@@ -109,7 +109,7 @@ def insertReview(conn, uid, rmID, rating, review, imgPath):
             values (%s,%s,%s,%s,%s, now())''',
             [uid, rmID, rating, review, imgPath])
     except Exception as err:
-        print(repr(err))
+        #print(repr(err))
         return None
    
 
@@ -156,7 +156,7 @@ def addSave(conn, rmID, uid):
         curs.execute('''INSERT INTO Saves(rmID, uid)
                                 VALUES(%s, %s)''', [rmID, uid])
     except Exception as err:
-        print(repr(err))
+        #print(repr(err))
         return None
                                 
 def removeSave(conn, rmID, uid):
