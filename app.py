@@ -37,7 +37,7 @@ def logged_in():
 @app.route('/after_logout/')
 def after_logout():
     flash('successfully logged out!')
-    return redirect( url_for('base') )
+    return redirect(url_for('index') )
 
 application = app
 
