@@ -10,8 +10,6 @@ app.secret_key = 'rosebud'  # so we can have sessions, which are necessary
 import os
 import dbi
 import imghdr
-import bcrypt
-#import db # database stuff
 import json
 import db
 
@@ -33,11 +31,10 @@ def logged_in():
     flash('successfully logged in!')
     return redirect( url_for('index') )
 
-
 @app.route('/after_logout/')
 def after_logout():
     flash('successfully logged out!')
-    return redirect(url_for('index') )
+    return redirect(url_for('index'))
 
 application = app
 
@@ -65,8 +62,56 @@ def index():
             conn.close()
             return render_template('home.html')
         else:
-            print('hello')
-            return render_template('base.html')      
+            if db.existsReview(conn) == True:
+                randomrmID = db.randomReviewoftheDay(conn)
+                randomRoom = db.getRoomInfo(conn, randomrmID.get('rmID'))
+                allRooms = db.getallRooms(conn)
+                topRooms = {}
+                for roomID in allRooms:
+                    rating = db.getAverageRating(conn,roomID.get('rmID'))
+                    topRooms[roomID.get('rmID')] = rating.get('rate')
+                sort_rooms = sorted(topRooms.items(), key=lambda x: x[1], reverse=True)
+                if len(allRooms) >= 3:
+                    three = True
+                    two = False
+                    one = False 
+                    top1 = sort_rooms[0][0]
+                    top1Rating = sort_rooms[0][1]
+                    img1 = db.getImgfromRmID(conn, top1)
+                    conn.close()
+                    top2 = sort_rooms[1][0]
+                    top2Rating = sort_rooms[1][1]
+                    img2 = db.getImgfromRmID(conn, top2)
+                    top3 = sort_rooms[2][0]
+                    top3Rating = sort_rooms[2][1]
+                    img3 = db.getImgfromRmID(conn, top3)
+                    return render_template('base.html', randomRoom= randomRoom[0], top1 = top1, top1Rating = top1Rating, img1 = img1, top2 = top2, top2Rating = top2Rating, img2 = img2, top3 = top3, top3Rating = top3Rating, img3 = img3, three = three, two = two, one = one)   
+                elif len(allRooms) == 2:
+                    two = True
+                    three = False
+                    one = False
+                    top1 = sort_rooms[0][0]
+                    top1Rating = sort_rooms[0][1]
+                    img1 = db.getImgfromRmID(conn, top1)
+                    conn.close()
+                    top2 = sort_rooms[1][0]
+                    top2Rating = sort_rooms[1][1] 
+                    img2 = db.getImgfromRmID(conn, top2)
+                    return render_template('base.html', randomRoom = randomRoom[0], top1 = top1, top1Rating = top1Rating, img1 = img1, top2 = top2, top2Rating = top2Rating, img2 = img2, two = two, one = one, three = three)   
+                elif len(allRooms) == 1:
+                    one = True
+                    two = False
+                    three = False
+                    top1 = sort_rooms[0][0]
+                    top1Rating = sort_rooms[0][1]
+                    img1 = db.getImgfromRmID(conn, top1)
+                    conn.close()
+                    return render_template('base.html', randomRoom = randomRoom[0], top1 = top1, top1Rating = top1Rating, img1 = img1, one=one, two = two, three = three)
+            else:
+                one = False
+                two = False
+                three = False
+                return render_template('base.html', one = one, two = two, three= three)
     except Exception as err:
         flash('login error ' + str(err))
         return redirect(request.referrer)

@@ -54,6 +54,12 @@ def getSinglePost(conn, rid):
                      from Reviews inner join Users on Users.uid=Reviews.uid where Reviews.rid = %s''', [rid])
     return curs.fetchone()
 
+#is there a review in the db
+def existsReview(conn):
+    curs = dbi.cursor(conn)
+    curs.execute('''select * from Reviews''')
+    return True if curs.fetchone() else False
+
 #check if the review exists
 def checkReview(conn, uid,rmID):
     curs = dbi.cursor(conn)
@@ -152,7 +158,7 @@ def getPicPath(conn, uid):
 
 def randomReviewoftheDay(conn):
     curs = dbi.dictCursor(conn)
-    curs.execute('''select * from Reviews order by rand() limit 1''')
+    curs.execute('''select rmID from Reviews order by rand() limit 1''')
     return curs.fetchone()
 
 def getImgfromRmID(conn, rmID):
