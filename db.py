@@ -54,45 +54,6 @@ def getSinglePost(conn, rid):
                      from Reviews inner join Users on Users.uid=Reviews.uid where Reviews.rid = %s''', [rid])
     return curs.fetchone()
 
-# returns posts where query matches post room id, building, floor, username, name
-#fix this to apply to our table 
-def getQueryReview(conn, query):
-    curs = dbi.dictCursor(conn)
-    curs.execute('''(select * from Posts where pname like %s 
-                            or restaurant like %s or location like %s)
-                    union
-                    (select Posts.* from Posts inner join 
-                            (select pid from Tagpost inner join Tags 
-                            on Tags.tid = Tagpost.tid where Tags.ttype = %s) as p 
-                            on Posts.pid = p.pid)
-                    union
-                    (select Posts.* from Posts inner join (select uid from Users 
-                            where username like %s or fullname like %s) as u
-                            on Posts.uid = u.uid)''',
-                ['%'+query+'%', '%'+query+'%', '%'+query+'%', query, 
-                    '%'+query+'%', '%'+query+'%'])
-    return curs.fetchall() # change to limit x offset y order by time
-
-# returns posts where query matches post name, tag, restaurant, username, fullname
-# sorted by rating
-#FIX
-def getQueryReviewSortByRating(conn, query):
-    curs = dbi.dictCursor(conn)
-    curs.execute('''(select * from Posts where pname like %s 
-                            or restaurant like %s or location like %s)
-                    union
-                    (select Posts.* from Posts inner join 
-                            (select pid from Tagpost inner join Tags 
-                            on Tags.tid = Tagpost.tid where Tags.ttype = %s) as p 
-                            on Posts.pid = p.pid)
-                    union
-                    (select Posts.* from Posts inner join (select uid from Users 
-                            where username like %s or fullname like %s) as u
-                            on Posts.uid = u.uid) order by rating''',
-                ['%'+query+'%', '%'+query+'%', '%'+query+'%', query, 
-                    '%'+query+'%', '%'+query+'%'])
-    return curs.fetchall()
-
 #check if the review exists
 def checkReview(conn, uid,rmID):
     curs = dbi.cursor(conn)

@@ -46,6 +46,7 @@ application = app
 @app.route('/')
 def index():
     try: 
+        conn = db.getConn(DB)
         if 'CAS_USERNAME' in session:
             username = session['CAS_USERNAME']
             profpicPath = 'img/default_profilepic.jpg'
@@ -54,41 +55,35 @@ def index():
             firstName = attribs['cas:givenName']
             lastName = attribs['cas:sn']
             fullname = firstName + ' ' + lastName
-            conn = db.getConn(DB)
             curs = dbi.cursor(conn)
             curs.execute('''SELECT * FROM Users WHERE username = %s''', [username])
             row = curs.fetchone()
             if row is None:
                 curs.execute('''INSERT INTO Users(fullname, username, profpicPath) VALUES(%s,%s,%s)''', [fullname, username, profpicPath])
-            curs.execute('select last_insert_id()')
-            row = curs.fetchone()
-            uid = row[0]
-            session['username'] = username
-            session['uid'] = uid
+                conn.commit()
+            uid = db.getUid(conn,username)
+            conn.close()
             return render_template('home.html')
-        #print('Session keys: ',list(session.keys()))
-        #for k in list(session.keys()):
-         #   print(k,' => ',session[k])
         else:
-            conn = db.getConn(DB)
             random = db.randomReviewoftheDay(conn)
-            randomUid = db.getUidwithRmID(conn, random.get('rmID'))
-            randomUsername = db.getUsername(conn, randomUid)
+            randomUid = db.getRoomInfo(conn, random.get('rmID'))
             allRooms = db.getallRooms(conn)
+
             topRooms = {}
             for roomID in allRooms:
                 rating = db.getAverageRating(conn,roomID.get('rmID'))
                 topRooms[roomID.get('rmID')] = rating.get('rate')
             sort_rooms = sorted(topRooms.items(), key=lambda x: x[1], reverse=True)
-     
+        
             top1 = sort_rooms[0][0]
             top1Rating = sort_rooms[0][1]
             img1 = db.getImgfromRmID(conn, top1)
-             #top2 = sort_rooms[1][0]
+            conn.close()
+            #top2 = sort_rooms[1][0]
             #top2Rating = sort_rooms[1][1]
             #top3 = sort_rooms[2][0]
             #top3Rating = sort_rooms[2][1]
-            return render_template('base.html', random = random, top1 = top1, top1Rating = top1Rating, img1 = img1, randomUsername = randomUsername)
+            return render_template('base.html', random = random, top1 = top1, top1Rating = top1Rating, img1 = img1)
     except Exception as err:
         flash('login error ' + str(err))
         return redirect(request.referrer)
@@ -107,9 +102,9 @@ def upload():
 
     rmID = roomCode + roomNum
     username = session['CAS_USERNAME']
-    postconn = db.getConn(DB)
-    uid = db.getUid(postconn, username)
     try: 
+        postconn = db.getConn(DB)
+        uid = db.getUid(postconn, username)
         if db.checkReview(postconn, uid, rmID):
             flash('Already posted a review. Go to your profile to edit your review!')
             return redirect(url_for('index'))
@@ -130,8 +125,8 @@ def upload():
 
         uid = db.getUid(postconn, username)
         file = request.files['upload']
-        print("FILE:")
-        print(file)
+       # print("FILE:")
+        #print(file)
         if file.filename == '': #check if they uploaded an img
             filePath = 'NA'
             db.insertReview(postconn, uid, rmID, rating, review, filePath)
@@ -150,21 +145,26 @@ def upload():
     except Exception as err:
     #     print("upload failed because " + str(err))
         flash('Upload failed {why}'.format(why=err))
-         return redirect(request.referrer)
+        return redirect(request.referrer)
 
 
 @app.route('/profile/')
 def profile():
     if session['CAS_USERNAME']:
-        conn = db.getConn(DB)
-        username = session['CAS_USERNAME']
-        uid = db.getUid(conn, username)
-        rooms = db.getMyRooms(conn, uid)
-        path = db.getPicPath(conn, uid)
-        savedRooms = db.getSaved(conn, uid)
-        return render_template('profile.html', page_title='Dormir', my_rooms = rooms, pic = path, username = username, starred_rooms = savedRooms) 
+        try:
+            conn = db.getConn(DB)
+            username = session['CAS_USERNAME']
+            uid = db.getUid(conn, username)
+            rooms = db.getMyRooms(conn, uid)
+            path = db.getPicPath(conn, uid)
+            savedRooms = db.getSaved(conn, uid)
+            conn.close()
+            return render_template('profile.html', page_title='Dormir', my_rooms = rooms, pic = path, username = username, starred_rooms = savedRooms) 
+        except Exception as err:
+            flash('profile failed to load due to {why}'.format(why=err))
+            return redirect(request.referrer)
     else:
-        return redirect( url_for('base') )
+        return redirect( url_for('base'))
 
 @app.route('/changePfp', methods = ["POST"])
 def pic():
@@ -199,6 +199,8 @@ def pic():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
             filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
             db.changePfp(conn, uid, filePath)
+            conn.close()
+        conn.close()
         return redirect(request.referrer)
     except Exception as err:
         flash(repr(err))
@@ -208,9 +210,9 @@ def pic():
 @app.route('/roomsearch/', methods=["POST"])
 def search():
     roomCode = request.form.get("rCode")
-    print(roomCode)
+    #print(roomCode)
     roomNum = request.form.get("rNum")
-    print(roomNum)
+    #print(roomNum)
     query = roomCode + roomNum
     #print("query: " + query)
     #print("query length: " + str(len(query)))
@@ -226,6 +228,7 @@ def roomResults(searched):
     if 'CAS_USERNAME' in session:
         conn = db.getConn(DB)
         result = db.getSearchedRooms(conn, searched)
+        conn.close()
         if (len(searched) <= 4) or (not result): #return list of rooms in that hall or no results.  
             return render_template('searchResults.html',
                                 rooms = result, searched = searched)
@@ -241,8 +244,8 @@ def roomReview(rmID):
             conn = db.getConn(DB)
             result = db.getRoomInfo(conn, rmID) 
             building = ''
-            print("RMID first three letters")
-            print(rmID[0:3])
+            #print("RMID first three letters")
+            #print(rmID[0:3])
             if rmID[0:3] == 'MCA':
                 building = 'McAfee'
             elif rmID[0:3] == 'BEB':
@@ -297,8 +300,10 @@ def roomReview(rmID):
             uid = db.getUid(conn, username)
             saved = db.save_trueFalse(conn, rmID, uid)
             r = db.getAverageRating(conn, rmID)
+            conn.close()
             return render_template('review.html', rmID = rmID, reviews = result, avg = r, username = username, building = building, diningHall = diningHall, saved = saved)    
         else:
+            conn.close()
             return redirect(url_for('index'))
     except Exception as err:
         flash(repr(err))
@@ -315,7 +320,7 @@ def Save(rmID):
         conn.close()
         return jsonify()
     except Exception as err:
-        print(err)
+        #print(err)
         return jsonify( {'error': True, 'err': str(err) } )
 
 @app.route('/unsaved/<rmID>', methods= ["POST"])   
@@ -329,40 +334,48 @@ def Unsave(rmID):
         conn.close()
         return jsonify()
     except Exception as err:
-        print(err)
+        #print(err)
         return jsonify( {'error': True, 'err': str(err) } )
 
 
 @app.route('/editReview/<rmID>', methods=["POST"])
 def edit(rmID): 
-    print("hello, it's me")
-    conn = db.getConn(DB)
-    username = session['CAS_USERNAME']
-    rating = request.form.get("rating")
-    review = request.form.get("review")
-    uid = db.getUid(conn, username)
-    db.editReview(db.getConn(DB), uid, rating, review)
-    return redirect(url_for('roomReview', rmID = rmID))
+    try:
+        conn = db.getConn(DB)
+        username = session['CAS_USERNAME']
+        rating = request.form.get("rating")
+        review = request.form.get("review")
+        uid = db.getUid(conn, username)
+        db.editReview(db.getConn(DB), uid, rating, review)
+        conn.close()
+        return redirect(url_for('roomReview', rmID = rmID))
+    except Exception as err:
+        #print(err)
+        return (redirect(request.referrer))
+  
 
     
 
 #handler for delete review (my room)
 @app.route('/deleteReview/', methods = ["POST"])
 def deleteReview():
-    conn = db.getConn(DB)
-    room = request.form.get('rmID')
-    uid = db.getUid(conn, session['CAS_USERNAME'])
-    db.deleteReview(conn, uid, room)
-    print(room, " review deleted")
-    return redirect(request.referrer)
+    try: 
+        conn = db.getConn(DB)
+        room = request.form.get('rmID')
+        uid = db.getUid(conn, session['CAS_USERNAME'])
+        db.deleteReview(conn, uid, room)
+        #print(room, " review deleted")
+        return redirect(request.referrer)
+    except Exception as err:
+        #print(err)
+        return (redirect(request.referrer))
 
 if __name__ == '__main__':
     import sys, os
-
     if len(sys.argv) > 1:
         port=int(sys.argv[1])
         if not(1943 <= port <= 1950):
-            print('For CAS, choose a port from 1943 to 1950')
+            #print('For CAS, choose a port from 1943 to 1950')
             sys.exit()
     else:
         port=os.getuid()
