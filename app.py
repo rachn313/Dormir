@@ -164,7 +164,7 @@ def profile():
             flash('profile failed to load due to {why}'.format(why=err))
             return redirect(request.referrer)
     else:
-        return redirect( url_for('base'))
+        return redirect(url_for('index'))
 
 @app.route('/changePfp', methods = ["POST"])
 def pic():
