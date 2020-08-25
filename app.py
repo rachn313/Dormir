@@ -362,8 +362,13 @@ def deleteReview():
     try: 
         conn = db.getConn(DB)
         room = request.form.get('rmID')
+        username = session['CAS_USERNAME']
         uid = db.getUid(conn, session['CAS_USERNAME'])
+        img = db.getImgfromRmID(conn, room)
+        #print(imgPath)
         db.deleteReview(conn, uid, room)
+        filePath = 'static/{}'.format(img.get('imgPath'))
+        os.remove(filePath)
         #print(room, " review deleted")
         return redirect(request.referrer)
     except Exception as err:
