@@ -277,14 +277,12 @@ body, html {
 }
 
 </style>
-<!-- <img style="margin-left: 520px;" src="{{url_for('static', filename='img/Dormir_Logo.png')}}"> -->
+
 <div class="hero-image" style="height: 80%;">
     <form method="GET" action="{{url_for('cas.login')}}">
     <button style="margin-left: 90%; margin-top: 20px;" class="btn default">Log In</button>
     </form>
     <a href="{{url_for('team')}}"> <button style="margin-left: 82%; margin-top: -100px;" class="btn default">Team</button> </a>
-    
-
     <br>
     <br>
     <div class="hero-text">
@@ -306,60 +304,6 @@ body, html {
   
     </p>
     
-    <h2 style="text-align: center"> Hot Rooms </h2>
-    <br>
-    <div class="card" style="margin-left: -160px">
-      <img style="width: 400px;height: 300px" src="{{url_for('static', filename=img1.imgPath)}}" alt="Avatar" style="width:100%">
-      <div class="container">
-        <h4 style="text-align: center">#1🔥  {{top1}}
-          <br>
-          Average Rating: {{top1Rating}}
-        </h4> 
-   
-      </div>
-    </div>    
-
-    <div class="card" style="margin-left: 31%; margin-top: -38.7%;">
-      <img style="width: 400px;height: 300px" src="{{url_for('static', filename='img/1.png')}}" alt="Avatar" style="width:100%;">
-      <div class="container">
-        <h4 style="text-align: center">
-          #2🔥
-        </h4> 
-        <p></p> 
-      </div>
-    </div>   
-
-    <div class="card" style="margin-left: 78%; margin-top: -38.7%">
-      <img style="width: 400px;height: 300px" src="{{url_for('static', filename='img/1.png')}}" alt="Avatar" style="width:100%">
-      <div class="container">
-        <h4 style="text-align: center">
-          #3🔥
-        </h4> 
-        <p></p> 
-      </div>
-    </div> 
-    
-    <br>
-    <br>
-
-    <h2 style="text-align: center">Review of the Day</h2>
-    <br>
-    <div class="card" style="margin-left:310px; height: 85%">
-      <img style="width: 400px;height: 300px" src="{{url_for('static', filename=random.imgPath)}}" alt="Avatar" style="width:100%">
-      <div class="container">
-        <h4><b>{{random.rmID}}
-            <br>
-            Rating: {{random.rating}}
-            <br>
-            @{{random.username}}
-        </b></h4> 
-        <p> 
-          {{random.review}}
-        </p> 
-      </div>
-    </div> 
-    <br>
-    <br>
   </div>
   
  

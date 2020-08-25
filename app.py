@@ -65,25 +65,8 @@ def index():
             conn.close()
             return render_template('home.html')
         else:
-            random = db.randomReviewoftheDay(conn)
-            randomUid = db.getRoomInfo(conn, random.get('rmID'))
-            allRooms = db.getallRooms(conn)
-
-            topRooms = {}
-            for roomID in allRooms:
-                rating = db.getAverageRating(conn,roomID.get('rmID'))
-                topRooms[roomID.get('rmID')] = rating.get('rate')
-            sort_rooms = sorted(topRooms.items(), key=lambda x: x[1], reverse=True)
-        
-            top1 = sort_rooms[0][0]
-            top1Rating = sort_rooms[0][1]
-            img1 = db.getImgfromRmID(conn, top1)
-            conn.close()
-            #top2 = sort_rooms[1][0]
-            #top2Rating = sort_rooms[1][1]
-            #top3 = sort_rooms[2][0]
-            #top3Rating = sort_rooms[2][1]
-            return render_template('base.html', random = random, top1 = top1, top1Rating = top1Rating, img1 = img1)
+            print('hello')
+            return render_template('base.html')      
     except Exception as err:
         flash('login error ' + str(err))
         return redirect(request.referrer)
