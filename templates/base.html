@@ -5,6 +5,7 @@ href="{{url_for('static', filename='home.css')}}">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <style>
 .btn {
@@ -70,6 +71,9 @@ body, html {
   padding: 2px 16px;
 }
 
+.checked {
+    color: gold;
+}
 
 </style>
 
@@ -218,7 +222,12 @@ body, html {
 		<div class="container">
 		  <h4><b>{{randomRoom.rmID}}
 			  <br>
-			  Rating: {{randomRoom.rating}}
+			  {% for num in range(randomRoom.rating | int) %} 
+			  <span class="fa fa-star checked"></span>
+			  {% endfor %}
+			  {% for num in range(5 - (randomRoom.rating | int)) %}
+				<span class="fa fa-star"></span>
+				{% endfor %}
 			  <br>
 			  @{{randomRoom.username}}
 		  </b></h4> 
