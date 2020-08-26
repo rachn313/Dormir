@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html> 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css"
@@ -24,7 +26,7 @@ body, html {
 }
 
 .hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('static/img/base_hero_img.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/img/hero.jpg');
   height: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -81,7 +83,12 @@ body, html {
     <form method="GET" action="{{url_for('cas.login')}}">
     <button style="margin-left: 90%; margin-top: 20px;" class="btn default">Log In</button>
     </form>
-    <a href="{{url_for('team')}}"> <button style="margin-left: 82%; margin-top: -100px;" class="btn default">Team</button> </a>
+    <div style="margin-top: -3.3%"> 
+      <a href="{{url_for('team')}}"> 
+        <button style="margin-left: 82%" class="btn default">Team
+        </button> 
+      </a>
+    </div>
     <br>
     <br>
     <div class="hero-text">
@@ -244,5 +251,5 @@ body, html {
 
   </div>
   
- 
+ </html>
 

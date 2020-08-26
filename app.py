@@ -25,6 +25,11 @@ app.config['CAS_AFTER_LOGIN'] = 'logged_in'
 # the following doesn't work :-(
 app.config['CAS_AFTER_LOGOUT'] = 'after_logout'
 
+@app.before_first_request
+def startup():
+   # init_database()
+    # clear out any prior session
+    session.clear()
 
 @app.route('/logged_in/')
 def logged_in():
@@ -37,8 +42,6 @@ def after_logout():
     return redirect(url_for('index'))
 
 application = app
-
-
 
 @app.route('/')
 def index():
