@@ -25,20 +25,36 @@
 <div class="cover">
   <div class="profile-image">
 
-    <img class="avatar" style="width: 200px; height: 200px; margin-top: 21%; margin-left: 13%;" src="{{url_for('static', filename=pic.profpicPath)}}" alt="profile_pic">
+    <img data-toggle="modal" data-target="#edit-modal" class="avatar" style="width: 200px; height: 200px; margin-top: 21%; margin-left: 13%;" src="{{url_for('static', filename=pic.profpicPath)}}" alt="profile_pic">
     </div>
-
+	
+	
     <p style="font-family: spaceBold; margin-top: 95px;" class="profile-user-name" value="{{username}}">{{username}}</p> 
 
-    <div id="edit-pic-form" style="width: 30%;height: 50%;display:none;background-color: #bbcbf2;text-align: center;z-index: 1000;margin-left: 30%;position: fixed;padding-top: 2%;">
-      <form id="pfp" method="POST" action="{{url_for('pic')}}" enctype = "multipart/form-data">
-      <label class="form-options" style="color: black"> Change Profile Picture
-        <input style="margin-left: 10px;" type="file" id="upload-pic" name="newpic">
-      </label>
-       <button type="button submit" class="btn btn-primary" form="pfp">Upload</button>
-        <button type="button" class="btn btn-secondary" id= "hide-form">Cancel</button>
-    </form>
-    </div>
+    <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Profile Picture</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div><!--  end header -->
+
+  <div class="modal-body"> 
+          <form id="edit-pic-form" method="POST" action="{{url_for('pic')}}" enctype = "multipart/form-data">
+          <input type="file" id="upload-pic" name="newpic" required> <br>
+          <br>
+         <button type="button submit" class="btn btn-primary" form="edit-pic-form">Upload</button>
+          <button type="button" class="btn btn-secondary" id="hide-form" data-dismiss="modal">Cancel</button>
+            </form>
+
+
+          </div>
+        </div>
+
+  </div>
+</div>
   
   <div class="myRoom">
   	<div class="title"> My Rooms </div>
