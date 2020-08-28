@@ -27,7 +27,7 @@ body, html {
 }
 
 .hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('static/img/base.jpg');
   height: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -169,7 +169,7 @@ body, html {
 	{% elif two==True %}
 	<h2 style="text-align: center"> Hot Rooms </h2>
 	<br>
-	<div class="card" style="margin-left: -160px">
+	<div class="card" style="margin-left: -3%">
 		<img style="width: 400px;height: 300px" src="{{url_for('static', filename=img1.imgPath)}}" alt="Avatar" style="width:100%">
 		<div class="container">
 		  <h4 style="text-align: center">#1🔥  {{top1}}
@@ -180,8 +180,8 @@ body, html {
 		</div>
 	  </div>    
   
-	  <div class="card" style="margin-left: 31%; margin-top: -38.7%;">
-		<img style="width: 400px;height: 300px" src="{{url_for('static', filename='img2.imgPath')}}" alt="Avatar" style="width:100%;">
+	  <div class="card" style="margin-left: 62%; margin-top: -42.3%;">
+		<img style="width: 400px;height: 300px" src="{{url_for('static', filename=img2.imgPath)}}" alt="Avatar" style="width:100%;">
 		<div class="container">
 		  <h4 style="text-align: center">
 			#2🔥 {{top2}}

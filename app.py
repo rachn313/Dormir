@@ -82,13 +82,13 @@ def index():
                     top1 = sort_rooms[0][0]
                     top1Rating = sort_rooms[0][1]
                     img1 = db.getImgfromRmID(conn, top1)
-                    conn.close()
                     top2 = sort_rooms[1][0]
                     top2Rating = sort_rooms[1][1]
                     img2 = db.getImgfromRmID(conn, top2)
                     top3 = sort_rooms[2][0]
                     top3Rating = sort_rooms[2][1]
                     img3 = db.getImgfromRmID(conn, top3)
+                    conn.close()
                     return render_template('base.html', randomRoom= randomRoom[0], top1 = top1, top1Rating = top1Rating, img1 = img1, top2 = top2, top2Rating = top2Rating, img2 = img2, top3 = top3, top3Rating = top3Rating, img3 = img3, three = three, two = two, one = one)   
                 elif len(allRooms) == 2:
                     two = True
@@ -97,10 +97,11 @@ def index():
                     top1 = sort_rooms[0][0]
                     top1Rating = sort_rooms[0][1]
                     img1 = db.getImgfromRmID(conn, top1)
-                    conn.close()
                     top2 = sort_rooms[1][0]
                     top2Rating = sort_rooms[1][1] 
                     img2 = db.getImgfromRmID(conn, top2)
+                    print(img2)
+                    conn.close()
                     return render_template('base.html', randomRoom = randomRoom[0], top1 = top1, top1Rating = top1Rating, img1 = img1, top2 = top2, top2Rating = top2Rating, img2 = img2, two = two, one = one, three = three)   
                 elif len(allRooms) == 1:
                     one = True
@@ -177,7 +178,7 @@ def upload():
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
                 filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
                 db.insertReview(postconn, uid, rmID, rating, review, filePath)
-                return redirect(url_for('roomReview', rmID = rmID))
+                return redirect(url_for(request.referrer))
         
         return redirect(url_for('index'))
 
