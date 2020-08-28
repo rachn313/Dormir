@@ -27,7 +27,7 @@ app.config['CAS_AFTER_LOGOUT'] = 'after_logout'
 
 @app.before_first_request
 def startup():
-   # init_database()
+    #db.init_db()
     # clear out any prior session
     session.clear()
 
@@ -197,7 +197,7 @@ def profile():
     else:
         return redirect(url_for('index'))
 
-@app.route('/changePfp', methods = ["POST"])
+@app.route('/changePfp/', methods = ["POST"])
 def pic():
     conn = db.getConn(DB)
     username = session['CAS_USERNAME']

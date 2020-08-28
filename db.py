@@ -4,6 +4,15 @@ import dbi
 
 DSN = None
 
+def init_db():
+    db = get_db()
+    with current_app.open_resource('tables.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+
+
+    if db is not None:
+        db.close()
+
 def getConn(DB):
     global DSN
     if DSN is None:
