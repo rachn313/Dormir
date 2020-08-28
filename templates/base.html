@@ -8,6 +8,7 @@ href="{{url_for('static', filename='home.css')}}">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;700&display=swap" rel="stylesheet"> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet"> 
 </head>
 <style>
 .btn {
@@ -22,11 +23,11 @@ href="{{url_for('static', filename='home.css')}}">
 body, html {
   height: 100%;
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Alata', sans-serif;
 }
 
 .hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/img/hero.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   height: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -151,16 +152,16 @@ body, html {
 
     <h2 style="text-align: center">Review of the Day</h2>
     <br>
-    <div class="card" style="margin-left:310px; height: 85%">
+    <div class="card" style="margin-left:301px; height: 85%">
       <img style="width: 400px;height: 300px" src="{{url_for('static', filename=randomRoom.imgPath)}}" alt="Avatar" style="width:100%">
-      <div class="container">
+      <div class="container" style="width: 30%;">
         <h4><b>{{randomRoom.rmID}}
             <br>
             Rating: {{randomRoom.rating}}
             <br>
             @{{randomRoom.username}}
         </b></h4> 
-        <p> 
+        <p style="font-family: 'Quicksand', sans-serif;"> 
           {{randomRoom.review}}
         </p> 
       </div>
@@ -193,7 +194,7 @@ body, html {
 	  <br>
 	  <h2 style="text-align: center">Review of the Day</h2>
 	  <br>
-	  <div class="card" style="margin-left:310px; height: 85%">
+	  <div class="card" style="margin-left:301px; height: 85%">
 		<img style="width: 400px;height: 300px" src="{{url_for('static', filename=randomRoom.imgPath)}}" alt="Avatar" style="width:100%">
 		<div class="container">
 		  <h4><b>{{randomRoom.rmID}}
@@ -202,7 +203,7 @@ body, html {
 			  <br>
 			  @{{randomRoom.username}}
 		  </b></h4> 
-		  <p> 
+		  <p style="font-family: 'Quicksand', sans-serif;">  
 			{{randomRoom.review}}
 		  </p> 
 		</div>
@@ -224,7 +225,7 @@ body, html {
 	  <br>
 	  <h2 style="text-align: center">Review of the Day</h2>
 	  <br>
-	  <div class="card" style="margin-left:310px; height: 85%">
+	  <div class="card" style="margin-left:301px; height: 85%">
 		<img style="width: 400px;height: 300px" src="{{url_for('static', filename=randomRoom.imgPath)}}" alt="Avatar" style="width:100%">
 		<div class="container">
 		  <h4><b>{{randomRoom.rmID}}
@@ -237,10 +238,10 @@ body, html {
 				{% endfor %}
 			  <br>
 			  @{{randomRoom.username}}
-		  </b></h4> 
-		  <p> 
-			{{randomRoom.review}}
-		  </p> 
+      </b></h4> 
+      <div>  <p style="font-family: 'Quicksand', sans-serif; width: 300px; overflow: scroll"> 
+        {{randomRoom.review}}
+        </p>  </div>
 		</div>
 	  </div>    
 	{% endif %}

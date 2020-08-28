@@ -61,6 +61,7 @@ def index():
             if row is None:
                 curs.execute('''INSERT INTO Users(fullname, username, profpicPath) VALUES(%s,%s,%s)''', [fullname, username, profpicPath])
                 conn.commit()
+              
             uid = db.getUid(conn,username)
             conn.close()
             return render_template('home.html')
@@ -123,16 +124,17 @@ def index():
 def team():
     return render_template('team.html')
 
-@app.route('/upload/', methods=["POST"])
+@app.route('/upload/', methods=["POST", "GET"])
 def upload(): 
     '''adds a post's information into the database'''
     roomCode = request.form.get("rCode")
+    flash(roomCode)
     roomNum = request.form.get("rNum")
     rating = request.form.get("rating")
     review = request.form.get("review")
-
     rmID = roomCode + roomNum
     username = session['CAS_USERNAME']
+    flash(username)
     try: 
         postconn = db.getConn(DB)
         uid = db.getUid(postconn, username)
@@ -141,10 +143,11 @@ def upload():
             return redirect(url_for('index'))
         #upload folder path, and allowed extension of file images
         #check if this exists
-        path = 'static/img/{}'.format(username)
+        THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(THIS_FOLDER, 'static/img/{}'.format(username))
         if not os.path.exists(path):
-            os.mkdir('static/img/{}'.format(username))
-        UPLOAD_FOLDER = 'static/img/{}/'.format(username)
+            os.mkdir(path)
+        UPLOAD_FOLDER = path
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
@@ -156,6 +159,9 @@ def upload():
 
         uid = db.getUid(postconn, username)
         file = request.files['upload']
+        flash(file)
+        #flash(file)
+        #flash(file.filename)
        # print("FILE:")
         #print(file)
         if file.filename == '': #check if they uploaded an img
@@ -164,7 +170,9 @@ def upload():
             return redirect(url_for('roomReview', rmID = rmID))
 
         filePath = None
+        flash(allowed_file(file.filename))
         if file and allowed_file(file.filename):
+                flash('made it to here')
                 filename = secure_filename(file.filename) #get the filename
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
                 filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
@@ -197,23 +205,22 @@ def profile():
     else:
         return redirect(url_for('index'))
 
-@app.route('/changePfp/', methods = ["POST"])
+@app.route('/changePfp/', methods = ["POST", "GET"])
 def pic():
     conn = db.getConn(DB)
     username = session['CAS_USERNAME']
     uid = db.getUid(conn, username)
-    #uid = 1
-    #upload folder path, and allowed extension of file images
-    #check if this exists
-    # username = "zwang11"
+    
     
     path = 'static/img/{}'.format(username)
     # print(path)
     # print(os.path.exists(path))
     try: 
+        THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(THIS_FOLDER, 'static/img/{}'.format(username))
         if not os.path.exists(path):
-            os.mkdir('static/img/{}'.format(username))
-        UPLOAD_FOLDER = 'static/img/{}/'.format(username)
+            os.mkdir(path)
+        UPLOAD_FOLDER =  path
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
@@ -268,7 +275,7 @@ def roomResults(searched):
     else: #not logged in:
         return redirect(url_for('index'))
 
-@app.route('/reviews/<rmID>')
+@app.route('/reviews/<rmID>', methods= ["GET"])
 def roomReview(rmID):
     try: 
         if 'CAS_USERNAME' in session:
@@ -369,7 +376,7 @@ def Unsave(rmID):
         return jsonify( {'error': True, 'err': str(err) } )
 
 
-@app.route('/editReview/<rmID>', methods=["POST"])
+@app.route('/editReview/<rmID>', methods=["POST", "GET"])
 def edit(rmID): 
     try:
         conn = db.getConn(DB)
@@ -399,7 +406,9 @@ def deleteReview():
         #print(imgPath)
         db.deleteReview(conn, uid, room)
         filePath = 'static/{}'.format(img.get('imgPath'))
-        os.remove(filePath)
+        THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(THIS_FOLDER, filePath)
+        os.remove(path)
         #print(room, " review deleted")
         return redirect(request.referrer)
     except Exception as err:

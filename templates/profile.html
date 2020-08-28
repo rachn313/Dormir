@@ -76,7 +76,7 @@
               <div style="position: relative; padding-top:65px; font-size: 30px;"><a href="{{url_for('roomReview', rmID = room.rmID)}}">{{ room.rmID }}  </a></div> 
              
                 <span>
-                  <button type="button" data-toggle="modal" data-target="#edit-modal">  
+                  <button type="button" data-toggle="modal" data-target="#editReview-modal">  
                     <i class="bsc-edit-write"></i>
                   </button> 
                 </span>
@@ -85,7 +85,7 @@
              </div>
              
              <!-- edit form section -->
-             <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div class="modal fade" id="editReview-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -97,10 +97,10 @@
                   
                   <div class="modal-body">
                     <!-- EDIT POST FORM -->
-                  <form id="edit-post-form" method=POST action="/editReview/{{room.rmID}}" enctype="multipart/form-data">  
+                  <form id="edit-post-form" method=POST action="{{url_for('edit', rmID = room.rmID)}}" enctype="multipart/form-data">  
                     <!-- rating -->
                     <div class="form-group form-inline">
-                        <label class="form-options">Dormir Rating </label>
+                        <label style="width: 105px;" class="form-options">Dormir Rating </label>
                             <label style="margin-left: 10px;" class="radio-inline"><input type="radio" value="1" name="rating" required>1</label>
                             <label class="radio-inline"><input type="radio" value="2" name="rating">2</label>
                             <label class="radio-inline"><input type="radio" value="3" name="rating">3</label>
