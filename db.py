@@ -147,10 +147,10 @@ def getSaved(conn, uid):
     return curs.fetchall()
 
 # edit a review by its uid 
-def editReview(conn, uid, rating, review):
+def editReview(conn, uid, rmID, rating, review):
     curs = dbi.dictCursor(conn)
-    curs.execute('''update Reviews set uid=%s, rating=%s, review=%s''', 
-                        [uid, rating, review])
+    curs.execute('''update Reviews set rating=%s, review=%s where uid=%s and rmID=%s''', 
+                        [rating, review, uid, rmID])
 
 def deleteReview(conn, uid, rmID):
     curs = dbi.dictCursor(conn)

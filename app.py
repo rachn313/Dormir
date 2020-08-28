@@ -125,7 +125,7 @@ def index():
 def team():
     return render_template('team.html')
 
-@app.route('/upload/', methods=["POST", "GET"])
+@app.route('/upload/', methods=["POST"])
 def upload(): 
     '''adds a post's information into the database'''
     roomCode = request.form.get("rCode")
@@ -178,7 +178,8 @@ def upload():
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
                 filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
                 db.insertReview(postconn, uid, rmID, rating, review, filePath)
-                return redirect(url_for(request.referrer))
+                print('why')
+                return redirect(url_for('profile'))
         
         return redirect(url_for('index'))
 
@@ -276,8 +277,9 @@ def roomResults(searched):
     else: #not logged in:
         return redirect(url_for('index'))
 
-@app.route('/reviews/<rmID>', methods= ["GET"])
+@app.route('/reviews/<rmID>', methods= ["GET", "POST"])
 def roomReview(rmID):
+    print('what')
     try: 
         if 'CAS_USERNAME' in session:
             conn = db.getConn(DB)
@@ -385,7 +387,7 @@ def edit(rmID):
         rating = request.form.get("rating")
         review = request.form.get("review")
         uid = db.getUid(conn, username)
-        db.editReview(db.getConn(DB), uid, rating, review)
+        db.editReview(db.getConn(DB), uid, rmID, rating, review)
         conn.close()
         return redirect(url_for('roomReview', rmID = rmID))
     except Exception as err:
