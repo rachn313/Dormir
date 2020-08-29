@@ -160,26 +160,19 @@ def upload():
 
         uid = db.getUid(postconn, username)
         file = request.files['upload']
-        flash(file)
-        #flash(file)
-        #flash(file.filename)
-       # print("FILE:")
-        #print(file)
         if file.filename == '': #check if they uploaded an img
             filePath = 'NA'
             db.insertReview(postconn, uid, rmID, rating, review, filePath)
             return redirect(url_for('roomReview', rmID = rmID))
 
         filePath = None
-        flash(allowed_file(file.filename))
         if file and allowed_file(file.filename):
-                flash('made it to here')
                 filename = secure_filename(file.filename) #get the filename
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
                 filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
                 db.insertReview(postconn, uid, rmID, rating, review, filePath)
                 print('why')
-                return redirect(url_for('profile'))
+                return redirect(url_for('roomReview', rmID = rmID))
         
         return redirect(url_for('index'))
 
