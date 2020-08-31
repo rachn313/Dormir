@@ -160,7 +160,7 @@ def upload():
 
         uid = db.getUid(postconn, username)
         file = request.files['upload']
-        if file.filename == '': #check if they uploaded an img
+        if not file: #check if they uploaded an img
             filePath = 'NA'
             db.insertReview(postconn, uid, rmID, rating, review, filePath)
             return redirect(url_for('roomReview', rmID = rmID))
