@@ -131,11 +131,11 @@ def upload():
     roomCode = request.form.get("rCode")
     flash(roomCode)
     roomNum = request.form.get("rNum")
+    print(roomNum)
     rating = request.form.get("rating")
     review = request.form.get("review")
     rmID = roomCode + roomNum
     username = session['CAS_USERNAME']
-    flash(username)
     try: 
         postconn = db.getConn(DB)
         uid = db.getUid(postconn, username)
@@ -144,36 +144,38 @@ def upload():
             return redirect(url_for('index'))
         #upload folder path, and allowed extension of file images
         #check if this exists
+        print('hello')
         THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
         path = os.path.join(THIS_FOLDER, 'static/img/{}'.format(username))
         if not os.path.exists(path):
+            print('what')
             os.mkdir(path)
         UPLOAD_FOLDER = path
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
-
+        print('bye')
         #add code to change file name
         #check allowed files 
+
         def allowed_file(filename):
             return '.' in filename and \
                 filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-        uid = db.getUid(postconn, username)
         file = request.files['upload']
-        if not file: #check if they uploaded an img
-            filePath = 'NA'
-            db.insertReview(postconn, uid, rmID, rating, review, filePath)
-            return redirect(url_for('roomReview', rmID = rmID))
-
+        print('hi')
         filePath = None
         if file and allowed_file(file.filename):
+                print('oh no!')
                 filename = secure_filename(file.filename) #get the filename
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #save the file to the upload folder destination
                 filePath = os.path.join('img/{}/'.format(username), filename) #make a modified path so the profile.html can read it
                 db.insertReview(postconn, uid, rmID, rating, review, filePath)
-                print('why')
                 return redirect(url_for('roomReview', rmID = rmID))
-        
+        else: 
+            print('did it make it??')
+            filePath = 'NA'
+            db.insertReview(postconn, uid, rmID, rating, review, filePath)
+            return redirect(url_for('roomReview', rmID = rmID))
         return redirect(url_for('index'))
 
     except Exception as err:
