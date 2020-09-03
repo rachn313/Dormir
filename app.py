@@ -395,9 +395,11 @@ def edit(rmID):
 #handler for delete review (my room)
 @app.route('/deleteReview/', methods = ["POST"])
 def deleteReview():
+    print('peggy')
     try: 
         conn = db.getConn(DB)
         room = request.form.get('rmID')
+        print(room)
         username = session['CAS_USERNAME']
         uid = db.getUid(conn, session['CAS_USERNAME'])
         img = db.getImgfromRmID(conn, room)
