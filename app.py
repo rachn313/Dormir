@@ -395,7 +395,6 @@ def edit(rmID):
 #handler for delete review (my room)
 @app.route('/deleteReview/', methods = ["POST"])
 def deleteReview():
-    print('peggy')
     try: 
         conn = db.getConn(DB)
         room = request.form.get('rmID')
