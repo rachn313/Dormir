@@ -274,7 +274,6 @@ def roomResults(searched):
 
 @app.route('/reviews/<rmID>', methods= ["GET", "POST"])
 def roomReview(rmID):
-    print('what')
     try: 
         if 'CAS_USERNAME' in session:
             conn = db.getConn(DB)

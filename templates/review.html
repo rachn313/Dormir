@@ -112,6 +112,15 @@
         <img style="margin-right: 310px;" src="{{url_for('static', filename=room.profpicPath)}}" alt="profile_pic">
     </div>
     <p style="font-family: spaceBold" class="profile-user-name" value="{{username}}">{{room.username}}</p> 
+    {% if room.username == username %}
+    <div style="margin-left: 95%;"> 
+        <i data-toggle="modal" data-target="#deleteReview-modal" class="bsc-trash-delete-bin"></i>
+    </div>
+       <div style="margin-left: 92%;" > 
+            <i data-toggle="modal" data-target="#editReview-modal" class="bsc-edit-write"></i>
+          </div>
+          
+    {% endif %}
     <br>
     <br>
     <div style="font-family: spaceSemiBold; font-size: 18px; margin-left: 2%;"> Dormir Rating   
@@ -128,16 +137,7 @@
         <p style="margin-left: 7.3%; width: 370%;"> {{ room.review }} </p>     
     </div>
     
-    {% if room.username == username %}
-    <div><span style="text-align:right;"> 
-        <i data-toggle="modal" data-target="#deleteReview-modal" class="bsc-trash-delete-bin"></i>
-    </span>
-  </div>
-        <span> 
-            <i data-toggle="modal" data-target="#editReview-modal" class="bsc-edit-write"></i>
-        </span>
-          
-    {% endif %}
+   
       
      </div>
      
